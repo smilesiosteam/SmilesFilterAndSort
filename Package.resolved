@@ -1,0 +1,68 @@
+{
+  "pins" : [
+    {
+      "identity" : "cryptoswift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/krzyzanowskim/CryptoSwift.git",
+      "state" : {
+        "revision" : "db51c407d3be4a051484a141bf0bff36c43d3b1e",
+        "version" : "1.8.0"
+      }
+    },
+    {
+      "identity" : "sdwebimage",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/SDWebImage/SDWebImage.git",
+      "state" : {
+        "revision" : "fd1950de05a5ad77cb252fd88576c1e1809ee50d",
+        "version" : "5.18.4"
+      }
+    },
+    {
+      "identity" : "skeletonview",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Juanpe/SkeletonView.git",
+      "state" : {
+        "revision" : "739a4f5d78731bebc48811c75fa9e1f4c4cef23e",
+        "version" : "1.30.4"
+      }
+    },
+    {
+      "identity" : "smilesfontsmanager",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/smilesiosteam/SmilesFontsManager.git",
+      "state" : {
+        "branch" : "main",
+        "revision" : "6cd2eca9539a6ccacbe19762bb9b3b6af74481e5"
+      }
+    },
+    {
+      "identity" : "smileslanguagemanager",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/smilesiosteam/SmilesLanguageManager.git",
+      "state" : {
+        "branch" : "main",
+        "revision" : "d70bc6f7a910dd4e7dcae9224b4988500cd1006e"
+      }
+    },
+    {
+      "identity" : "smilesstorage",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/smilesiosteam/SmilesStorage.git",
+      "state" : {
+        "branch" : "main",
+        "revision" : "89a57c302aab530f033ba35f001b09cfee822707"
+      }
+    },
+    {
+      "identity" : "smilesutilities",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/smilesiosteam/SmilesUtilities.git",
+      "state" : {
+        "branch" : "main",
+        "revision" : "f0f6482b91cb61822707d2f7591fb6b9a5d01e29"
+      }
+    }
+  ],
+  "version" : 2
+}

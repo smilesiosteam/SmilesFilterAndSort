@@ -11,10 +11,24 @@ import SmilesUtilities
 final class FilterSearchTVC: UITableViewCell {
     // MARK: Outlets
     @IBOutlet weak var searchView: UIView!
+    @IBOutlet weak var collectionParentView: UIView!
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var searchTextField: UITextField!
     
-    var mockFilterChips = ["American", "Arabic", "Indian", "Pakistani", "Armenian", "African", "Asian", "Bakery"]
+    // MARK: Properties
+    var collectionData: [String]? {
+        didSet {
+            if collectionData?.isEmpty ?? false {
+                collectionParentView.isHidden = true
+            } else {
+                collectionParentView.isHidden = false
+            }
+            
+            collectionView.reloadData()
+        }
+    }
+    
+    var removeFilter: ((_ title: String?) -> Void)?
     
     // MARK: Lifecycle
     override func awakeFromNib() {
@@ -48,8 +62,6 @@ final class FilterSearchTVC: UITableViewCell {
                 heightDimension: .absolute(32)
             )
             
-//            let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1)))
-//            item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 16)
             let group = NSCollectionLayoutGroup.horizontal(layoutSize: layoutSize, subitems: [.init(layoutSize: layoutSize)])
             group.interItemSpacing = .fixed(8.0)
             
@@ -67,30 +79,22 @@ final class FilterSearchTVC: UITableViewCell {
 
 extension FilterSearchTVC: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return mockFilterChips.count
+        return collectionData?.count ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        if let data = collectionData?[indexPath.row] {
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FilterChipCVC", for: indexPath) as? FilterChipCVC else { return UICollectionViewCell() }
+            
+            cell.configureCell(with: data)
+            cell.removeFilter = { [weak self] title in
+                guard let self else { return }
+                self.removeFilter?(title)
+            }
+            
+            return cell
+        }
         
-//        if let data = collectionsData?[indexPath.row] {
-//            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FilterChipCVC", for: indexPath) as? FilterChipCVC else { return UICollectionViewCell() }
-//            
-//            cell.configureCell(with: data)
-//            return cell
-//        }
-//        
-//        return UICollectionViewCell()
-        
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FilterChipCVC", for: indexPath) as? FilterChipCVC else { return UICollectionViewCell() }
-        
-        cell.configureCell(with: mockFilterChips[indexPath.row])
-        
-        return cell
+        return UICollectionViewCell()
     }
-    
-//    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//        if let data = collectionsData?[indexPath.row] {
-//            callBack?(data)
-//        }
-//    }
 }

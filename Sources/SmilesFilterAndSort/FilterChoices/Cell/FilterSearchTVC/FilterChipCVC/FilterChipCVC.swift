@@ -15,7 +15,7 @@ final class FilterChipCVC: UICollectionViewCell {
     @IBOutlet weak var titleLabel: UILabel!
     
     // MARK: Properties
-    var removeFilter: ((String) -> Void)?
+    var removeFilter: ((String?) -> Void)?
     
     // MARK: Lifecycle
     override func awakeFromNib() {
