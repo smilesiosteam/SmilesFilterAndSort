@@ -5,7 +5,9 @@ import PackageDescription
 
 let package = Package(
     name: "SmilesFilterAndSort",
-    products: [
+    platforms: [
+        .iOS(.v13)
+    ], products: [
         // Products define the executables and libraries a package produces, making them visible to other packages.
         .library(
             name: "SmilesFilterAndSort",
