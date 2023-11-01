@@ -14,16 +14,19 @@ final class RatingCollectionViewCell: UICollectionViewCell {
     @IBOutlet private weak var rateLabel: UILabel!
     @IBOutlet private weak var starImage: UIImageView!
     
+    static let identifier = String(describing: RatingCollectionViewCell.self)
     // MARK: - Life Cycle
     override func awakeFromNib() {
         super.awakeFromNib()
         containerView.layer.borderWidth = 1
         containerView.layer.cornerRadius = 8
+       
     }
     
     // MARK: - Functions
     func updateCell(with viewModel: FilterCellViewModel) {
         rateLabel.text = viewModel.title
+        rateLabel.font =  UIFont.circularXXTTMediumFont(size: 16)
         viewModel.isSelected ? configSelectedItem() : configUnSelectedItem()
     }
     

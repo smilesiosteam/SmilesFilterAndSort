@@ -6,18 +6,21 @@
 //
 
 import UIKit
+import SmilesFontsManager
 
 final class TextCollectionViewCell: UICollectionViewCell {
     
     // MARK: - Outlets
     @IBOutlet private weak var titleLabel: UILabel!
     @IBOutlet private weak var containerView: UIView!
+    static let identifier = String(describing: TextCollectionViewCell.self)
     
     // MARK: - Life Cycle
     override func awakeFromNib() {
         super.awakeFromNib()
         containerView.layer.borderWidth = 1
         containerView.layer.cornerRadius = 8
+        titleLabel.font = UIFont.circularXXTTRegularFont(size: 16)
     }
     
     // MARK: - Functions

@@ -1,15 +1,16 @@
 //
 //  SortViewController.swift
-//  
+//
 //
 //  Created by Ahmed Naguib on 30/10/2023.
 //
 
 import UIKit
 import Combine
+import SmilesUtilities
 
 public final class SortViewController: UIViewController {
-
+    
     // MARK: - Outlets
     @IBOutlet private weak var collectionView: UICollectionView!
     
@@ -23,12 +24,18 @@ public final class SortViewController: UIViewController {
     // MARK: - Life Cycle
     public override func viewDidLoad() {
         super.viewDidLoad()
+        setupCollectionView()
+    }
+    
+    // MARK: - Functions
+    private func setupCollectionView() {
         collectionView.dataSource = self
         collectionView.delegate = self
-        collectionView.register(UINib(nibName: "TextCollectionViewCell", bundle: .module), forCellWithReuseIdentifier: "TextCollectionViewCell")
-        collectionView.register(UINib(nibName: "RatingCollectionViewCell", bundle: .module), forCellWithReuseIdentifier: "RatingCollectionViewCell")
+        collectionView.register(UINib(nibName: TextCollectionViewCell.identifier, bundle: .module), forCellWithReuseIdentifier: TextCollectionViewCell.identifier)
         
-        collectionView.register(UINib(nibName: "FilterHeaderCollectionViewCell", bundle: .module), forSupplementaryViewOfKind: "header", withReuseIdentifier: "FilterHeaderCollectionViewCell")
+        collectionView.register(UINib(nibName: RatingCollectionViewCell.identifier, bundle: .module), forCellWithReuseIdentifier: RatingCollectionViewCell.identifier)
+        
+        collectionView.register(UINib(nibName: FilterHeaderCollectionViewCell.identifier, bundle: .module), forSupplementaryViewOfKind: "header", withReuseIdentifier: FilterHeaderCollectionViewCell.identifier)
         
         collectionView.collectionViewLayout = layout.createLayout(sections: [])
     }
@@ -41,40 +48,40 @@ public final class SortViewController: UIViewController {
     }
 }
 
-
- extension SortViewController: UICollectionViewDataSource {
-     
-     public func numberOfSections(in collectionView: UICollectionView) -> Int {
-         return sections.count
-     }
-     public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-         sections[section].items.count
+// MARK: - UICollectionViewDataSource
+extension SortViewController: UICollectionViewDataSource {
+    
+    public func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return sections.count
+    }
+    public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        sections[section].items.count
     }
     
-     public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-         let section = sections[indexPath.section]
+    public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let section = sections[indexPath.section]
         
-         switch section.type {
-         case .rating:
-             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "RatingCollectionViewCell", for: indexPath) as! RatingCollectionViewCell
-             cell.updateCell(with: section.items[indexPath.row])
-             return cell
-         default:
-             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TextCollectionViewCell", for: indexPath) as! TextCollectionViewCell
-             cell.updateCell(with: section.items[indexPath.row])
-             return cell
-         }
+        switch section.type {
+        case .rating:
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RatingCollectionViewCell.identifier, for: indexPath) as! RatingCollectionViewCell
+            cell.updateCell(with: section.items[indexPath.row])
+            return cell
+        default:
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TextCollectionViewCell.identifier, for: indexPath) as! TextCollectionViewCell
+            cell.updateCell(with: section.items[indexPath.row])
+            return cell
+        }
     }
-     
-     public func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-         let header = collectionView.dequeueReusableSupplementaryView(ofKind: "header", withReuseIdentifier: "FilterHeaderCollectionViewCell", for: indexPath) as! FilterHeaderCollectionViewCell
-         let section = indexPath.section
-         let currentSection = sections[section]
-         currentSection.isFirstSection ? header.hideLineView() : header.showLineView()
-         header.setupHeader(with: currentSection.title)
-         return header
-     }
- }
+    
+    public func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        let header = collectionView.dequeueReusableSupplementaryView(ofKind: "header", withReuseIdentifier: FilterHeaderCollectionViewCell.identifier, for: indexPath) as! FilterHeaderCollectionViewCell
+        let section = indexPath.section
+        let currentSection = sections[section]
+        currentSection.isFirstSection ? header.hideLineView() : header.showLineView()
+        header.setupHeader(with: currentSection.title)
+        return header
+    }
+}
 
 extension SortViewController: UICollectionViewDelegate {
     public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -107,8 +114,7 @@ extension SortViewController: UICollectionViewDelegate {
 // MARK: - Create
 extension SortViewController {
     static public func create() -> SortViewController {
-        let viewController = SortViewController(nibName: "SortViewController", bundle: .module)
+        let viewController = SortViewController(nibName: String(describing: SortViewController.self), bundle: .module)
         return viewController
     }
 }
-
