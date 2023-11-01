@@ -24,12 +24,23 @@ extension FilterChoicesVC: UITableViewDelegate, UITableViewDataSource {
         if indexPath.section == TableSection.filterSearch.rawValue {
             guard let filterSearchCell = tableView.dequeueReusableCell(withIdentifier: "FilterSearchTVC", for: indexPath) as? FilterSearchTVC else { return UITableViewCell() }
             
+            filterSearchCell.collectionData = mockFilterChips
+            filterSearchCell.removeFilter = { [weak self] title in
+                guard let self else { return }
+                self.configureFilterCollectionState(filter: title, shouldAddFilter: false)
+            }
+            
             return filterSearchCell
         }
         
         guard let filterChoiceCell = tableView.dequeueReusableCell(withIdentifier: "FilterChoiceTVC", for: indexPath) as? FilterChoiceTVC else { return UITableViewCell() }
         
-        filterChoiceCell.configureCell(with: mockFilterChoices[indexPath.row])
+        filterChoiceCell.configureCell(with: mockFilterChoices[indexPath.row], isSelected: false)
+        filterChoiceCell.filterSelected = { [weak self] title, isSelected in
+            guard let self else { return }
+            self.configureFilterCollectionState(filter: title, shouldAddFilter: isSelected)
+        }
+        
         return filterChoiceCell
     }
     

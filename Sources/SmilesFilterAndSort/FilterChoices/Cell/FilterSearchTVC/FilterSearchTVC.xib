@@ -101,6 +101,7 @@
                 </constraints>
             </tableViewCellContentView>
             <connections>
+                <outlet property="collectionParentView" destination="YXS-He-aVM" id="7Fp-GB-3MQ"/>
                 <outlet property="collectionView" destination="FnT-AJ-bis" id="9eA-Xq-LmM"/>
                 <outlet property="searchTextField" destination="shZ-QH-CwA" id="tP7-Pb-RW3"/>
                 <outlet property="searchView" destination="BHj-3u-zSa" id="Aqi-hN-xBe"/>
