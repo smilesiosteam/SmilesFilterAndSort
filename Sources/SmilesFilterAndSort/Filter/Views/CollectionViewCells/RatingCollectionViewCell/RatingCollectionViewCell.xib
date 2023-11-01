@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="22155" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22131"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="RatingCollectionViewCell" customModule="SmilesFilterAndSort">
+            <rect key="frame" x="0.0" y="0.0" width="136" height="71"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="136" height="71"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9vO-yk-mTY">
+                        <rect key="frame" x="0.0" y="0.0" width="136" height="71"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="j38-xj-o5P">
+                                <rect key="frame" x="8" y="27.666666666666671" width="120" height="16"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="252" verticalHuggingPriority="251" image="star" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="xY5-Mv-uHL">
+                                        <rect key="frame" x="0.0" y="-0.66666666666666785" width="16" height="16.333333333333332"/>
+                                        <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="16" id="AeM-bK-8tH"/>
+                                            <constraint firstAttribute="height" constant="16" id="v5T-pt-sIW"/>
+                                        </constraints>
+                                        <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="font" weight="medium">
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                        </preferredSymbolConfiguration>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="3.5 +" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BpC-d6-N7t">
+                                        <rect key="frame" x="19" y="0.0" width="101" height="16"/>
+                                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="16"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="j38-xj-o5P" firstAttribute="leading" secondItem="9vO-yk-mTY" secondAttribute="leading" constant="8" id="0YG-yt-H1x"/>
+                            <constraint firstAttribute="trailing" secondItem="j38-xj-o5P" secondAttribute="trailing" constant="8" id="ajc-FJ-4HC"/>
+                            <constraint firstItem="j38-xj-o5P" firstAttribute="centerY" secondItem="9vO-yk-mTY" secondAttribute="centerY" id="fWj-q7-Uun"/>
+                        </constraints>
+                    </view>
+                </subviews>
+            </view>
+            <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="9vO-yk-mTY" secondAttribute="bottom" id="4bi-Gr-ltY"/>
+                <constraint firstItem="9vO-yk-mTY" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="Qpk-MQ-yPd"/>
+                <constraint firstAttribute="trailing" secondItem="9vO-yk-mTY" secondAttribute="trailing" id="Y7J-tc-P7C"/>
+                <constraint firstItem="9vO-yk-mTY" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="dTf-kI-BE7"/>
+            </constraints>
+            <size key="customSize" width="146" height="71"/>
+            <connections>
+                <outlet property="containerView" destination="9vO-yk-mTY" id="FCM-rs-Hs2"/>
+                <outlet property="rateLabel" destination="BpC-d6-N7t" id="i9A-fP-S5U"/>
+                <outlet property="starImage" destination="xY5-Mv-uHL" id="94k-lp-6cH"/>
+            </connections>
+            <point key="canvasLocation" x="209.16030534351145" y="27.112676056338028"/>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <image name="star" catalog="system" width="128" height="116"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>
