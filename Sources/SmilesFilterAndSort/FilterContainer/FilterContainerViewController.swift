@@ -29,11 +29,13 @@ public final class FilterContainerViewController: UIViewController {
     public override func viewDidLoad() {
         super.viewDidLoad()
         filterViewController.view.frame = self.containerView.bounds
-        viewModel.loadData()
+        viewModel.fetchFilters()
         segmentController.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.black], for: .selected)
         let normalColor = UIColor.black.withAlphaComponent(0.6)
         segmentController.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: normalColor], for: .normal)
         viewFilter.layer.cornerRadius = 24
+        
+        bindCountFilters()
        
     }
     public override func viewDidAppear(_ animated: Bool) {
@@ -45,19 +47,27 @@ public final class FilterContainerViewController: UIViewController {
         bindFilterData()
     }
     
+    private func bindCountFilters() {
+        viewModel.$countOfSelectedFilters.sink { [weak self] count in
+            self?.filterCountLabel.text = "\(count)"
+        }
+        .store(in: &cancellable)
+    }
+    
     private func bindFilterData() {
         filterViewController.selectedFilter.sink { [weak self] indexPath in
             guard let self else {
                 return
             }
             self.viewModel.updateFilter(with: indexPath)
-            self.filterCountLabel.text = "\(self.viewModel.getSelectedFilters())"
+//            self.filterCountLabel.text = "\(self.viewModel.getSelectedFilters())"
+            self.viewModel.updateSelectedFilters()
         }.store(in: &cancellable)
     }
     
     @IBAction func filterTapped(_ sender: Any) {
         
-        print(viewModel.getSelectedFilters())
+//        print(viewModel.getSelectedFilters())
     }
     
     
@@ -71,7 +81,7 @@ public final class FilterContainerViewController: UIViewController {
 
 extension FilterContainerViewController {
     static public func create() -> UIViewController {
-        let viewController = FilterContainerViewController(nibName: "FilterContainerViewController", bundle: .module)
+        let viewController = FilterContainerViewController(nibName: String(describing: FilterContainerViewController.self), bundle: .module)
         return viewController
     }
 }

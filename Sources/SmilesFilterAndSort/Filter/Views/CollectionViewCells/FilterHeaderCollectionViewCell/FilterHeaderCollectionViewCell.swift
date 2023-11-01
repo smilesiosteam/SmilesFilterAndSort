@@ -6,18 +6,22 @@
 //
 
 import UIKit
+import SmilesFontsManager
+import SmilesUtilities
 
 final class FilterHeaderCollectionViewCell: UICollectionReusableView {
     
     // MARK: - Outlets
     @IBOutlet private weak var titleLabel: UILabel!
-   
     @IBOutlet weak var lineView: UIView!
     @IBOutlet weak var lineStack: UIStackView!
+    
+    static let identifier = String(describing: FilterHeaderCollectionViewCell.self)
     
     // MARK: - Functions
     func setupHeader(with title: String?) {
         titleLabel.text = title
+//        titleLabel.fontTextStyle = .smilesHeadline3
         lineView.backgroundColor = UIColor.black.withAlphaComponent(0.2)
     }
     
