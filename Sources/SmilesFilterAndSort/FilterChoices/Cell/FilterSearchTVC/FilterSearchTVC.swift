@@ -29,6 +29,7 @@ final class FilterSearchTVC: UITableViewCell {
     }
     
     var removeFilter: ((_ title: String?) -> Void)?
+    var searchQuery: ((_ query: String?) -> Void)?
     
     // MARK: Lifecycle
     override func awakeFromNib() {
@@ -39,6 +40,11 @@ final class FilterSearchTVC: UITableViewCell {
     
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
+    }
+    
+    // MARK: Actions
+    @IBAction func searchTextFieldDidChange(_ sender: UITextField) {
+        searchQuery?(sender.text)
     }
     
     // MARK: Methods

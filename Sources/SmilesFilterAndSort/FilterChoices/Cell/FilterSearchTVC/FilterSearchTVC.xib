@@ -37,6 +37,9 @@
                                                 <rect key="frame" x="56" y="10.666666666666666" width="289" height="18.666666666666671"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits"/>
+                                                <connections>
+                                                    <action selector="searchTextFieldDidChange:" destination="XUv-Rb-1if" eventType="editingChanged" id="mEk-Uj-48y"/>
+                                                </connections>
                                             </textField>
                                         </subviews>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
