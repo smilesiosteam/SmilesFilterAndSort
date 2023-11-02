@@ -26,6 +26,7 @@ extension FilterChoicesVC: UITableViewDelegate, UITableViewDataSource {
             guard let filterSearchCell = tableView.dequeueReusableCell(withIdentifier: "FilterSearchTVC", for: indexPath) as? FilterSearchTVC else { return UITableViewCell() }
             
             filterSearchCell.collectionData = mockFilterChips
+            filterSearchCell.configureCell(with: searchQuery)
             filterSearchCell.removeFilter = { [weak self] title in
                 guard let self else { return }
                 self.configureFilterCollectionState(filter: title, shouldAddFilter: false, sectionsToReload: [TableSection.filterSearch.rawValue, TableSection.filterChoice.rawValue])
@@ -42,6 +43,7 @@ extension FilterChoicesVC: UITableViewDelegate, UITableViewDataSource {
                     self.filteredFilterChoices = self.mockFilterChoices.filter({ $0.lowercased().contains(query?.lowercased() ?? "") })
                 }
                 
+                self.searchQuery = query
                 self.tableView.reloadSections([TableSection.filterChoice.rawValue], with: .automatic)
             }
             

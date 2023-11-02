@@ -22,6 +22,7 @@ final public class FilterChoicesVC: UIViewController {
     var filteredFilterChoices = [String]()
     var mockFilterChips = [String]()
     var isSearching = false
+    var searchQuery: String?
     
     // MARK: Lifecycle
     public init() {
