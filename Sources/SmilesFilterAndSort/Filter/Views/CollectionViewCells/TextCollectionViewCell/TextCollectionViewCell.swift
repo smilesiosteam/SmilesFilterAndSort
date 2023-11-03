@@ -20,7 +20,7 @@ final class TextCollectionViewCell: UICollectionViewCell {
         super.awakeFromNib()
         containerView.layer.borderWidth = 1
         containerView.layer.cornerRadius = 8
-        titleLabel.font = UIFont.circularXXTTRegularFont(size: 16)
+        titleLabel.fontTextStyle = .smilesBody2
     }
     
     // MARK: - Functions

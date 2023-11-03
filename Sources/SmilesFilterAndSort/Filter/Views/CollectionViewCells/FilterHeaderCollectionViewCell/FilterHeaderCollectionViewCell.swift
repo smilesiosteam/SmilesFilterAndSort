@@ -21,7 +21,7 @@ final class FilterHeaderCollectionViewCell: UICollectionReusableView {
     // MARK: - Functions
     func setupHeader(with title: String?) {
         titleLabel.text = title
-//        titleLabel.fontTextStyle = .smilesHeadline3
+        titleLabel.fontTextStyle = .smilesHeadline3
         lineView.backgroundColor = UIColor.black.withAlphaComponent(0.2)
     }
     

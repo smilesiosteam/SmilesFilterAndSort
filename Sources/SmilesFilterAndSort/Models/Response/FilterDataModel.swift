@@ -7,24 +7,24 @@
 
 import Foundation
 
-struct FilterDataModel: Codable {
+public struct FilterDataModel: Codable {
     let filtersList: [FiltersList]?
 }
 
-struct FiltersList: Codable {
+public struct FiltersList: Codable {
     let title, type: String?
     var filterTypes: [FilterType]?
 }
 
 // MARK: - FilterType
-struct FilterType: Codable {
+public struct FilterType: Codable {
     let name, type: String?
     let isMultipleSelection: Bool?
     var filterValues: [FilterValue]?
 }
 
 // MARK: - FilterValue
-struct FilterValue: Codable {
+public struct FilterValue: Codable {
     let name, filterKey, filterValue, parentTitle: String?
     let image, smallImage: String?
     var isSelected: Bool?

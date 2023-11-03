@@ -35,9 +35,9 @@ final class FilterContainerUseCase: FilterContainerUseCaseType {
         
         let jsonData = json.data(using: .utf8)
         let filters = try! JSONDecoder().decode(FilterDataModel.self, from: jsonData!)
-        
-        handleResponse(filters.filtersList ?? [])
         filtersList = filters.filtersList ?? []
+        handleResponse(filters.filtersList ?? [])
+       
         return Just(filters).eraseToAnyPublisher()
     }
     

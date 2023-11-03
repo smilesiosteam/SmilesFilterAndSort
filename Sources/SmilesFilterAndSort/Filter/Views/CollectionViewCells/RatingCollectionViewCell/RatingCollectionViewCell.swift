@@ -20,7 +20,7 @@ final class RatingCollectionViewCell: UICollectionViewCell {
         super.awakeFromNib()
         containerView.layer.borderWidth = 1
         containerView.layer.cornerRadius = 8
-       
+        rateLabel.fontTextStyle = .smilesHeadline4
     }
     
     // MARK: - Functions

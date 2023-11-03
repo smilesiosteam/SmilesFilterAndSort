@@ -22,13 +22,14 @@ public final class FilterContainerViewController: UIViewController {
     
     let filterViewController = SortViewController.create()
     private let viewModel = FilterContainerViewModel()
-    
+    let demo = DemoViewController()
     var cancellable = Set<AnyCancellable>()
     
     var dic: [String: [String]] = [:]
     public override func viewDidLoad() {
         super.viewDidLoad()
         filterViewController.view.frame = self.containerView.bounds
+        demo.view.frame = self.containerView.bounds
         viewModel.fetchFilters()
         segmentController.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.black], for: .selected)
         let normalColor = UIColor.black.withAlphaComponent(0.6)
@@ -42,6 +43,7 @@ public final class FilterContainerViewController: UIViewController {
         super.viewDidAppear(animated)
         
         containerView.addSubview(filterViewController.view)
+        containerView.addSubview(demo.view)
         containerView.bringSubviewToFront(filterViewController.view)
         filterViewController.setupSections(filterModel:FilterUIModel(sections: viewModel.filters))
         bindFilterData()
@@ -75,6 +77,24 @@ public final class FilterContainerViewController: UIViewController {
     }
     @IBAction func clearAllTapped(_ sender: Any) {
     }
+    @IBAction func segmentChanged(_ sender: UISegmentedControl) {
+        if segmentController.selectedSegmentIndex == 0 {
+            filterViewController.view.alpha = 0
+            containerView.bringSubviewToFront(filterViewController.view)
+            fadeIn(view: filterViewController.view)
+        } else {
+            demo.view.alpha = 0
+            containerView.bringSubviewToFront(demo.view)
+            fadeIn(view: demo.view)
+        }
+    }
+    
+    
+    func fadeIn(view: UIView, duration: TimeInterval = 0.5) {
+            UIView.animate(withDuration: duration) {
+                view.alpha = 1.0 // Set the final alpha value to 1 for a full fade-in
+            }
+        }
     
 
 }
@@ -87,6 +107,13 @@ extension FilterContainerViewController {
 }
 
 
+class DemoViewController: UIViewController {
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.backgroundColor = .red
+    }
+}
 
 import UIKit
 

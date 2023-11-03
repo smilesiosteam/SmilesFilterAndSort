@@ -88,6 +88,9 @@
                         <segment title="Filter by"/>
                         <segment title="Cuisines"/>
                     </segments>
+                    <connections>
+                        <action selector="segmentChanged:" destination="-1" eventType="valueChanged" id="Sby-qZ-hui"/>
+                    </connections>
                 </segmentedControl>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3FB-dI-KQ2">
                     <rect key="frame" x="0.0" y="746" width="393" height="106"/>
