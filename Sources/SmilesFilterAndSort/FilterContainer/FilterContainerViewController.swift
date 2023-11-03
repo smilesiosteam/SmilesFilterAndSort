@@ -21,6 +21,9 @@ public final class FilterContainerViewController: UIViewController {
     @IBOutlet private weak var segmentController: UISegmentedControl!
     
     let filterViewController = SortViewController.create()
+    let choicesViewController  = FilterChoicesVC()
+    
+    
     private let viewModel = FilterContainerViewModel()
     let demo = DemoViewController()
     var cancellable = Set<AnyCancellable>()
@@ -45,7 +48,8 @@ public final class FilterContainerViewController: UIViewController {
         containerView.addSubview(filterViewController.view)
         containerView.addSubview(demo.view)
         containerView.bringSubviewToFront(filterViewController.view)
-        filterViewController.setupSections(filterModel:FilterUIModel(sections: viewModel.filters))
+        filterViewController.setupSections(filterModel: FilterUIModel(sections: viewModel.filters))
+        choicesViewController.updateData(section: viewModel.cuisines[0])
         bindFilterData()
     }
     
@@ -54,6 +58,10 @@ public final class FilterContainerViewController: UIViewController {
             self?.filterCountLabel.text = "\(count)"
         }
         .store(in: &cancellable)
+    }
+    
+    private func bindFilterCuision() {
+        
     }
     
     private func bindFilterData() {

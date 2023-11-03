@@ -59,6 +59,7 @@ extension FilterChoicesVC: UITableViewDelegate, UITableViewDataSource {
         filterChoiceCell.filterSelected = { [weak self] title, isSelected in
             guard let self else { return }
             self.configureFilterCollectionState(filter: title, shouldAddFilter: isSelected, sectionsToReload: [TableSection.filterSearch.rawValue])
+            self.selectedFilter.send(indexPath)
         }
         
         if indexPath.row == (!isSearching ? (mockFilterChoices.endIndex - 1) : (filteredFilterChoices.endIndex - 1)) {

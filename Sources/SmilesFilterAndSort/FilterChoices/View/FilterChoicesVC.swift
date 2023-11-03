@@ -7,6 +7,7 @@
 
 import UIKit
 import SmilesUtilities
+import Combine
 
 final public class FilterChoicesVC: UIViewController {
     enum TableSection: Int, CaseIterable {
@@ -23,6 +24,8 @@ final public class FilterChoicesVC: UIViewController {
     var mockFilterChips = [String]()
     var isSearching = false
     var searchQuery: String?
+    var filters: [FilterCellViewModel] = []
+    var selectedFilter = PassthroughSubject<IndexPath, Never>()
     
     // MARK: Lifecycle
     public init() {
@@ -37,6 +40,18 @@ final public class FilterChoicesVC: UIViewController {
         super.viewDidLoad()
         
         setupTableView()
+    }
+    
+    func updateData(section: FilterSectionUIModel) {
+        // U have one section
+        let title = section.title //
+        let mutilSection = section.isMultipleSelection
+        filters = section.items
+        tableView.reloadData()
+    }
+    
+    func clearSelectedItems() {
+        
     }
     
     // MARK: Methods
