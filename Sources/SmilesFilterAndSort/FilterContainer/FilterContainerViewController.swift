@@ -30,14 +30,14 @@ public final class FilterContainerViewController: UIViewController {
     
     var cancellable = Set<AnyCancellable>()
     
-    var dic: [String: [String]] = [:]
+   
     public override func viewDidLoad() {
         super.viewDidLoad()
         filterViewController.view.frame = self.containerView.bounds
         choicesViewController.view.frame = self.containerView.bounds
         viewModel.fetchFilters()
-//        smilesTitle2
-        let fontStyle = UIFont.preferredFont(forTextStyle: .smilesHeadline1)
+
+        let fontStyle = UIFont.preferredFont(forTextStyle: .headline)
         segmentController.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.foodEnableColor, NSAttributedString.Key.font: fontStyle], for: .selected)
         
         let normalColor = UIColor.black.withAlphaComponent(0.6)
@@ -45,7 +45,7 @@ public final class FilterContainerViewController: UIViewController {
         viewFilter.layer.cornerRadius = 24
         
         bindCountFilters()
-        bindFilterCuision()
+       
         clearAllButton.titleLabel?.textColor = .foodEnableColor
         
         buttomView.addShadowToSelf(offset: CGSize(width: 0, height: -1), color: UIColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 0.2), radius: 1.0, opacity: 5)
@@ -61,6 +61,7 @@ public final class FilterContainerViewController: UIViewController {
         filterViewController.setupSections(filterModel: FilterUIModel(sections: viewModel.filters))
         choicesViewController.updateData(section: viewModel.cuisines[0])
         bindFilterData()
+        bindFilterCuision()
     }
     
     private func bindCountFilters() {

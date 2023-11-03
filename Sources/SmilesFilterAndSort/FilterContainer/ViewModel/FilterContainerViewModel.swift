@@ -86,13 +86,19 @@ final class FilterContainerViewModel {
     
     func updateSelectedFilters() {
         countOfSelectedFilters = 0
-        guard let filterIndex = useCase.getFilterIndex() else {
+        guard let filterIndex = useCase.getFilterIndex(), let cusinesIndex = useCase.getCusinesIndex() else {
             return
         }
         let filterTypes = filtersList[filterIndex].filterTypes ?? []
-        
+        let cusinesTypes = filtersList[cusinesIndex].filterTypes ?? []
         // Get Selected Filters
         filterTypes.forEach { item in
+            let selected = (item.filterValues ?? []).filter({ $0.isSelected == true })
+            countOfSelectedFilters += selected.count
+            selectedFilter.append(contentsOf: selected)
+        }
+        
+        cusinesTypes.forEach { item in
             let selected = (item.filterValues ?? []).filter({ $0.isSelected == true })
             countOfSelectedFilters += selected.count
             selectedFilter.append(contentsOf: selected)
