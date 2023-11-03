@@ -14,6 +14,7 @@ final class FilterContainerViewModel {
     var filters: [FilterSectionUIModel] = []
     var cuisines: [FilterSectionUIModel] = []
     private var filtersList: [FiltersList] = []
+    private var originalFiltersList: [FiltersList] = []
     private var selectedFilter: [FilterValue] = []
     
     @Published var countOfSelectedFilters = 0
@@ -34,8 +35,15 @@ final class FilterContainerViewModel {
                     return
                 }
                 self.filtersList = values.filtersList ?? []
+                self.originalFiltersList = values.filtersList ?? []
             }
             .store(in: &cancellable)
+    }
+    
+    func clearData() {
+        filtersList = originalFiltersList
+        updateSelectedFilters()
+        
     }
     
     private func bindFilters() {
@@ -44,6 +52,7 @@ final class FilterContainerViewModel {
                 return
             }
             self.cuisines = values.sections
+            
         }.store(in: &cancellable)
         
         useCase.filterPublisher.sink { [weak self] values in
@@ -56,7 +65,17 @@ final class FilterContainerViewModel {
     
     func updateFilter(with index: IndexPath) {
         if let filterIndex = useCase.getFilterIndex() {
-            filtersList[filterIndex].filterTypes?[index.section].filterValues?[index.row].toggle()
+            let countOfItems =  filtersList[filterIndex].filterTypes?[index.section].filterValues?.count ?? 0
+            let isMultiSelection =  filtersList[filterIndex].filterTypes?[index.section].isMultipleSelection ?? false
+            if isMultiSelection {
+                filtersList[filterIndex].filterTypes?[index.section].filterValues?[index.row].toggle()
+            } else {
+                for i in 0..<countOfItems {
+                    i != index.row ? filtersList[filterIndex].filterTypes?[index.section].filterValues?[i].setUnselected() : ()
+                }
+                filtersList[filterIndex].filterTypes?[index.section].filterValues?[index.row].toggle()
+            }
+            
         }
     }
     

@@ -8,7 +8,12 @@
 import Foundation
 
 public struct FilterDataModel: Codable {
+    let extTransactionID: String?
     let filtersList: [FiltersList]?
+    enum CodingKeys: String, CodingKey {
+            case extTransactionID = "extTransactionId"
+            case  filtersList = "filterList"
+        }
 }
 
 public struct FiltersList: Codable {
@@ -33,5 +38,9 @@ public struct FilterValue: Codable {
         var value = isSelected ?? false
         value.toggle()
         isSelected = value
+    }
+    
+    mutating func setUnselected() {
+        isSelected = false
     }
 }

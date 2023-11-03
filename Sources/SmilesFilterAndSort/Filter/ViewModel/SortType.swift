@@ -7,11 +7,12 @@
 
 import Foundation
 
-enum SortType: Int {
+enum SortType {
     case explore
     case rating
     case price
     case dietary
+    case custom(name: String)
     
     var name: String {
         switch self {
@@ -23,6 +24,8 @@ enum SortType: Int {
            return "price"
         case .dietary:
             return "dietery"
+        case .custom(name: let name):
+            return name
         }
     }
 }

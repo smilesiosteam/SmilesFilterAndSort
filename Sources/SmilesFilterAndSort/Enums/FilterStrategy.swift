@@ -8,6 +8,6 @@
 import Foundation
 
 public enum FilterStrategy: String {
-    case filter = "filter"
-    case cusines = "cusines"
+    case filter = "filterby"
+    case cusines = "cuisines"
 }

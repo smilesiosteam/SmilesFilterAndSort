@@ -7,19 +7,21 @@
 
 import UIKit
 import Combine
+import SmilesUtilities
 
 public final class FilterContainerViewController: UIViewController {
 
     // MARK: - Outlets
     @IBOutlet private weak var containerView: UIView!
-    @IBOutlet private weak var titleLabel: UILabel!
-    @IBOutlet private weak var clearAllButton: UIButton!
-    @IBOutlet private weak var filterLabel: UILabel!
-    @IBOutlet private weak var filterCountLabel: UILabel!
-    @IBOutlet private weak var applyLabel: UILabel!
+    @IBOutlet private weak var titleLabel: UILabel! { didSet { titleLabel.fontTextStyle = .smilesHeadline3 } }
+    @IBOutlet private weak var clearAllButton: UIButton! { didSet { clearAllButton.fontTextStyle = .smilesTitle2 } }
+    @IBOutlet private weak var filterLabel: UILabel! { didSet { filterLabel.fontTextStyle = .smilesTitle3 } }
+    @IBOutlet private weak var filterCountLabel: UILabel! { didSet { filterCountLabel.fontTextStyle = .smilesTitle3 } }
+    @IBOutlet private weak var applyLabel: UILabel! { didSet { applyLabel.fontTextStyle = .smilesTitle1 } }
     @IBOutlet private weak var viewFilter: UIView!
     @IBOutlet private weak var segmentController: UISegmentedControl!
     
+    @IBOutlet weak var buttomView: UIView!
     let filterViewController = SortViewController.create()
     let choicesViewController  = FilterChoicesVC()
     
@@ -34,12 +36,20 @@ public final class FilterContainerViewController: UIViewController {
         filterViewController.view.frame = self.containerView.bounds
         demo.view.frame = self.containerView.bounds
         viewModel.fetchFilters()
-        segmentController.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.black], for: .selected)
+//        smilesTitle2
+        let fontStyle = UIFont.preferredFont(forTextStyle: .smilesHeadline1)
+        segmentController.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.foodEnableColor, NSAttributedString.Key.font: fontStyle], for: .selected)
+        
         let normalColor = UIColor.black.withAlphaComponent(0.6)
-        segmentController.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: normalColor], for: .normal)
+        segmentController.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: normalColor, NSAttributedString.Key.font: fontStyle], for: .normal)
         viewFilter.layer.cornerRadius = 24
         
         bindCountFilters()
+            
+        clearAllButton.titleLabel?.textColor = .foodEnableColor
+        
+        buttomView.addShadowToSelf(offset: CGSize(width: 0, height: -1), color: UIColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 0.2), radius: 1.0, opacity: 5)
+        
        
     }
     public override func viewDidAppear(_ animated: Bool) {
@@ -49,7 +59,7 @@ public final class FilterContainerViewController: UIViewController {
         containerView.addSubview(demo.view)
         containerView.bringSubviewToFront(filterViewController.view)
         filterViewController.setupSections(filterModel: FilterUIModel(sections: viewModel.filters))
-        choicesViewController.updateData(section: viewModel.cuisines[0])
+//        choicesViewController.updateData(section: viewModel.cuisines[0])
         bindFilterData()
     }
     
@@ -70,20 +80,21 @@ public final class FilterContainerViewController: UIViewController {
                 return
             }
             self.viewModel.updateFilter(with: indexPath)
-//            self.filterCountLabel.text = "\(self.viewModel.getSelectedFilters())"
             self.viewModel.updateSelectedFilters()
         }.store(in: &cancellable)
     }
     
     @IBAction func filterTapped(_ sender: Any) {
         
-//        print(viewModel.getSelectedFilters())
     }
-    
-    
     @IBAction func dismissTapped(_ sender: Any) {
+        dismiss(animated: true)
     }
+    
     @IBAction func clearAllTapped(_ sender: Any) {
+        filterViewController.clearData()
+        viewModel.clearData()
+        
     }
     @IBAction func segmentChanged(_ sender: UISegmentedControl) {
         if segmentController.selectedSegmentIndex == 0 {

@@ -13,6 +13,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="FilterContainerViewController" customModuleProvider="target">
             <connections>
                 <outlet property="applyLabel" destination="4kM-05-am8" id="eQB-bN-L5o"/>
+                <outlet property="buttomView" destination="3FB-dI-KQ2" id="wFH-cq-3Lw"/>
                 <outlet property="clearAllButton" destination="s7k-re-xSK" id="gF5-b8-9vk"/>
                 <outlet property="containerView" destination="scd-ta-SS9" id="jjQ-KE-EJU"/>
                 <outlet property="filterCountLabel" destination="Fjn-Bz-78a" id="4GB-ZX-NNJ"/>
@@ -34,28 +35,30 @@
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="s7k-re-xSK">
                             <rect key="frame" x="292" y="15.000000000000004" width="85" height="34.333333333333343"/>
                             <state key="normal" title="Button"/>
-                            <buttonConfiguration key="configuration" style="plain" title="Clear all"/>
+                            <buttonConfiguration key="configuration" style="plain" title="Clear all">
+                                <color key="baseForegroundColor" red="0.45882352939999999" green="0.25882352939999997" blue="0.5568627451" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </buttonConfiguration>
                             <connections>
                                 <action selector="clearAllTapped:" destination="-1" eventType="touchUpInside" id="Ga7-oT-OYb"/>
                             </connections>
                         </button>
                         <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="w1W-ZU-Dkl">
-                            <rect key="frame" x="16" y="21" width="74.666666666666671" height="22"/>
+                            <rect key="frame" x="16" y="21" width="68.333333333333329" height="22"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TKq-7u-5CU">
-                                    <rect key="frame" x="0.0" y="0.0" width="22.333333333333332" height="22"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="16" height="22"/>
                                     <fontDescription key="fontDescription" type="system" weight="medium" pointSize="18"/>
                                     <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                     <state key="normal">
-                                        <imageReference key="image" image="xmark" catalog="system" symbolScale="large"/>
+                                        <imageReference key="image" image="closeBlack" symbolScale="large"/>
                                     </state>
                                     <connections>
                                         <action selector="dismissTapped:" destination="-1" eventType="touchUpInside" id="In4-bZ-JCf"/>
                                     </connections>
                                 </button>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Filter" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="N1U-Ki-lzL">
-                                    <rect key="frame" x="30.333333333333332" y="0.0" width="44.333333333333343" height="22"/>
+                                    <rect key="frame" x="24.000000000000004" y="0.0" width="44.333333333333343" height="22"/>
                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
@@ -93,7 +96,7 @@
                     </connections>
                 </segmentedControl>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3FB-dI-KQ2">
-                    <rect key="frame" x="0.0" y="746" width="393" height="106"/>
+                    <rect key="frame" x="0.0" y="752" width="393" height="100"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="11u-up-eFg">
                             <rect key="frame" x="16" y="16" width="361" height="48"/>
@@ -127,7 +130,7 @@
                                     </subviews>
                                 </stackView>
                             </subviews>
-                            <color key="backgroundColor" systemColor="systemBrownColor"/>
+                            <color key="backgroundColor" red="0.45882352941176469" green="0.25882352941176467" blue="0.55686274509803924" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <constraints>
                                 <constraint firstItem="OCl-X1-84f" firstAttribute="centerX" secondItem="11u-up-eFg" secondAttribute="centerX" id="5wQ-xq-5pE"/>
                                 <constraint firstItem="OCl-X1-84f" firstAttribute="centerX" secondItem="11u-up-eFg" secondAttribute="centerX" id="Us0-eA-bv3"/>
@@ -138,6 +141,7 @@
                         <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qHG-op-cng">
                             <rect key="frame" x="16" y="12" width="361" height="48"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                             <connections>
                                 <action selector="filterTapped:" destination="-1" eventType="touchUpInside" id="b5w-nP-3lH"/>
@@ -146,14 +150,14 @@
                     </subviews>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="106" id="MUt-Ef-PQB"/>
+                        <constraint firstAttribute="height" constant="100" id="MUt-Ef-PQB"/>
                         <constraint firstAttribute="trailing" secondItem="11u-up-eFg" secondAttribute="trailing" constant="16" id="TdI-20-fMg"/>
                         <constraint firstItem="11u-up-eFg" firstAttribute="top" secondItem="3FB-dI-KQ2" secondAttribute="top" constant="16" id="bL7-I4-hMg"/>
                         <constraint firstItem="11u-up-eFg" firstAttribute="leading" secondItem="3FB-dI-KQ2" secondAttribute="leading" constant="16" id="nWi-tT-WND"/>
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="scd-ta-SS9">
-                    <rect key="frame" x="16" y="206" width="361" height="540"/>
+                    <rect key="frame" x="16" y="206" width="361" height="541"/>
                     <color key="backgroundColor" systemColor="viewFlipsideBackgroundColor"/>
                 </view>
             </subviews>
@@ -163,7 +167,7 @@
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="CqT-7l-Xl5" secondAttribute="trailing" constant="16" id="2c7-um-dNp"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="scd-ta-SS9" secondAttribute="trailing" constant="16" id="9xh-G9-BL7"/>
                 <constraint firstItem="CqT-7l-Xl5" firstAttribute="top" secondItem="Ac3-Nf-hXp" secondAttribute="bottom" constant="16" id="KXV-A2-guf"/>
-                <constraint firstItem="3FB-dI-KQ2" firstAttribute="top" secondItem="scd-ta-SS9" secondAttribute="bottom" id="OYV-yS-Eem"/>
+                <constraint firstItem="3FB-dI-KQ2" firstAttribute="top" secondItem="scd-ta-SS9" secondAttribute="bottom" constant="5" id="OYV-yS-Eem"/>
                 <constraint firstItem="Ac3-Nf-hXp" firstAttribute="top" secondItem="c5F-BQ-VJQ" secondAttribute="bottom" id="QfR-vm-aQj"/>
                 <constraint firstItem="Ac3-Nf-hXp" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="Qok-gD-oP1"/>
                 <constraint firstItem="CqT-7l-Xl5" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="Qpe-E0-WQl"/>
@@ -180,13 +184,15 @@
             <point key="canvasLocation" x="104.58015267175573" y="-1.4084507042253522"/>
         </view>
     </objects>
+    <designables>
+        <designable name="CqT-7l-Xl5">
+            <size key="intrinsicContentSize" width="143" height="31"/>
+        </designable>
+    </designables>
     <resources>
-        <image name="xmark" catalog="system" width="128" height="113"/>
+        <image name="closeBlack" width="16" height="17"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-        <systemColor name="systemBrownColor">
-            <color red="0.63529411764705879" green="0.51764705882352946" blue="0.36862745098039218" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="viewFlipsideBackgroundColor">
             <color red="0.12156862745098039" green="0.12941176470588237" blue="0.14117647058823529" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
