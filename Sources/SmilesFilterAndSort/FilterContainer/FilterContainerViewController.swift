@@ -45,7 +45,7 @@ public final class FilterContainerViewController: UIViewController {
         viewFilter.layer.cornerRadius = 24
         
         bindCountFilters()
-            
+        bindFilterCuision()
         clearAllButton.titleLabel?.textColor = .foodEnableColor
         
         buttomView.addShadowToSelf(offset: CGSize(width: 0, height: -1), color: UIColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 0.2), radius: 1.0, opacity: 5)

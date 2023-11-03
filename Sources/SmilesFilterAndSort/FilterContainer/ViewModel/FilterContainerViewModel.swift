@@ -80,7 +80,7 @@ final class FilterContainerViewModel {
     
     func updateCusines(with index: IndexPath) {
         if let filterIndex = useCase.getCusinesIndex() {
-            filtersList[filterIndex].filterTypes?[index.section].filterValues?[index.row].toggle()
+            filtersList[filterIndex].filterTypes?[0].filterValues?[index.row].toggle()
         }
     }
     

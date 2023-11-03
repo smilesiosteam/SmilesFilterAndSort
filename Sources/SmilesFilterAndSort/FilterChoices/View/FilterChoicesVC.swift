@@ -22,7 +22,7 @@ final public class FilterChoicesVC: UIViewController {
     var isSearching = false
     var searchQuery: String?
     
-    var filters = [FilterCellViewModel]()
+    var filters = [FilterCellViewModel]() 
     var searchedFilters = [FilterCellViewModel]()
     var filterTags = [FilterCellViewModel]()
 //    private var original lFilters
@@ -81,6 +81,21 @@ final public class FilterChoicesVC: UIViewController {
         }
     
         tableView.reloadSections(sectionsToReload, with: .automatic)
+    }
+    
+    func updateSearchedList(with id: String) {
+        if let index = filters.firstIndex(where: { $0.title == id }) {
+            filters[index].toggle()
+//            tableView.reloadRows(at: [IndexPath(item: index, section: 1)], with: .fade)
+            tableView.reloadData()
+        }
+        
+        if let index = filterTags.firstIndex(where: { $0.title == id }) { 
+            filterTags.remove(at: index)
+//            tableView.reloadRows(at: [IndexPath(item: index, section: 0)], with: .fade)
+            tableView.reloadData()
+        }
+        
     }
 }
 

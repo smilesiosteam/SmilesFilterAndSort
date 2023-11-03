@@ -31,8 +31,11 @@ extension FilterChoicesVC: UITableViewDelegate, UITableViewDataSource {
             filterSearchCell.removeFilter = { [weak self] title in
                 guard let self else { return }
                 
-                let filterToRemove = filterTags.first(where: { $0.title.asStringOrEmpty() == title.asStringOrEmpty() })
-                self.configureFilterCollectionState(filter: filterToRemove, shouldAddFilter: false, sectionsToReload: [TableSection.filterSearch.rawValue, TableSection.filterChoice.rawValue])
+//                let filterToRemove = filterTags.first(where: { $0.title.asStringOrEmpty() == title.asStringOrEmpty() })
+//                self.configureFilterCollectionState(filter: filterToRemove, shouldAddFilter: false, sectionsToReload: [TableSection.filterSearch.rawValue, TableSection.filterChoice.rawValue])
+                self.updateSearchedList(with: title ?? "" ) // Use id not title
+                
+                
             }
             
             filterSearchCell.searchQuery = { [weak self] query in
@@ -62,8 +65,9 @@ extension FilterChoicesVC: UITableViewDelegate, UITableViewDataSource {
             guard let self else { return }
             self.filters[indexPath.row].toggle()
             self.configureFilterCollectionState(filter: title, shouldAddFilter: isSelected, sectionsToReload: [TableSection.filterSearch.rawValue])
-            
+            self.tableView.reloadSections(IndexSet(integer: 0), with: .fade)
             self.selectedFilter.send(indexPath)
+            
         }
         
         if indexPath.row == (!isSearching ? (filters.endIndex - 1) : (searchedFilters.endIndex - 1)) {
