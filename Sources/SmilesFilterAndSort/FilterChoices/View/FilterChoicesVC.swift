@@ -19,7 +19,10 @@ final public class FilterChoicesVC: UIViewController {
     
     // MARK: Properties
     var mockFilterChoices = ["American", "Arabic", "Indian", "Pakistani", "Armenian", "African", "Asian", "Bakery", "Cake", "Coffee", "Burger", "Pizza", "Sandwich", "Wrap", "Shawarma"]
+    var filteredFilterChoices = [String]()
     var mockFilterChips = [String]()
+    var isSearching = false
+    var searchQuery: String?
     
     // MARK: Lifecycle
     public init() {
@@ -45,13 +48,13 @@ final public class FilterChoicesVC: UIViewController {
         tableView.registerCellFromNib(FilterChoiceTVC.self, withIdentifier: String(describing: FilterChoiceTVC.self), bundle: .module)
     }
     
-    func configureFilterCollectionState(filter: String?, shouldAddFilter: Bool) {
+    func configureFilterCollectionState(filter: String?, shouldAddFilter: Bool, sectionsToReload: IndexSet) {
         if let filter, shouldAddFilter {
             self.mockFilterChips.append(filter)
         } else {
             self.mockFilterChips.removeAll(where: { $0 == filter })
         }
     
-        tableView.reloadSections([TableSection.filterSearch.rawValue], with: .automatic)
+        tableView.reloadSections(sectionsToReload, with: .automatic)
     }
 }

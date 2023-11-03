@@ -34,15 +34,18 @@
                                                 </constraints>
                                             </imageView>
                                             <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Search for cuisines" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="shZ-QH-CwA">
-                                                <rect key="frame" x="56" y="10.666666666666666" width="289" height="18.666666666666671"/>
+                                                <rect key="frame" x="48" y="10.666666666666666" width="297" height="18.666666666666671"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits"/>
+                                                <connections>
+                                                    <action selector="searchTextFieldDidChange:" destination="XUv-Rb-1if" eventType="editingChanged" id="mEk-Uj-48y"/>
+                                                </connections>
                                             </textField>
                                         </subviews>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <constraints>
                                             <constraint firstAttribute="trailing" secondItem="shZ-QH-CwA" secondAttribute="trailing" constant="16" id="0Mx-TR-CJ4"/>
-                                            <constraint firstItem="shZ-QH-CwA" firstAttribute="leading" secondItem="hhk-xu-8HZ" secondAttribute="trailing" constant="16" id="U5F-QR-dt7"/>
+                                            <constraint firstItem="shZ-QH-CwA" firstAttribute="leading" secondItem="hhk-xu-8HZ" secondAttribute="trailing" constant="8" id="U5F-QR-dt7"/>
                                             <constraint firstItem="hhk-xu-8HZ" firstAttribute="centerY" secondItem="BHj-3u-zSa" secondAttribute="centerY" id="q99-9l-fXs"/>
                                             <constraint firstItem="hhk-xu-8HZ" firstAttribute="leading" secondItem="BHj-3u-zSa" secondAttribute="leading" constant="16" id="zGo-1T-NIj"/>
                                             <constraint firstItem="shZ-QH-CwA" firstAttribute="centerY" secondItem="hhk-xu-8HZ" secondAttribute="centerY" id="zbA-6i-SOB"/>

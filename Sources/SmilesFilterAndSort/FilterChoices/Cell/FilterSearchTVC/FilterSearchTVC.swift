@@ -7,6 +7,7 @@
 
 import UIKit
 import SmilesUtilities
+import SmilesFontsManager
 
 final class FilterSearchTVC: UITableViewCell {
     // MARK: Outlets
@@ -29,6 +30,7 @@ final class FilterSearchTVC: UITableViewCell {
     }
     
     var removeFilter: ((_ title: String?) -> Void)?
+    var searchQuery: ((_ query: String?) -> Void)?
     
     // MARK: Lifecycle
     override func awakeFromNib() {
@@ -41,20 +43,29 @@ final class FilterSearchTVC: UITableViewCell {
         super.setSelected(selected, animated: animated)
     }
     
-    // MARK: Methods
-    func setupUI() {
-        searchView.addMaskedCorner(withMaskedCorner: [.layerMaxXMaxYCorner, .layerMaxXMinYCorner, .layerMinXMaxYCorner, .layerMinXMinYCorner], cornerRadius: searchView.bounds.height / 2)
-        searchView.addBorder(withBorderWidth: 1.0, borderColor: .black.withAlphaComponent(0.2))
+    // MARK: Actions
+    @IBAction func searchTextFieldDidChange(_ sender: UITextField) {
+        searchQuery?(sender.text)
     }
     
-    func setupCollectionView() {
+    // MARK: Methods
+    private func setupUI() {
+        searchView.addMaskedCorner(withMaskedCorner: [.layerMaxXMaxYCorner, .layerMaxXMinYCorner, .layerMinXMaxYCorner, .layerMinXMinYCorner], cornerRadius: searchView.bounds.height / 2)
+        searchView.addBorder(withBorderWidth: 1.0, borderColor: .black.withAlphaComponent(0.2))
+        
+        searchTextField.fontTextStyle = .smilesTitle1
+        searchTextField.textColor = .black.withAlphaComponent(0.6)
+        searchTextField.attributedPlaceholder = NSAttributedString(string: "Search for cuisines", attributes: [.font: UIFont.circularXXTTMediumFont(size: 16), .foregroundColor: UIColor.black.withAlphaComponent(0.6)])
+    }
+    
+    private func setupCollectionView() {
         collectionView.register(UINib(nibName: String(describing: FilterChipCVC.self), bundle: .module), forCellWithReuseIdentifier: String(describing: FilterChipCVC.self))
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.collectionViewLayout = setupCollectionViewLayout()
     }
     
-    func setupCollectionViewLayout() ->  UICollectionViewCompositionalLayout {
+    private func setupCollectionViewLayout() ->  UICollectionViewCompositionalLayout {
         let layout = UICollectionViewCompositionalLayout { (sectionNumber, env) -> NSCollectionLayoutSection? in
             
             let layoutSize = NSCollectionLayoutSize(
@@ -74,6 +85,10 @@ final class FilterSearchTVC: UITableViewCell {
         }
         
         return layout
+    }
+    
+    func configureCell(with searchQuery: String?) {
+        searchTextField.text = searchQuery
     }
 }
 
