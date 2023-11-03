@@ -18,18 +18,20 @@ extension FilterChoicesVC: UITableViewDelegate, UITableViewDataSource {
             return 1
         }
         
-        return !isSearching ? mockFilterChoices.count : filteredFilterChoices.count
+        return !isSearching ? filters.count : searchedFilters.count
     }
     
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == TableSection.filterSearch.rawValue {
             guard let filterSearchCell = tableView.dequeueReusableCell(withIdentifier: "FilterSearchTVC", for: indexPath) as? FilterSearchTVC else { return UITableViewCell() }
             
-            filterSearchCell.collectionData = mockFilterChips
+            filterSearchCell.collectionData = filterTags
             filterSearchCell.configureCell(with: searchQuery)
             filterSearchCell.removeFilter = { [weak self] title in
                 guard let self else { return }
-                self.configureFilterCollectionState(filter: title, shouldAddFilter: false, sectionsToReload: [TableSection.filterSearch.rawValue, TableSection.filterChoice.rawValue])
+                
+                let filterToRemove = filterTags.first(where: { $0.title.asStringOrEmpty() == title.asStringOrEmpty() })
+                self.configureFilterCollectionState(filter: filterToRemove, shouldAddFilter: false, sectionsToReload: [TableSection.filterSearch.rawValue, TableSection.filterChoice.rawValue])
             }
             
             filterSearchCell.searchQuery = { [weak self] query in
@@ -37,10 +39,10 @@ extension FilterChoicesVC: UITableViewDelegate, UITableViewDataSource {
                 
                 if query?.isEmpty ?? false {
                     self.isSearching = false
-                    self.filteredFilterChoices.removeAll()
+                    self.searchedFilters.removeAll()
                 } else {
                     self.isSearching = true
-                    self.filteredFilterChoices = self.mockFilterChoices.filter({ $0.lowercased().contains(query?.lowercased() ?? "") })
+                    self.searchedFilters = self.filters.filter({ ($0.title.asStringOrEmpty()).lowercased().contains(query?.lowercased() ?? "") })
                 }
                 
                 self.searchQuery = query
@@ -52,17 +54,16 @@ extension FilterChoicesVC: UITableViewDelegate, UITableViewDataSource {
         
         guard let filterChoiceCell = tableView.dequeueReusableCell(withIdentifier: "FilterChoiceTVC", for: indexPath) as? FilterChoiceTVC else { return UITableViewCell() }
         
-        let filterChoice = !isSearching ? mockFilterChoices[indexPath.row] : filteredFilterChoices[indexPath.row]
-        let isSelected = mockFilterChips.contains(where: { $0 == filterChoice })
+        let filterChoice = !isSearching ? filters[indexPath.row] : searchedFilters[indexPath.row]
         
-        filterChoiceCell.configureCell(with: filterChoice, isSelected: isSelected)
+        filterChoiceCell.configureCell(with: filterChoice)
         filterChoiceCell.filterSelected = { [weak self] title, isSelected in
             guard let self else { return }
             self.configureFilterCollectionState(filter: title, shouldAddFilter: isSelected, sectionsToReload: [TableSection.filterSearch.rawValue])
             self.selectedFilter.send(indexPath)
         }
         
-        if indexPath.row == (!isSearching ? (mockFilterChoices.endIndex - 1) : (filteredFilterChoices.endIndex - 1)) {
+        if indexPath.row == (!isSearching ? (filters.endIndex - 1) : (searchedFilters.endIndex - 1)) {
             filterChoiceCell.separatorView.isHidden = true
         } else {
             filterChoiceCell.separatorView.isHidden = false

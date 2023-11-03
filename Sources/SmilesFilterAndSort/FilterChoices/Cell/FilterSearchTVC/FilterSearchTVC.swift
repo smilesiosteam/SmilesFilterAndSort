@@ -17,7 +17,7 @@ final class FilterSearchTVC: UITableViewCell {
     @IBOutlet weak var searchTextField: UITextField!
     
     // MARK: Properties
-    var collectionData: [String]? {
+    var collectionData: [FilterCellViewModel]? {
         didSet {
             if collectionData?.isEmpty ?? false {
                 collectionParentView.isHidden = true

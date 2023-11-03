@@ -38,7 +38,7 @@ final class FilterChipCVC: UICollectionViewCell {
         titleLabel.fontTextStyle = .smilesTitle2
     }
     
-    func configureCell(with title: String?) {
-        titleLabel.text = title
+    func configureCell(with filter: FilterCellViewModel?) {
+        titleLabel.text = filter?.title
     }
 }
