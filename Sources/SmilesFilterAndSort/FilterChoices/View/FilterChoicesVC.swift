@@ -19,12 +19,13 @@ final public class FilterChoicesVC: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     
     // MARK: Properties
-    var mockFilterChoices = ["American", "Arabic", "Indian", "Pakistani", "Armenian", "African", "Asian", "Bakery", "Cake", "Coffee", "Burger", "Pizza", "Sandwich", "Wrap", "Shawarma"]
-    var filteredFilterChoices = [String]()
-    var mockFilterChips = [String]()
     var isSearching = false
     var searchQuery: String?
-    var filters: [FilterCellViewModel] = []
+    
+    var filters = [FilterCellViewModel]()
+    var searchedFilters = [FilterCellViewModel]()
+    var filterTags = [FilterCellViewModel]()
+    
     var selectedFilter = PassthroughSubject<IndexPath, Never>()
     
     // MARK: Lifecycle
@@ -38,20 +39,29 @@ final public class FilterChoicesVC: UIViewController {
     
     public override func viewDidLoad() {
         super.viewDidLoad()
-        
         setupTableView()
     }
     
     func updateData(section: FilterSectionUIModel) {
-        // U have one section
-        let title = section.title //
-        let mutilSection = section.isMultipleSelection
         filters = section.items
         tableView.reloadData()
     }
     
-    func clearSelectedItems() {
+    func clearSelectedFilters() {
+        filters = filters.map({
+            var filter = $0
+            filter.setUnselected()
+            
+            return filter
+        })
         
+        isSearching = false
+        searchedFilters.removeAll()
+        filterTags.removeAll()
+        
+        searchQuery?.removeAll()
+        
+        tableView.reloadSections([TableSection.filterSearch.rawValue, TableSection.filterChoice.rawValue], with: .automatic)
     }
     
     // MARK: Methods
@@ -63,11 +73,11 @@ final public class FilterChoicesVC: UIViewController {
         tableView.registerCellFromNib(FilterChoiceTVC.self, withIdentifier: String(describing: FilterChoiceTVC.self), bundle: .module)
     }
     
-    func configureFilterCollectionState(filter: String?, shouldAddFilter: Bool, sectionsToReload: IndexSet) {
+    func configureFilterCollectionState(filter: FilterCellViewModel?, shouldAddFilter: Bool, sectionsToReload: IndexSet) {
         if let filter, shouldAddFilter {
-            self.mockFilterChips.append(filter)
+            self.filterTags.append(filter)
         } else {
-            self.mockFilterChips.removeAll(where: { $0 == filter })
+            self.filterTags.removeAll(where: { $0.title == filter?.title })
         }
     
         tableView.reloadSections(sectionsToReload, with: .automatic)

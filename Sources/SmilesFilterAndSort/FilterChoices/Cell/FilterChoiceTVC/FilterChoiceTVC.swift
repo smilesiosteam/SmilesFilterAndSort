@@ -17,8 +17,8 @@ final class FilterChoiceTVC: UITableViewCell {
     @IBOutlet weak var separatorView: UIView!
     
     // MARK: Properties
-    var filterChoice: String?
-    var filterSelected: ((_ title: String?, _ isSelected: Bool) -> Void)?
+    var filterChoice: FilterCellViewModel?
+    var filterSelected: ((_ filter: FilterCellViewModel?, _ isSelected: Bool) -> Void)?
     
     // MARK: Lifecycle
     override func awakeFromNib() {
@@ -35,7 +35,6 @@ final class FilterChoiceTVC: UITableViewCell {
         sender.isSelected = !sender.isSelected
         
         configureSelectionStateUI(isSelected: sender.isSelected)
-        
         filterSelected?(filterChoice, sender.isSelected)
     }
     
@@ -59,12 +58,12 @@ final class FilterChoiceTVC: UITableViewCell {
         }
     }
     
-    func configureCell(with title: String, isSelected: Bool) {
-        selectionButton.isSelected = isSelected
+    func configureCell(with filter: FilterCellViewModel) {
+        filterChoice = filter
         
-        configureSelectionStateUI(isSelected: isSelected)
+        selectionButton.isSelected = filter.isSelected
+        configureSelectionStateUI(isSelected: filter.isSelected)
         
-        filterChoice = title
-        choiceLabel.text = title
+        choiceLabel.text = filter.title
     }
 }
