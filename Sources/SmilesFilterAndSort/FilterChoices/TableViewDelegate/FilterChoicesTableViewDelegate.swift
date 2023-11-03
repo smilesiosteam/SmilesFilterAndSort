@@ -18,7 +18,8 @@ extension FilterChoicesVC: UITableViewDelegate, UITableViewDataSource {
             return 1
         }
         
-        return !isSearching ? filters.count : searchedFilters.count
+        return filters.count
+        
     }
     
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -54,12 +55,14 @@ extension FilterChoicesVC: UITableViewDelegate, UITableViewDataSource {
         
         guard let filterChoiceCell = tableView.dequeueReusableCell(withIdentifier: "FilterChoiceTVC", for: indexPath) as? FilterChoiceTVC else { return UITableViewCell() }
         
-        let filterChoice = !isSearching ? filters[indexPath.row] : searchedFilters[indexPath.row]
+//        let filterChoice = !isSearching ? filters[indexPath.row] : searchedFilters[indexPath.row]
         
-        filterChoiceCell.configureCell(with: filterChoice)
+        filterChoiceCell.configureCell(with: filters[indexPath.row])
         filterChoiceCell.filterSelected = { [weak self] title, isSelected in
             guard let self else { return }
+            self.filters[indexPath.row].toggle()
             self.configureFilterCollectionState(filter: title, shouldAddFilter: isSelected, sectionsToReload: [TableSection.filterSearch.rawValue])
+            
             self.selectedFilter.send(indexPath)
         }
         

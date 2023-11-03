@@ -43,7 +43,6 @@ final class FilterContainerViewModel {
     func clearData() {
         filtersList = originalFiltersList
         updateSelectedFilters()
-        
     }
     
     private func bindFilters() {

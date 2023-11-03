@@ -25,18 +25,18 @@ final public class FilterChoicesVC: UIViewController {
     var filters = [FilterCellViewModel]()
     var searchedFilters = [FilterCellViewModel]()
     var filterTags = [FilterCellViewModel]()
-    
+//    private var original lFilters
     var selectedFilter = PassthroughSubject<IndexPath, Never>()
     
     // MARK: Lifecycle
-    public init() {
-        super.init(nibName: "FilterChoicesVC", bundle: .module)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
+//    public init() {
+//        super.init(nibName: "FilterChoicesVC", bundle: .module)
+//    }
+//    
+//    required init?(coder: NSCoder) {
+//        fatalError("init(coder:) has not been implemented")
+//    }
+//    
     public override func viewDidLoad() {
         super.viewDidLoad()
         setupTableView()
@@ -81,5 +81,12 @@ final public class FilterChoicesVC: UIViewController {
         }
     
         tableView.reloadSections(sectionsToReload, with: .automatic)
+    }
+}
+
+extension FilterChoicesVC {
+    static public func create() -> FilterChoicesVC {
+        let viewController = FilterChoicesVC(nibName: String(describing: FilterChoicesVC.self), bundle: .module)
+        return viewController
     }
 }

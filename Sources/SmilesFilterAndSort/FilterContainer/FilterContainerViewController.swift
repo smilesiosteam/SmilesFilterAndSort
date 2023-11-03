@@ -23,18 +23,18 @@ public final class FilterContainerViewController: UIViewController {
     
     @IBOutlet weak var buttomView: UIView!
     let filterViewController = SortViewController.create()
-    let choicesViewController  = FilterChoicesVC()
+    let choicesViewController  = FilterChoicesVC.create()
     
     
     private let viewModel = FilterContainerViewModel()
-    let demo = DemoViewController()
+    
     var cancellable = Set<AnyCancellable>()
     
     var dic: [String: [String]] = [:]
     public override func viewDidLoad() {
         super.viewDidLoad()
         filterViewController.view.frame = self.containerView.bounds
-        demo.view.frame = self.containerView.bounds
+        choicesViewController.view.frame = self.containerView.bounds
         viewModel.fetchFilters()
 //        smilesTitle2
         let fontStyle = UIFont.preferredFont(forTextStyle: .smilesHeadline1)
@@ -56,10 +56,10 @@ public final class FilterContainerViewController: UIViewController {
         super.viewDidAppear(animated)
         
         containerView.addSubview(filterViewController.view)
-        containerView.addSubview(demo.view)
+        containerView.addSubview(choicesViewController.view)
         containerView.bringSubviewToFront(filterViewController.view)
         filterViewController.setupSections(filterModel: FilterUIModel(sections: viewModel.filters))
-//        choicesViewController.updateData(section: viewModel.cuisines[0])
+        choicesViewController.updateData(section: viewModel.cuisines[0])
         bindFilterData()
     }
     
@@ -71,7 +71,13 @@ public final class FilterContainerViewController: UIViewController {
     }
     
     private func bindFilterCuision() {
-        
+        choicesViewController.selectedFilter.sink { [weak self] indexPath in
+            guard let self else {
+                return
+            }
+            self.viewModel.updateCusines(with: indexPath)
+            self.viewModel.updateSelectedFilters()
+        }.store(in: &cancellable)
     }
     
     private func bindFilterData() {
@@ -102,35 +108,24 @@ public final class FilterContainerViewController: UIViewController {
             containerView.bringSubviewToFront(filterViewController.view)
             fadeIn(view: filterViewController.view)
         } else {
-            demo.view.alpha = 0
-            containerView.bringSubviewToFront(demo.view)
-            fadeIn(view: demo.view)
+            choicesViewController.view.alpha = 0
+            containerView.bringSubviewToFront(choicesViewController.view)
+            fadeIn(view: choicesViewController.view)
         }
     }
     
     
     func fadeIn(view: UIView, duration: TimeInterval = 0.5) {
-            UIView.animate(withDuration: duration) {
-                view.alpha = 1.0 // Set the final alpha value to 1 for a full fade-in
-            }
+        UIView.animate(withDuration: duration) {
+            view.alpha = 1.0
         }
-    
-
+    }
 }
 
 extension FilterContainerViewController {
     static public func create() -> UIViewController {
         let viewController = FilterContainerViewController(nibName: String(describing: FilterContainerViewController.self), bundle: .module)
         return viewController
-    }
-}
-
-
-class DemoViewController: UIViewController {
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        view.backgroundColor = .red
     }
 }
 
