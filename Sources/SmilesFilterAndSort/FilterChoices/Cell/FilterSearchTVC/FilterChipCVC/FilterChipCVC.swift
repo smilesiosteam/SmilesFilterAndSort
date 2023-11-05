@@ -15,7 +15,8 @@ final class FilterChipCVC: UICollectionViewCell {
     @IBOutlet weak var titleLabel: UILabel!
     
     // MARK: Properties
-    var removeFilter: ((String?) -> Void)?
+    var filter: FilterCellViewModel?
+    var removeFilter: ((_ filter: FilterCellViewModel?) -> Void)?
     
     // MARK: Lifecycle
     override func awakeFromNib() {
@@ -25,7 +26,7 @@ final class FilterChipCVC: UICollectionViewCell {
     
     // MARK: Actions
     @IBAction func crossButtonTapped(_ sender: UIButton) {
-        removeFilter?(titleLabel.text ?? "")
+        removeFilter?(filter)
     }
     
     // MARK: Methods
@@ -39,6 +40,7 @@ final class FilterChipCVC: UICollectionViewCell {
     }
     
     func configureCell(with filter: FilterCellViewModel?) {
+        self.filter = filter
         titleLabel.text = filter?.title
     }
 }

@@ -22,21 +22,12 @@ final public class FilterChoicesVC: UIViewController {
     var isSearching = false
     var searchQuery: String?
     
-    var filters = [FilterCellViewModel]() 
+    var filters = [FilterCellViewModel]()
+    var selectedFilters = [FilterCellViewModel]()
     var searchedFilters = [FilterCellViewModel]()
-    var filterTags = [FilterCellViewModel]()
-//    private var original lFilters
     var selectedFilter = PassthroughSubject<IndexPath, Never>()
     
     // MARK: Lifecycle
-//    public init() {
-//        super.init(nibName: "FilterChoicesVC", bundle: .module)
-//    }
-//    
-//    required init?(coder: NSCoder) {
-//        fatalError("init(coder:) has not been implemented")
-//    }
-//    
     public override func viewDidLoad() {
         super.viewDidLoad()
         setupTableView()
@@ -56,9 +47,8 @@ final public class FilterChoicesVC: UIViewController {
         })
         
         isSearching = false
+        selectedFilters.removeAll()
         searchedFilters.removeAll()
-        filterTags.removeAll()
-        
         searchQuery?.removeAll()
         
         tableView.reloadSections([TableSection.filterSearch.rawValue, TableSection.filterChoice.rawValue], with: .automatic)
@@ -73,29 +63,24 @@ final public class FilterChoicesVC: UIViewController {
         tableView.registerCellFromNib(FilterChoiceTVC.self, withIdentifier: String(describing: FilterChoiceTVC.self), bundle: .module)
     }
     
-    func configureFilterCollectionState(filter: FilterCellViewModel?, shouldAddFilter: Bool, sectionsToReload: IndexSet) {
-        if let filter, shouldAddFilter {
-            self.filterTags.append(filter)
+    func configureFilterCollectionState(filter: FilterCellViewModel?, isSelected: Bool, sectionsToReload: IndexSet) {
+        if let filter, isSelected {
+            selectedFilters.append(filter)
         } else {
-            self.filterTags.removeAll(where: { $0.title == filter?.title })
+            if !isSearching {
+                if let filtersIndex = filters.firstIndex(where: { $0.filterValue == filter?.filterValue }) {
+                    filters[filtersIndex].setUnselected()
+                }
+            } else {
+                if let searchedFiltersIndex = searchedFilters.firstIndex(where: { $0.filterValue == filter?.filterValue }) {
+                    searchedFilters[searchedFiltersIndex].setUnselected()
+                }
+            }
+            
+            selectedFilters.removeAll(where: { $0.filterValue == filter?.filterValue })
         }
-    
+        
         tableView.reloadSections(sectionsToReload, with: .automatic)
-    }
-    
-    func updateSearchedList(with id: String) {
-        if let index = filters.firstIndex(where: { $0.title == id }) {
-            filters[index].toggle()
-//            tableView.reloadRows(at: [IndexPath(item: index, section: 1)], with: .fade)
-            tableView.reloadData()
-        }
-        
-        if let index = filterTags.firstIndex(where: { $0.title == id }) { 
-            filterTags.remove(at: index)
-//            tableView.reloadRows(at: [IndexPath(item: index, section: 0)], with: .fade)
-            tableView.reloadData()
-        }
-        
     }
 }
 

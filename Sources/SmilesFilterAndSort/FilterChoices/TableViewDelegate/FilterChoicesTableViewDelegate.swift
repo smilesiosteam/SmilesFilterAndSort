@@ -18,24 +18,19 @@ extension FilterChoicesVC: UITableViewDelegate, UITableViewDataSource {
             return 1
         }
         
-        return filters.count
-        
+        return !isSearching ? filters.count : searchedFilters.count
     }
     
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == TableSection.filterSearch.rawValue {
             guard let filterSearchCell = tableView.dequeueReusableCell(withIdentifier: "FilterSearchTVC", for: indexPath) as? FilterSearchTVC else { return UITableViewCell() }
             
-            filterSearchCell.collectionData = filterTags
-            filterSearchCell.configureCell(with: searchQuery)
-            filterSearchCell.removeFilter = { [weak self] title in
+            filterSearchCell.collectionData = selectedFilters
+            filterSearchCell.configureSearchBar(with: searchQuery)
+            filterSearchCell.removeFilter = { [weak self] filter in
                 guard let self else { return }
                 
-//                let filterToRemove = filterTags.first(where: { $0.title.asStringOrEmpty() == title.asStringOrEmpty() })
-//                self.configureFilterCollectionState(filter: filterToRemove, shouldAddFilter: false, sectionsToReload: [TableSection.filterSearch.rawValue, TableSection.filterChoice.rawValue])
-                self.updateSearchedList(with: title ?? "" ) // Use id not title
-                
-                
+                self.configureFilterCollectionState(filter: filter, isSelected: false, sectionsToReload: [TableSection.filterSearch.rawValue, TableSection.filterChoice.rawValue])
             }
             
             filterSearchCell.searchQuery = { [weak self] query in
@@ -58,16 +53,16 @@ extension FilterChoicesVC: UITableViewDelegate, UITableViewDataSource {
         
         guard let filterChoiceCell = tableView.dequeueReusableCell(withIdentifier: "FilterChoiceTVC", for: indexPath) as? FilterChoiceTVC else { return UITableViewCell() }
         
-//        let filterChoice = !isSearching ? filters[indexPath.row] : searchedFilters[indexPath.row]
+        let filterChoice = !isSearching ? filters[indexPath.row] : searchedFilters[indexPath.row]
         
-        filterChoiceCell.configureCell(with: filters[indexPath.row])
-        filterChoiceCell.filterSelected = { [weak self] title, isSelected in
+        filterChoiceCell.configureCell(with: filterChoice)
+        filterChoiceCell.filterSelected = { [weak self] filter, isSelected in
             guard let self else { return }
-            self.filters[indexPath.row].toggle()
-            self.configureFilterCollectionState(filter: title, shouldAddFilter: isSelected, sectionsToReload: [TableSection.filterSearch.rawValue])
-            self.tableView.reloadSections(IndexSet(integer: 0), with: .fade)
-            self.selectedFilter.send(indexPath)
             
+            !isSearching ? self.filters[indexPath.row].toggle() : self.searchedFilters[indexPath.row].toggle()
+            self.configureFilterCollectionState(filter: filter, isSelected: isSelected, sectionsToReload: [TableSection.filterSearch.rawValue])
+            
+            self.selectedFilter.send(indexPath)
         }
         
         if indexPath.row == (!isSearching ? (filters.endIndex - 1) : (searchedFilters.endIndex - 1)) {
