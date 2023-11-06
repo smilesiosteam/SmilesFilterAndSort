@@ -37,7 +37,7 @@ final class FilterLayout {
         group.interItemSpacing = .fixed(8)
         
         let section = NSCollectionLayoutSection(group: group)
-//        section.contentInsets = .init(top: 0, leading: 0, bottom: 0, trailing: 0) // 8 8
+//      section.contentInsets = .init(top: 0, leading: 0, bottom: 0, trailing: 0) // 8 8
         section.interGroupSpacing = 14
         
         let headerHeight: CGFloat = isFirstSection ? 40 : 90

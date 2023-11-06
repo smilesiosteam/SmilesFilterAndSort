@@ -10,14 +10,30 @@ import Foundation
 struct FilterUIModel {
     var title: String?
     var sections: [FilterSectionUIModel] = []
+    
+    mutating func setUnselectedValues() -> [FilterSectionUIModel] {
+        let count = sections.count
+        for index in 0..<count {
+            sections[index].setUnselectedValues()
+        }
+        
+        return sections
+    }
 }
 
 struct FilterSectionUIModel {
-    let type: SortType
+    var type: SortType = .explore
     var title: String?
-    let isMultipleSelection: Bool
+    var isMultipleSelection: Bool = false
     var isFirstSection = false
     var items: [FilterCellViewModel] = []
+    
+    mutating func setUnselectedValues() {
+        let count = items.count
+        for index in 0..<count {
+            items[index].setUnselected()
+        }
+    }
 }
 
 struct FilterCellViewModel {

@@ -31,6 +31,11 @@ extension FilterChoicesVC: UITableViewDelegate, UITableViewDataSource {
                 guard let self else { return }
                 
                 self.configureFilterCollectionState(filter: filter, isSelected: false, sectionsToReload: [TableSection.filterSearch.rawValue, TableSection.filterChoice.rawValue])
+                if let index = self.filters.firstIndex(where: { filter?.title == $0.title }) {
+                  self.selectedFilter.send(IndexPath(row: index, section: indexPath.section))
+                }
+                
+
             }
             
             filterSearchCell.searchQuery = { [weak self] query in
@@ -61,7 +66,7 @@ extension FilterChoicesVC: UITableViewDelegate, UITableViewDataSource {
             
             !isSearching ? self.filters[indexPath.row].toggle() : self.searchedFilters[indexPath.row].toggle()
             self.configureFilterCollectionState(filter: filter, isSelected: isSelected, sectionsToReload: [TableSection.filterSearch.rawValue])
-            
+            print(indexPath)
             self.selectedFilter.send(indexPath)
         }
         

@@ -9,16 +9,32 @@ import Foundation
 
 public struct FilterDataModel: Codable {
     let extTransactionID: String?
-    let filtersList: [FiltersList]?
+    var filtersList: [FiltersList]?
     enum CodingKeys: String, CodingKey {
-            case extTransactionID = "extTransactionId"
-            case  filtersList = "filterList"
+        case extTransactionID = "extTransactionId"
+        case  filtersList = "filterList"
+    }
+    
+    mutating func setUnselectedValues() -> [FiltersList]?{
+        let count = filtersList?.count ?? 0
+        for index in 0..<count {
+            filtersList?[index].setUnselectedValues()
         }
+        
+        return filtersList
+    }
 }
 
 public struct FiltersList: Codable {
     let title, type: String?
     var filterTypes: [FilterType]?
+    
+    mutating func setUnselectedValues() {
+        let count = filterTypes?.count ?? 0
+        for index in 0..<count {
+            filterTypes?[index].setUnselectedValues()
+        }
+     }
 }
 
 // MARK: - FilterType
@@ -26,6 +42,13 @@ public struct FilterType: Codable {
     let name, type: String?
     let isMultipleSelection: Bool?
     var filterValues: [FilterValue]?
+    
+   mutating func setUnselectedValues() {
+       let count = filterValues?.count ?? 0
+       for index in 0..<count {
+           filterValues?[index].setUnselected()
+       }
+    }
 }
 
 // MARK: - FilterValue

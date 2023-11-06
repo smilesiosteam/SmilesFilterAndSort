@@ -13,8 +13,8 @@ final class FilterHeaderCollectionViewCell: UICollectionReusableView {
     
     // MARK: - Outlets
     @IBOutlet private weak var titleLabel: UILabel!
-    @IBOutlet weak var lineView: UIView!
-    @IBOutlet weak var lineStack: UIStackView!
+    @IBOutlet private weak var lineView: UIView!
+    @IBOutlet private weak var lineStack: UIStackView!
     
     static let identifier = String(describing: FilterHeaderCollectionViewCell.self)
     

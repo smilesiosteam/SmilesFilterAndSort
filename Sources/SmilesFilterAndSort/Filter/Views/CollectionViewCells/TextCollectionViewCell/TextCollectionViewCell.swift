@@ -31,7 +31,7 @@ final class TextCollectionViewCell: UICollectionViewCell {
     }
     
     private func configSelectedItem() {
-        containerView.backgroundColor =   UIColor( red: 66/255, green: 76/255, blue:153/255, alpha: 0.2)
+        containerView.backgroundColor =  UIColor( red: 66/255, green: 76/255, blue:153/255, alpha: 0.2)
         containerView.layer.borderColor = UIColor.black.withAlphaComponent(0.5).cgColor
     }
     

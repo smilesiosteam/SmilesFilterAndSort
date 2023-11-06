@@ -1,6 +1,6 @@
 //
 //  File.swift
-//  
+//
 //
 //  Created by Ahmed Naguib on 02/11/2023.
 //
@@ -39,7 +39,6 @@ enum FilterRequestBuilder {
     }
     
     func getURL(from baseURL: String, for endPoint: FilterEndPoints) -> String {
-        
         let endPoint = endPoint.url
         
         switch self {

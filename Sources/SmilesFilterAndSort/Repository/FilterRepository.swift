@@ -1,6 +1,6 @@
 //
 //  File.swift
-//  
+//
 //
 //  Created by Ahmed Naguib on 02/11/2023.
 //
@@ -10,21 +10,24 @@ import Combine
 import NetworkingLayer
 
 protocol FilterRepositoryType {
-    
+    func fetchFilters(menuItemType: String?) -> AnyPublisher<FilterDataModel, NetworkError>
 }
 
-public final class FilterRepository {
+final class FilterRepository: FilterRepositoryType {
+    // MARK: - Properties
     private var networkRequest: Requestable
     private var baseURL: String
     
-   public init(networkRequest: Requestable, baseURL: String) {
+    // MARK: - Init
+    init(networkRequest: Requestable, baseURL: String) {
         self.networkRequest = networkRequest
         self.baseURL = baseURL
-
+        
     }
     
-    public func fetchFilters(categoryId: Int?) -> AnyPublisher<FilterDataModel, NetworkError> {
-        let requestCategory = ListFilterRequest(categoryId: categoryId)
+    // MARK: - Functions
+    public func fetchFilters(menuItemType: String?) -> AnyPublisher<FilterDataModel, NetworkError> {
+        let requestCategory = ListFilterRequest(menuItemType: menuItemType)
         let endPoint = FilterRequestBuilder.listFilters(request: requestCategory)
         
         let request = endPoint.createRequest(
@@ -33,6 +36,5 @@ public final class FilterRepository {
         )
         
         return networkRequest.request(request)
-        
     }
 }

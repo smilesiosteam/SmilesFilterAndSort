@@ -4,7 +4,6 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22131"/>
-        <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -43,22 +42,20 @@
                             </connections>
                         </button>
                         <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="w1W-ZU-Dkl">
-                            <rect key="frame" x="16" y="21" width="68.333333333333329" height="22"/>
+                            <rect key="frame" x="16" y="12" width="82.333333333333329" height="40"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TKq-7u-5CU">
-                                    <rect key="frame" x="0.0" y="0.0" width="16" height="22"/>
-                                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="18"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="30" height="40"/>
+                                    <fontDescription key="fontDescription" type="system" weight="light" pointSize="23"/>
                                     <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                    <state key="normal">
-                                        <imageReference key="image" image="closeBlack" symbolScale="large"/>
-                                    </state>
+                                    <state key="normal" title="X"/>
                                     <connections>
                                         <action selector="dismissTapped:" destination="-1" eventType="touchUpInside" id="In4-bZ-JCf"/>
                                     </connections>
                                 </button>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Filter" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="N1U-Ki-lzL">
-                                    <rect key="frame" x="24.000000000000004" y="0.0" width="44.333333333333343" height="22"/>
+                                    <rect key="frame" x="38" y="0.0" width="44.333333333333343" height="40"/>
                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
@@ -82,19 +79,29 @@
                         <constraint firstAttribute="height" constant="1" id="rEt-ei-Tbf"/>
                     </constraints>
                 </view>
-                <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="CqT-7l-Xl5" customClass="CustomizableSegmentControl" customModule="SmilesFilterAndSort">
-                    <rect key="frame" x="16" y="140" width="361" height="37"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="36" id="Jt4-U9-Z3u"/>
-                    </constraints>
-                    <segments>
-                        <segment title="Filter by"/>
-                        <segment title="Cuisines"/>
-                    </segments>
-                    <connections>
-                        <action selector="segmentChanged:" destination="-1" eventType="valueChanged" id="Sby-qZ-hui"/>
-                    </connections>
-                </segmentedControl>
+                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="30" translatesAutoresizingMaskIntoConstraints="NO" id="ve7-zj-sgK">
+                    <rect key="frame" x="16" y="140" width="361" height="612"/>
+                    <subviews>
+                        <segmentedControl hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="CqT-7l-Xl5" customClass="CustomizableSegmentControl" customModule="SmilesFilterAndSort">
+                            <rect key="frame" x="0.0" y="0.0" width="361" height="37"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="36" id="Jt4-U9-Z3u"/>
+                            </constraints>
+                            <segments>
+                                <segment title="Filte"/>
+                                <segment title=""/>
+                            </segments>
+                            <connections>
+                                <action selector="segmentChanged:" destination="-1" eventType="valueChanged" id="Sby-qZ-hui"/>
+                            </connections>
+                        </segmentedControl>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="scd-ta-SS9">
+                            <rect key="frame" x="0.0" y="0.0" width="361" height="612"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </view>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                </stackView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3FB-dI-KQ2">
                     <rect key="frame" x="0.0" y="752" width="393" height="100"/>
                     <subviews>
@@ -156,29 +163,22 @@
                         <constraint firstItem="11u-up-eFg" firstAttribute="leading" secondItem="3FB-dI-KQ2" secondAttribute="leading" constant="16" id="nWi-tT-WND"/>
                     </constraints>
                 </view>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="scd-ta-SS9">
-                    <rect key="frame" x="16" y="206" width="361" height="541"/>
-                    <color key="backgroundColor" systemColor="viewFlipsideBackgroundColor"/>
-                </view>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="CqT-7l-Xl5" secondAttribute="trailing" constant="16" id="2c7-um-dNp"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="scd-ta-SS9" secondAttribute="trailing" constant="16" id="9xh-G9-BL7"/>
-                <constraint firstItem="CqT-7l-Xl5" firstAttribute="top" secondItem="Ac3-Nf-hXp" secondAttribute="bottom" constant="16" id="KXV-A2-guf"/>
-                <constraint firstItem="3FB-dI-KQ2" firstAttribute="top" secondItem="scd-ta-SS9" secondAttribute="bottom" constant="5" id="OYV-yS-Eem"/>
+                <constraint firstItem="ve7-zj-sgK" firstAttribute="top" secondItem="Ac3-Nf-hXp" secondAttribute="bottom" constant="16" id="PCd-cX-tL6"/>
                 <constraint firstItem="Ac3-Nf-hXp" firstAttribute="top" secondItem="c5F-BQ-VJQ" secondAttribute="bottom" id="QfR-vm-aQj"/>
                 <constraint firstItem="Ac3-Nf-hXp" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="Qok-gD-oP1"/>
-                <constraint firstItem="CqT-7l-Xl5" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="Qpe-E0-WQl"/>
+                <constraint firstItem="ve7-zj-sgK" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="Uqn-3e-ZBU"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="c5F-BQ-VJQ" secondAttribute="trailing" id="VQM-k1-LjU"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="3FB-dI-KQ2" secondAttribute="trailing" id="aM7-NQ-Jaw"/>
+                <constraint firstItem="3FB-dI-KQ2" firstAttribute="top" secondItem="ve7-zj-sgK" secondAttribute="bottom" id="aVN-ks-1Gk"/>
                 <constraint firstItem="3FB-dI-KQ2" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="aYP-vZ-ibM"/>
-                <constraint firstItem="scd-ta-SS9" firstAttribute="top" secondItem="CqT-7l-Xl5" secondAttribute="bottom" constant="30" id="bnp-Sh-wnB"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="ve7-zj-sgK" secondAttribute="trailing" constant="16" id="bNn-fa-Npp"/>
                 <constraint firstItem="c5F-BQ-VJQ" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="fVG-zF-8JN"/>
                 <constraint firstAttribute="bottom" secondItem="3FB-dI-KQ2" secondAttribute="bottom" id="g6m-U2-RsQ"/>
                 <constraint firstItem="c5F-BQ-VJQ" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="ie7-4u-ZN5"/>
-                <constraint firstItem="scd-ta-SS9" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="r1R-kG-oAa"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="Ac3-Nf-hXp" secondAttribute="trailing" id="vP4-ur-ILo"/>
             </constraints>
             <point key="canvasLocation" x="104.58015267175573" y="-1.4084507042253522"/>
@@ -186,16 +186,12 @@
     </objects>
     <designables>
         <designable name="CqT-7l-Xl5">
-            <size key="intrinsicContentSize" width="143" height="31"/>
+            <size key="intrinsicContentSize" width="91" height="31"/>
         </designable>
     </designables>
     <resources>
-        <image name="closeBlack" width="16" height="17"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-        <systemColor name="viewFlipsideBackgroundColor">
-            <color red="0.12156862745098039" green="0.12941176470588237" blue="0.14117647058823529" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

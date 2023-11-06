@@ -31,24 +31,32 @@ public final class SortViewController: UIViewController {
     private func setupCollectionView() {
         collectionView.dataSource = self
         collectionView.delegate = self
-        collectionView.register(UINib(nibName: TextCollectionViewCell.identifier, bundle: .module), forCellWithReuseIdentifier: TextCollectionViewCell.identifier)
+        collectionView.register(
+            UINib(nibName: TextCollectionViewCell.identifier, bundle: .module),
+            forCellWithReuseIdentifier: TextCollectionViewCell.identifier)
         
-        collectionView.register(UINib(nibName: RatingCollectionViewCell.identifier, bundle: .module), forCellWithReuseIdentifier: RatingCollectionViewCell.identifier)
+        collectionView.register(
+            UINib(nibName: RatingCollectionViewCell.identifier, bundle: .module), 
+            forCellWithReuseIdentifier: RatingCollectionViewCell.identifier)
         
-        collectionView.register(UINib(nibName: FilterHeaderCollectionViewCell.identifier, bundle: .module), forSupplementaryViewOfKind: "header", withReuseIdentifier: FilterHeaderCollectionViewCell.identifier)
+        collectionView.register(
+            UINib(nibName: FilterHeaderCollectionViewCell.identifier, bundle: .module),
+            forSupplementaryViewOfKind: "header",
+            withReuseIdentifier: FilterHeaderCollectionViewCell.identifier)
         
         collectionView.collectionViewLayout = layout.createLayout(sections: [])
     }
     
     func setupSections(filterModel: FilterUIModel) {
         manipulatedSections = filterModel.sections
-        sections = manipulatedSections
+        var list = filterModel
+        sections = list.setUnselectedValues()
         reloadData()
     }
     
     func clearData() {
         manipulatedSections = sections
-       reloadData()
+        reloadData()
     }
     
     private func reloadData() {
@@ -62,7 +70,7 @@ public final class SortViewController: UIViewController {
 extension SortViewController: UICollectionViewDataSource {
     
     public func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return manipulatedSections.count
+        manipulatedSections.count
     }
     public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         manipulatedSections[section].items.count
@@ -103,7 +111,6 @@ extension SortViewController: UICollectionViewDelegate {
         } else {
             
             for i in 0..<selectedSection.items.count {
-                
                 i != indexPath.row ? manipulatedSections[section].items[i].setUnselected() : ()
             }
             manipulatedSections[section].items[indexPath.row].toggle()

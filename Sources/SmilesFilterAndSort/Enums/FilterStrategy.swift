@@ -7,7 +7,16 @@
 
 import Foundation
 
-public enum FilterStrategy: String {
-    case filter = "filterby"
-    case cusines = "cuisines"
+public enum FilterStrategy {
+    case filter(title: String?)
+    case cusines(title: String?)
+    
+    var text: String {
+        switch self {
+        case .filter:
+            return "filterby"
+        case .cusines:
+            return  "cuisines"
+        }
+    }
 }

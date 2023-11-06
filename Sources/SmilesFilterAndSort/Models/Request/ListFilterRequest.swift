@@ -9,11 +9,11 @@ import Foundation
 import SmilesBaseMainRequestManager
 
 final class ListFilterRequest: SmilesBaseMainRequest {
-    var categoryId: Int?
+    var menuItemType: String?
     
-    init(categoryId: Int?) {
+    init(menuItemType: String?) {
         super.init()
-        self.categoryId = categoryId
+        self.menuItemType = menuItemType
     }
     
     required init(from decoder: Decoder) throws {
@@ -22,12 +22,12 @@ final class ListFilterRequest: SmilesBaseMainRequest {
     
     // MARK: - Model Keys
     enum CodingKeys: String, CodingKey {
-        case categoryId
+        case menuItemType
     }
     
     public override func encode(to encoder: Encoder) throws {
         try super.encode(to: encoder)
         var container = encoder.container(keyedBy: CodingKeys.self)
-        try container.encodeIfPresent(self.categoryId, forKey: .categoryId)
+        try container.encodeIfPresent(self.menuItemType, forKey: .menuItemType)
     }
 }
