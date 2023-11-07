@@ -24,7 +24,7 @@ final public class FilterChoicesVC: UIViewController {
     
     var filters = [FilterCellViewModel]()
     var selectedFilters = [FilterCellViewModel]()
-    var searchedFilters = [FilterCellViewModel]()
+//    var searchedFilters = [FilterCellViewModel]()
     var selectedFilter = PassthroughSubject<IndexPath, Never>()
     
     // MARK: Lifecycle
@@ -42,13 +42,14 @@ final public class FilterChoicesVC: UIViewController {
         filters = filters.map({
             var filter = $0
             filter.setUnselected()
+            filter.setNotIsSearching()
             
             return filter
         })
         
         isSearching = false
         selectedFilters.removeAll()
-        searchedFilters.removeAll()
+//        searchedFilters.removeAll()
         searchQuery?.removeAll()
         
         tableView.reloadSections([TableSection.filterSearch.rawValue, TableSection.filterChoice.rawValue], with: .automatic)
@@ -67,15 +68,25 @@ final public class FilterChoicesVC: UIViewController {
         if let filter, isSelected {
             selectedFilters.append(filter)
         } else {
-            if !isSearching {
-                if let filtersIndex = filters.firstIndex(where: { $0.filterValue == filter?.filterValue }) {
-                    filters[filtersIndex].setUnselected()
-                }
-            } else {
-                if let searchedFiltersIndex = searchedFilters.firstIndex(where: { $0.filterValue == filter?.filterValue }) {
-                    searchedFilters[searchedFiltersIndex].setUnselected()
-                }
+//            if !isSearching {
+//                if let filtersIndex = filters.firstIndex(where: { $0.filterValue == filter?.filterValue }) {
+//                    filters[filtersIndex].setUnselected()
+//                }
+//            } else {
+//                if let searchedFiltersIndex = searchedFilters.firstIndex(where: { $0.filterValue == filter?.filterValue }) {
+//                    searchedFilters[searchedFiltersIndex].setUnselected()
+//                }
+//            }
+            
+            if let filtersIndex = filters.firstIndex(where: { $0.filterValue == filter?.filterValue }) {
+                filters[filtersIndex].setUnselected()
             }
+            
+//            if isSearching {
+//                if let searchedFiltersIndex = searchedFilters.firstIndex(where: { $0.filterValue == filter?.filterValue }) {
+//                    searchedFilters[searchedFiltersIndex].setUnselected()
+//                }
+//            }
             
             selectedFilters.removeAll(where: { $0.filterValue == filter?.filterValue })
         }

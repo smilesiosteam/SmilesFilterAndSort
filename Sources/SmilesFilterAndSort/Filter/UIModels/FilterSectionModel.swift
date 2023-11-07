@@ -41,6 +41,7 @@ struct FilterCellViewModel {
     var isSelected = false
     var filterKey: String = ""
     var filterValue: String = ""
+    var isSearching = false
     
     mutating func toggle() {
         isSelected.toggle()
@@ -48,5 +49,13 @@ struct FilterCellViewModel {
     
     mutating func setUnselected() {
         isSelected = false
+    }
+    
+    mutating func toggleSearching() {
+        isSearching.toggle()
+    }
+    
+    mutating func setNotIsSearching() {
+        isSearching = false
     }
 }

@@ -18,7 +18,7 @@ extension FilterChoicesVC: UITableViewDelegate, UITableViewDataSource {
             return 1
         }
         
-        return !isSearching ? filters.count : searchedFilters.count
+        return !isSearching ? filters.filter({ !$0.isSearching }).count : filters.filter({ $0.isSearching }).count
     }
     
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -31,11 +31,10 @@ extension FilterChoicesVC: UITableViewDelegate, UITableViewDataSource {
                 guard let self else { return }
                 
                 self.configureFilterCollectionState(filter: filter, isSelected: false, sectionsToReload: [TableSection.filterSearch.rawValue, TableSection.filterChoice.rawValue])
-                if let index = self.filters.firstIndex(where: { filter?.title == $0.title }) {
-                  self.selectedFilter.send(IndexPath(row: index, section: indexPath.section))
-                }
                 
-
+                if let index = self.filters.firstIndex(where: { filter?.title == $0.title }) {
+                    self.selectedFilter.send(IndexPath(row: index, section: indexPath.section))
+                }
             }
             
             filterSearchCell.searchQuery = { [weak self] query in
@@ -43,10 +42,24 @@ extension FilterChoicesVC: UITableViewDelegate, UITableViewDataSource {
                 
                 if query?.isEmpty ?? false {
                     self.isSearching = false
-                    self.searchedFilters.removeAll()
+                    self.filters = self.filters.map({
+                        var filter = $0
+                        filter.setNotIsSearching()
+                        
+                        return filter
+                    })
                 } else {
                     self.isSearching = true
-                    self.searchedFilters = self.filters.filter({ ($0.title.asStringOrEmpty()).lowercased().contains(query?.lowercased() ?? "") })
+                    self.filters = self.filters.map({
+                        var filter = $0
+                        if $0.title?.lowercased().contains(query?.lowercased() ?? "") == true {
+                            filter.isSearching = true
+                        } else {
+                            filter.setNotIsSearching()
+                        }
+                        
+                        return filter
+                    })
                 }
                 
                 self.searchQuery = query
@@ -58,19 +71,22 @@ extension FilterChoicesVC: UITableViewDelegate, UITableViewDataSource {
         
         guard let filterChoiceCell = tableView.dequeueReusableCell(withIdentifier: "FilterChoiceTVC", for: indexPath) as? FilterChoiceTVC else { return UITableViewCell() }
         
-        let filterChoice = !isSearching ? filters[indexPath.row] : searchedFilters[indexPath.row]
+        let filterChoice = !isSearching ? filters.filter({ !$0.isSearching })[indexPath.row] : filters.filter({ $0.isSearching })[indexPath.row]
         
         filterChoiceCell.configureCell(with: filterChoice)
         filterChoiceCell.filterSelected = { [weak self] filter, isSelected in
             guard let self else { return }
             
-            !isSearching ? self.filters[indexPath.row].toggle() : self.searchedFilters[indexPath.row].toggle()
+            if let index = self.filters.firstIndex(where: { $0.filterValue == filter?.filterValue }) {
+                self.filters[index].toggle()
+            }
+            
             self.configureFilterCollectionState(filter: filter, isSelected: isSelected, sectionsToReload: [TableSection.filterSearch.rawValue])
-            print(indexPath)
+
             self.selectedFilter.send(indexPath)
         }
         
-        if indexPath.row == (!isSearching ? (filters.endIndex - 1) : (searchedFilters.endIndex - 1)) {
+        if indexPath.row == (filters.endIndex - 1) {
             filterChoiceCell.separatorView.isHidden = true
         } else {
             filterChoiceCell.separatorView.isHidden = false
