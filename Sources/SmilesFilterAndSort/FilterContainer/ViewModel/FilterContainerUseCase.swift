@@ -25,6 +25,7 @@ final class FilterContainerUseCase: FilterContainerUseCaseType {
     private var cancellable = Set<AnyCancellable>()
     private var stateSubject = PassthroughSubject<State, Never>()
     private let previousResponse: Data?
+    var selectedCuisine: FilterValue?
     var statePublisher: AnyPublisher<State, Never> {
         return stateSubject.eraseToAnyPublisher()
     }
@@ -49,13 +50,14 @@ final class FilterContainerUseCase: FilterContainerUseCaseType {
         if let values: FilterDataModel = data.decoded() {
             let list = values.filtersList ?? []
             self.filtersList = list
+            self.setSelectedCuisine()
             self.stateSubject.send(.listFilters(filters: values))
             self.handleResponse(values.filtersList ?? [])
         } else {
-            fetchFilters()
+            fetchRemoteFilters()
         }
-        
     }
+    
     private func fetchRemoteFilters() {
         repository.fetchFilters(menuItemType: menuItemType)
             .sink { [weak self] completion in
@@ -72,8 +74,9 @@ final class FilterContainerUseCase: FilterContainerUseCaseType {
                 }
                 let list = values.filtersList ?? []
                 self.filtersList = list
-                self.stateSubject.send(.listFilters(filters: values))
-                self.handleResponse(values.filtersList ?? [])
+                self.setSelectedCuisine()
+                self.stateSubject.send(.listFilters(filters: .init(extTransactionID: "", filtersList: self.filtersList)))
+                self.handleResponse(self.filtersList)
             }
             .store(in: &cancellable)
     }
@@ -161,6 +164,18 @@ final class FilterContainerUseCase: FilterContainerUseCaseType {
         item.isSelected = value.isSelected ?? false
         item.title = value.name
         return item
+    }
+    
+    func setSelectedCuisine() {
+        guard let selectedCuisine,
+              let cuisineIndex = getCusinesIndex(),
+              let values = filtersList[cuisineIndex].filterTypes?.first?.filterValues,
+              let selectedIndex = values.firstIndex(where: { $0.filterKey ==  selectedCuisine.filterKey && $0.filterValue == selectedCuisine.filterValue })
+        else {
+            return
+        }
+        filtersList[cuisineIndex].filterTypes?[0].filterValues?[selectedIndex].toggle()
+        
     }
 }
 

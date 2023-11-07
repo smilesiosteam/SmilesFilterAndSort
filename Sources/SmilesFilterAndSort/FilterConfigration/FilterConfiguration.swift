@@ -12,13 +12,15 @@ import SmilesUtilities
 public enum FilterConfiguration {
     
     public static func getGetListFilters(menuType: String?,
-                                   previousResponse: Data? = nil,
+                                         previousResponse: Data? = nil,
+                                         selectedCuisine: FilterValue? = nil,
                                          delegate: SelectedFiltersDelegate) -> UIViewController {
         let baseURL = AppCommonMethods.serviceBaseUrl
         let networkRequest = NetworkingLayerRequestable(requestTimeOut: 60)
         let repository = FilterRepository(networkRequest: networkRequest, baseURL: baseURL)
         let useCase = FilterContainerUseCase(repository: repository, menuItemType: menuType, previousResponse: previousResponse)
         let viewModel = FilterContainerViewModel(useCase: useCase)
+        useCase.selectedCuisine = selectedCuisine
         viewModel.delegate = delegate
         let viewController = FilterContainerViewController.create()
         viewController.viewModel = viewModel

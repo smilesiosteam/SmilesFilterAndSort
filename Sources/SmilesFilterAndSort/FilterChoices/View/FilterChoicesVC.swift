@@ -35,6 +35,7 @@ final public class FilterChoicesVC: UIViewController {
     
     func updateData(section: FilterSectionUIModel) {
         filters = section.items
+        selectedFilters = filters.filter({ $0.isSelected })
         tableView.reloadData()
     }
     

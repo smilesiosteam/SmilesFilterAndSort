@@ -31,7 +31,7 @@ extension FilterChoicesVC: UITableViewDelegate, UITableViewDataSource {
                 guard let self else { return }
                 
                 self.configureFilterCollectionState(filter: filter, isSelected: false, sectionsToReload: [TableSection.filterSearch.rawValue, TableSection.filterChoice.rawValue])
-                
+
                 if let index = self.filters.firstIndex(where: { filter?.title == $0.title }) {
                     self.selectedFilter.send(IndexPath(row: index, section: indexPath.section))
                 }
@@ -83,7 +83,9 @@ extension FilterChoicesVC: UITableViewDelegate, UITableViewDataSource {
             
             self.configureFilterCollectionState(filter: filter, isSelected: isSelected, sectionsToReload: [TableSection.filterSearch.rawValue])
 
-            self.selectedFilter.send(indexPath)
+            if let index = self.filters.firstIndex(where: { filter?.title == $0.title }) {
+                self.selectedFilter.send(IndexPath(row: index, section: indexPath.section))
+            }
         }
         
         if indexPath.row == (filters.endIndex - 1) {

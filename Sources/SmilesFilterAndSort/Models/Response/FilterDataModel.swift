@@ -53,11 +53,26 @@ public struct FilterType: Codable {
 
 // MARK: - FilterValue
 public struct FilterValue: Codable {
-    public let filterKey, filterValue: String?
+    public var filterKey, filterValue: String?
     public let name, parentTitle: String?
-    let image, smallImage: String?
+    public let image, smallImage: String?
     var isSelected: Bool?
-    
+   
+    public init(filterKey: String? = nil, 
+         filterValue: String? = nil,
+         name: String? = nil,
+         parentTitle: String? = nil,
+         image: String? = nil,
+         smallImage: String? = nil,
+         isSelected: Bool? = nil) {
+        self.filterKey = filterKey
+        self.filterValue = filterValue
+        self.name = name
+        self.parentTitle = parentTitle
+        self.image = image
+        self.smallImage = smallImage
+        self.isSelected = isSelected
+    }
     mutating func toggle() {
         var value = isSelected ?? false
         value.toggle()
@@ -67,4 +82,8 @@ public struct FilterValue: Codable {
     mutating func setUnselected() {
         isSelected = false
     }
+}
+
+extension FilterValue {
+   
 }
