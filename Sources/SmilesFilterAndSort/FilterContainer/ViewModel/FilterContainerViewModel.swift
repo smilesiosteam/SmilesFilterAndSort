@@ -23,7 +23,6 @@ final class FilterContainerViewModel {
     private var cancellable = Set<AnyCancellable>()
     private let useCase: FilterContainerUseCaseType
     private var stateSubject = PassthroughSubject<State, Never>()
-    
     var filters: [FilterSectionUIModel] = []
     var cuisines: FilterSectionUIModel = .init()
     var segmentTitles: [FilterStrategy] = []
@@ -131,18 +130,12 @@ final class FilterContainerViewModel {
     }
     
     func getFiltersDictionary() {
-//        var filteredData: [String: [String]] = [:]
-//        
-//        for item in selectedFilter {
-//            if let key = item.filterKey, let value = item.filterValue {
-//                filteredData[key, default: []].append(value)
-//            }
-//        }
-        
         let responseData = FilterDataModel(extTransactionID: "", filtersList: filtersList).toData
         delegate?.didSetFilters(selectedFilter)
         delegate?.didSetFilterResponse(responseData)
     }
+    
+    
 }
 
 
