@@ -55,7 +55,7 @@ final class FilterSearchTVC: UITableViewCell {
         
         searchTextField.fontTextStyle = .smilesTitle1
         searchTextField.textColor = .black.withAlphaComponent(0.6)
-        searchTextField.attributedPlaceholder = NSAttributedString(string: "\("Search".localizedString)...", attributes: [.font: UIFont.circularXXTTMediumFont(size: 16.0), .foregroundColor: UIColor.black.withAlphaComponent(0.6)])
+        searchTextField.attributedPlaceholder = NSAttributedString(string: "\(FilterLocalization.search.text)...", attributes: [.font: UIFont.circularXXTTMediumFont(size: 16.0), .foregroundColor: UIColor.black.withAlphaComponent(0.6)])
     }
     
     private func setupCollectionView() {

@@ -33,7 +33,9 @@ class CustomizableSegmentControl: UISegmentedControl {
     
     override func layoutSubviews(){
         super.layoutSubviews()
-        self.backgroundColor = UIColor.black.withAlphaComponent(0.05)
+        self.backgroundColor = UIColor.black.withAlphaComponent(0.01)
+        layer.borderWidth = 1
+        layer.borderColor = UIColor.black.withAlphaComponent(0.05).cgColor
         
         //MARK: - Configure Background Radius
         self.layer.cornerRadius = self.radius
@@ -54,9 +56,6 @@ class CustomizableSegmentControl: UISegmentedControl {
             selectedImageView.layer.cornerRadius = (bounds.height - 6) / 2
             
             selectedImageView.layer.removeAnimation(forKey: "SelectionBounds")
-
         }
-       
     }
-   
 }

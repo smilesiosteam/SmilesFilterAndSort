@@ -14,14 +14,37 @@ public final class FilterContainerViewController: UIViewController {
     
     // MARK: - Outlets
     @IBOutlet private weak var containerView: UIView!
-    @IBOutlet private weak var titleLabel: UILabel! { didSet { titleLabel.fontTextStyle = .smilesHeadline3 } }
-    @IBOutlet private weak var clearAllButton: UIButton! { didSet { clearAllButton.fontTextStyle = .smilesTitle2 } }
-    @IBOutlet private weak var filterLabel: UILabel! { didSet { filterLabel.fontTextStyle = .smilesTitle3 } }
+    @IBOutlet private weak var titleLabel: UILabel! {
+        didSet {
+            titleLabel.fontTextStyle = .smilesHeadline2
+            titleLabel.text = FilterLocalization.filter.text
+        }
+    }
+    @IBOutlet private weak var clearAllButton: UIButton! {
+        didSet {
+            clearAllButton.fontTextStyle = .smilesTitle1
+//            clearAllButton.setTitle(FilterLocalization.clearAll.text, for: .normal)
+        }
+    }
+    @IBOutlet private weak var filterLabel: UILabel! {
+        didSet {
+            filterLabel.fontTextStyle = .smilesTitle3
+//            filterLabel.text = FilterLocalization.filtersSelected.text
+        }
+    }
     @IBOutlet private weak var filterCountLabel: UILabel! { didSet { filterCountLabel.fontTextStyle = .smilesTitle3 } }
-    @IBOutlet private weak var applyLabel: UILabel! { didSet { applyLabel.fontTextStyle = .smilesTitle1 } }
+    @IBOutlet private weak var applyLabel: UILabel! {
+        didSet {
+            applyLabel.fontTextStyle = .smilesTitle1
+            applyLabel.text = FilterLocalization.apply.text
+        }
+    }
     @IBOutlet private weak var viewFilter: UIView!
     @IBOutlet private weak var segmentController: UISegmentedControl!
     @IBOutlet private weak var buttomView: UIView!
+    @IBOutlet private weak var dismissButton: UIButton! {
+        didSet { dismissButton.setImage(UIImage(resource: .closeButton), for: .normal) }
+    }
     
     // MARK: - Properties
     let filterViewController = SortViewController.create()

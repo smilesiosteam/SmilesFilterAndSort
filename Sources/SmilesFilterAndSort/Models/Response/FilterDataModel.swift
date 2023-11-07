@@ -53,7 +53,8 @@ public struct FilterType: Codable {
 
 // MARK: - FilterValue
 public struct FilterValue: Codable {
-    let name, filterKey, filterValue, parentTitle: String?
+    public let filterKey, filterValue: String?
+    public let name, parentTitle: String?
     let image, smallImage: String?
     var isSelected: Bool?
     

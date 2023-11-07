@@ -9,6 +9,11 @@ import Foundation
 import Combine
 import SmilesUtilities
 
+public protocol SelectedFiltersDelegate: AnyObject {
+    func didSetFilters(_ filters: [FilterValue])
+    func didSetFilterResponse(_ data: Data?)
+}
+
 final class FilterContainerViewModel {
     
     // MARK: - Properties
@@ -22,7 +27,7 @@ final class FilterContainerViewModel {
     var filters: [FilterSectionUIModel] = []
     var cuisines: FilterSectionUIModel = .init()
     var segmentTitles: [FilterStrategy] = []
-    var didSetFilters: (([String: [String]], Data?) -> Void)?
+    public weak var delegate: SelectedFiltersDelegate?
     @Published var countOfSelectedFilters = 0
     var statePublisher: AnyPublisher<State, Never> {
         stateSubject.eraseToAnyPublisher()
@@ -126,16 +131,17 @@ final class FilterContainerViewModel {
     }
     
     func getFiltersDictionary() {
-        var filteredData: [String: [String]] = [:]
-        
-        for item in selectedFilter {
-            if let key = item.filterKey, let value = item.filterValue {
-                filteredData[key, default: []].append(value)
-            }
-        }
+//        var filteredData: [String: [String]] = [:]
+//        
+//        for item in selectedFilter {
+//            if let key = item.filterKey, let value = item.filterValue {
+//                filteredData[key, default: []].append(value)
+//            }
+//        }
         
         let responseData = FilterDataModel(extTransactionID: "", filtersList: filtersList).toData
-        didSetFilters?(filteredData, responseData)
+        delegate?.didSetFilters(selectedFilter)
+        delegate?.didSetFilterResponse(responseData)
     }
 }
 
