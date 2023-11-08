@@ -139,7 +139,12 @@ public final class FilterContainerViewController: UIViewController {
             case .hideLoader:
                 SmilesLoader.dismiss()
             case .showError(message: let message):
-                self.showAlertWithOkayOnly(message: message)
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                    self.showAlertWithOkayOnly(message: message) { _ in 
+                        self.dismiss()
+                    }
+                }
+                
             case .filters(let filters):
                 self.filterViewController.setupSections(filterModel: FilterUIModel(sections: filters))
             case .cuisines(cuisines: let cuisines):
