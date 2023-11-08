@@ -24,17 +24,22 @@ final class FilterContainerUseCase: FilterContainerUseCaseType {
     private let menuItemType: String?
     private var cancellable = Set<AnyCancellable>()
     private var stateSubject = PassthroughSubject<State, Never>()
-    private let previousResponse: Data?
-    var selectedCuisine: FilterValue?
+    private var previousResponse: Data?
+    var selectedCusines: FilterValue?
+    private let selectedFilters: [FilterValue]
     var statePublisher: AnyPublisher<State, Never> {
         return stateSubject.eraseToAnyPublisher()
     }
     
     // MARK: - Init
-    init(repository: FilterRepositoryType, menuItemType: String?, previousResponse: Data?) {
+    init(repository: FilterRepositoryType,
+         menuItemType: String?,
+         previousResponse: Data?,
+         selectedFilters: [FilterValue]) {
         self.repository = repository
         self.menuItemType = menuItemType
         self.previousResponse = previousResponse
+        self.selectedFilters = selectedFilters
     }
     
     // MARK: - Functions
@@ -50,9 +55,8 @@ final class FilterContainerUseCase: FilterContainerUseCaseType {
         if let values: FilterDataModel = data.decoded() {
             let list = values.filtersList ?? []
             self.filtersList = list
-            self.setSelectedCuisine()
-            self.stateSubject.send(.listFilters(filters: values))
-            self.handleResponse(values.filtersList ?? [])
+            self.handleSuccessResponse()
+            
         } else {
             fetchRemoteFilters()
         }
@@ -74,14 +78,19 @@ final class FilterContainerUseCase: FilterContainerUseCaseType {
                 }
                 let list = values.filtersList ?? []
                 self.filtersList = list
-                self.setSelectedCuisine()
-                self.stateSubject.send(.listFilters(filters: .init(extTransactionID: "", filtersList: self.filtersList)))
-                self.handleResponse(self.filtersList)
+                self.handleSuccessResponse()
             }
             .store(in: &cancellable)
     }
     
-    private func handleResponse(_ filtersList: [FiltersList]) {
+    private func handleSuccessResponse() {
+        updateSelectedFilters()
+        setSelectedCuisine()
+        stateSubject.send(.listFilters(filters: .init(extTransactionID: "", filtersList: self.filtersList)))
+        handleResponse()
+    }
+    
+    private func handleResponse() {
         var filters: FilterUIModel = .init()
         var cusines: FilterUIModel = .init()
         
@@ -166,15 +175,51 @@ final class FilterContainerUseCase: FilterContainerUseCaseType {
         return item
     }
     
-    func setSelectedCuisine() {
-        guard let selectedCuisine,
+   private func updateSelectedFilters() {
+        for item in selectedFilters {
+            guard let type = item.indexPath?.section else {
+                return
+            }
+            switch type {
+            case -1:
+                processCusines(filterIndex: getCusinesIndex(), indexPath: item.indexPath)
+                
+            default:
+                processFilter(filterIndex: getFilterIndex(), indexPath: item.indexPath)
+                break
+            }
+        }
+        
+        func processFilter(filterIndex: Int?, indexPath: IndexPath?) {
+            guard let filterIndex,
+            let indexPath,
+            let _ = filtersList[safe: filterIndex]?.filterTypes?[safe: indexPath.section]?.filterValues?[safe: indexPath.row]
+            else { return }
+            filtersList[filterIndex].filterTypes?[indexPath.section].filterValues?[indexPath.row].setSelected()
+            filtersList[filterIndex].filterTypes?[indexPath.section].filterValues?[indexPath.row].indexPath = indexPath
+        }
+       
+        func processCusines(filterIndex: Int?, indexPath: IndexPath?) {
+            guard let filterIndex,
+            let indexPath,
+                  let _ = filtersList[safe: filterIndex]?.filterTypes?.first?.filterValues?[safe: indexPath.row]
+            else { return }
+            
+            filtersList[filterIndex].filterTypes?[0].filterValues?[indexPath.row].setSelected()
+            filtersList[filterIndex].filterTypes?[0].filterValues?[indexPath.row].indexPath = indexPath
+        }
+        
+    }
+    
+    private func setSelectedCuisine() {
+        guard let selectedCusines,
               let cuisineIndex = getCusinesIndex(),
               let values = filtersList[cuisineIndex].filterTypes?.first?.filterValues,
-              let selectedIndex = values.firstIndex(where: { $0.filterKey ==  selectedCuisine.filterKey && $0.filterValue == selectedCuisine.filterValue })
+              let selectedIndex = values.firstIndex(where: { $0.filterKey ==  selectedCusines.filterKey && $0.filterValue == selectedCusines.filterValue })
         else {
             return
         }
-        filtersList[cuisineIndex].filterTypes?[0].filterValues?[selectedIndex].toggle()
+        filtersList[cuisineIndex].filterTypes?[0].filterValues?[selectedIndex].setSelected()
         
     }
 }

@@ -55,14 +55,18 @@ public final class FilterContainerViewController: UIViewController {
     // MARK: - Life Cycle
     public override func viewDidLoad() {
         super.viewDidLoad()
-        filterViewController.view.frame = self.containerView.bounds
-        choicesViewController.view.frame = self.containerView.bounds
         bindData()
         bindFilterData()
         bindFilterCuision()
         viewModel.fetchFilters()
         configSegmentUI()
         bindCountFilters()
+    }
+    
+    public override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        filterViewController.view.frame = self.containerView.bounds
+        choicesViewController.view.frame = self.containerView.bounds
     }
     
     // MARK: - Button Actions

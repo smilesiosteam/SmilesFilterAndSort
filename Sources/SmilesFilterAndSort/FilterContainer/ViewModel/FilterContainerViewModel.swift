@@ -85,7 +85,8 @@ final class FilterContainerViewModel {
     func updateFilter(with index: IndexPath) {
         guard let filterIndex = useCase.getFilterIndex(),
               let countOfItems = filtersList[safe: filterIndex]?.filterTypes?[safe: index.section]?.filterValues?.count,
-              let isMultiSelection = filtersList[safe: filterIndex]?.filterTypes?[safe: index.section]?.isMultipleSelection
+              let isMultiSelection = filtersList[safe: filterIndex]?.filterTypes?[safe: index.section]?.isMultipleSelection,
+              let _ = filtersList[safe: filterIndex]?.filterTypes?[safe: index.section]?.filterValues?[safe: index.row]
         else {
             return
         }
@@ -98,22 +99,25 @@ final class FilterContainerViewModel {
             }
             filtersList[filterIndex].filterTypes?[index.section].filterValues?[index.row].toggle()
         }
+        filtersList[filterIndex].filterTypes?[index.section].filterValues?[index.row].indexPath = index
     }
     
     func updateCusines(with index: IndexPath) {
         guard let filterIndex = useCase.getCusinesIndex(),
               let isEmpty = filtersList[filterIndex].filterTypes?.first?.filterValues?.isEmpty,
-              !isEmpty
+              !isEmpty,
+              let _ = filtersList[safe: filterIndex]?.filterTypes?[safe: 0]?.filterValues?[safe: index.row]
         else {
             return
         }
+        // when section is -1 indicate that is Cusines, because we have one section for it 
+        filtersList[filterIndex].filterTypes?[0].filterValues?[index.row].indexPath = IndexPath(row: index.row, section: -1)
         filtersList[filterIndex].filterTypes?[0].filterValues?[index.row].toggle()
     }
     
     func updateSelectedFilters() {
         countOfSelectedFilters = 0
         selectedFilter = []
-        
         func processFilterTypes(filterIndex: Int?) {
             guard let filterIndex, let filterTypes = filtersList[filterIndex].filterTypes else {
                 return
@@ -130,12 +134,10 @@ final class FilterContainerViewModel {
     }
     
     func getFiltersDictionary() {
-        let responseData = FilterDataModel(extTransactionID: "", filtersList: filtersList).toData
+        let responseData = FilterDataModel(extTransactionID: "", filtersList: originalFiltersList).toData
         delegate?.didSetFilters(selectedFilter)
         delegate?.didSetFilterResponse(responseData)
     }
-    
-    
 }
 
 

@@ -69,26 +69,11 @@ final public class FilterChoicesVC: UIViewController {
         if let filter, isSelected {
             selectedFilters.append(filter)
         } else {
-//            if !isSearching {
-//                if let filtersIndex = filters.firstIndex(where: { $0.filterValue == filter?.filterValue }) {
-//                    filters[filtersIndex].setUnselected()
-//                }
-//            } else {
-//                if let searchedFiltersIndex = searchedFilters.firstIndex(where: { $0.filterValue == filter?.filterValue }) {
-//                    searchedFilters[searchedFiltersIndex].setUnselected()
-//                }
-//            }
             
             if let filtersIndex = filters.firstIndex(where: { $0.filterValue == filter?.filterValue }) {
                 filters[filtersIndex].setUnselected()
             }
-            
-//            if isSearching {
-//                if let searchedFiltersIndex = searchedFilters.firstIndex(where: { $0.filterValue == filter?.filterValue }) {
-//                    searchedFilters[searchedFiltersIndex].setUnselected()
-//                }
-//            }
-            
+ 
             selectedFilters.removeAll(where: { $0.filterValue == filter?.filterValue })
         }
         
