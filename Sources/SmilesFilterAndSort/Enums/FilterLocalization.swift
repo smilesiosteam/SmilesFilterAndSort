@@ -26,7 +26,7 @@ public enum FilterLocalization {
         case .search:
             return "Search".localizedString
         case .clearAll:
-            return "clearAll".localizedString
+            return "FilterClearAll".localizedString
         case .filtersSelected:
             return "filtersSelected".localizedString
         case .noFilteredResultFoundTitle:
