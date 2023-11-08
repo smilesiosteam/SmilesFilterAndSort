@@ -10,6 +10,7 @@ import SmilesUtilities
 
 public class NoFilteredResultFound: UIView {
     // MARK: Outlets
+    @IBOutlet weak var stackView: UIStackView!
     @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var emptyResultImageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
@@ -27,6 +28,15 @@ public class NoFilteredResultFound: UIView {
         view.frame = self.bounds
         self.addSubview(view)
         containerView = view
+        
+        titleLabel.fontTextStyle = .smilesHeadline3
+        titleLabel.textColor = .black.withAlphaComponent(0.8)
+        
+        descriptionLabel.fontTextStyle = .smilesBody3
+        descriptionLabel.textColor = .black.withAlphaComponent(0.4)
+        
+        stackView.setCustomSpacing(32.0, after: emptyResultImageView)
+        stackView.setCustomSpacing(8.0, after: titleLabel)
     }
     
     // MARK: Methods
@@ -36,12 +46,6 @@ public class NoFilteredResultFound: UIView {
         containerView.frame = bounds
         
         containerView.bindFrameToSuperviewBounds()
-        
-        titleLabel.fontTextStyle = .smilesHeadline3
-        titleLabel.textColor = .black.withAlphaComponent(0.8)
-        
-        descriptionLabel.fontTextStyle = .smilesBody3
-        descriptionLabel.textColor = .black.withAlphaComponent(0.4)
     }
     
     public func loadViewFromNib() -> UIView? {
@@ -49,9 +53,9 @@ public class NoFilteredResultFound: UIView {
         return nib.instantiate(withOwner: self, options: nil).first as? UIView
     }
     
-    public func setupView(iconName: String? = "empty-result-icon", title: String?, description: String?) {
-        emptyResultImageView.image = UIImage(named: iconName.asStringOrEmpty())
-        titleLabel.text = title
-        descriptionLabel.text = description
+    public func setupView(with model: NoFilteredResultCellModel) {
+        emptyResultImageView.image = UIImage(named: model.image.asStringOrEmpty(), in: .module, with: nil)
+        titleLabel.text = model.title
+        descriptionLabel.text = model.description
     }
 }

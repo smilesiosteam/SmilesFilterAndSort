@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="22155" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22131"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="default" indentationWidth="10" reuseIdentifier="NoFilteredResultFoundTVC" rowHeight="891" id="kgO-ev-tK1" customClass="NoFilteredResultFoundTVC" customModule="SmilesFilterAndSort">
+            <rect key="frame" x="0.0" y="0.0" width="393" height="597"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" preservesSuperviewLayoutMargins="YES" tableViewCell="kgO-ev-tK1" id="JLQ-2l-Jfj">
+                <rect key="frame" x="0.0" y="0.0" width="393" height="597"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0aI-qX-sC0" customClass="NoFilteredResultFound" customModule="SmilesFilterAndSort">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="598"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="598" id="dzx-A9-m1e"/>
+                        </constraints>
+                    </view>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="0aI-qX-sC0" firstAttribute="top" secondItem="JLQ-2l-Jfj" secondAttribute="top" id="Alw-2M-Wb0"/>
+                    <constraint firstAttribute="trailing" secondItem="0aI-qX-sC0" secondAttribute="trailing" id="P6j-8N-XAo"/>
+                    <constraint firstItem="0aI-qX-sC0" firstAttribute="leading" secondItem="JLQ-2l-Jfj" secondAttribute="leading" id="RVU-3J-XLe"/>
+                    <constraint firstAttribute="bottom" secondItem="0aI-qX-sC0" secondAttribute="bottom" id="YUl-Jg-g50"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="noFilteredResultFoundView" destination="0aI-qX-sC0" id="Tbg-LD-Igd"/>
+            </connections>
+            <point key="canvasLocation" x="284.73282442748092" y="190.49295774647888"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

@@ -14,6 +14,7 @@
                 <outlet property="containerView" destination="WvZ-cg-1rd" id="vg2-On-fbN"/>
                 <outlet property="descriptionLabel" destination="N5G-RL-qlG" id="k7c-vk-CwK"/>
                 <outlet property="emptyResultImageView" destination="lJM-Nz-JDP" id="vMe-YF-QGu"/>
+                <outlet property="stackView" destination="8fl-f8-Zxp" id="kOf-kF-n5i"/>
                 <outlet property="titleLabel" destination="yWO-yZ-Uoz" id="a1n-ER-hRz"/>
             </connections>
         </placeholder>
@@ -22,8 +23,8 @@
             <rect key="frame" x="0.0" y="0.0" width="393" height="432"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
-                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="8fl-f8-Zxp">
-                    <rect key="frame" x="16" y="48" width="361" height="368"/>
+                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="32" translatesAutoresizingMaskIntoConstraints="NO" id="8fl-f8-Zxp">
+                    <rect key="frame" x="16" y="48" width="361" height="334"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tUm-Hs-VDY">
                             <rect key="frame" x="0.0" y="0.0" width="361" height="209"/>
@@ -42,13 +43,13 @@
                             </constraints>
                         </view>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Opps, no result found" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yWO-yZ-Uoz">
-                            <rect key="frame" x="0.0" y="217" width="361" height="20.333333333333343"/>
+                            <rect key="frame" x="0.0" y="241" width="361" height="20.333333333333314"/>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="sorry, there are no results for the selected filters, please try fewer or different filters" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="N5G-RL-qlG">
-                            <rect key="frame" x="0.0" y="245.33333333333329" width="361" height="122.66666666666666"/>
+                            <rect key="frame" x="0.0" y="293.33333333333331" width="361" height="40.666666666666686"/>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
@@ -61,7 +62,6 @@
             <constraints>
                 <constraint firstItem="8fl-f8-Zxp" firstAttribute="top" secondItem="WvZ-cg-1rd" secondAttribute="top" constant="48" id="HrV-1y-dpO"/>
                 <constraint firstItem="8fl-f8-Zxp" firstAttribute="leading" secondItem="5wA-IW-qGC" secondAttribute="leading" constant="16" id="MYq-CT-Fjq"/>
-                <constraint firstAttribute="bottom" secondItem="8fl-f8-Zxp" secondAttribute="bottom" constant="16" id="UnJ-lZ-T8D"/>
                 <constraint firstItem="5wA-IW-qGC" firstAttribute="trailing" secondItem="8fl-f8-Zxp" secondAttribute="trailing" constant="16" id="nBT-0J-Wl6"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>

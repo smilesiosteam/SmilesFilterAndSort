@@ -8,13 +8,16 @@
 import Foundation
 import SmilesUtilities
 
-enum FilterLocalization {
+public enum FilterLocalization {
     case filter
     case apply
     case search
     case clearAll
     case filtersSelected
-    var text: String {
+    case noFilteredResultFoundTitle
+    case noFilteredResultFoundDescription
+    
+    public var text: String {
         switch self {
         case .filter:
             return "FilterMainTitle".localizedString
@@ -26,6 +29,10 @@ enum FilterLocalization {
             return "clearAll".localizedString
         case .filtersSelected:
             return "filtersSelected".localizedString
+        case .noFilteredResultFoundTitle:
+            return "NoFilteredResultFoundTitle".localizedString
+        case .noFilteredResultFoundDescription:
+            return "NoFilteredResultFoundDescription".localizedString
         }
     }
 }
