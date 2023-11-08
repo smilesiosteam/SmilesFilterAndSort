@@ -29,14 +29,7 @@ public class NoFilteredResultFound: UIView {
         self.addSubview(view)
         containerView = view
         
-        titleLabel.fontTextStyle = .smilesHeadline3
-        titleLabel.textColor = .black.withAlphaComponent(0.8)
-        
-        descriptionLabel.fontTextStyle = .smilesBody3
-        descriptionLabel.textColor = .black.withAlphaComponent(0.4)
-        
-        stackView.setCustomSpacing(32.0, after: emptyResultImageView)
-        stackView.setCustomSpacing(8.0, after: titleLabel)
+        configFont()
     }
     
     // MARK: Methods
@@ -57,5 +50,17 @@ public class NoFilteredResultFound: UIView {
         emptyResultImageView.image = UIImage(named: model.image.asStringOrEmpty(), in: .module, with: nil)
         titleLabel.text = model.title
         descriptionLabel.text = model.description
+        configFont()
+    }
+    
+    private func configFont() {
+        titleLabel.fontTextStyle = .smilesHeadline3
+        titleLabel.textColor = .black.withAlphaComponent(0.8)
+        
+        descriptionLabel.fontTextStyle = .smilesBody3
+        descriptionLabel.textColor = .black.withAlphaComponent(0.4)
+        
+        stackView.setCustomSpacing(32.0, after: emptyResultImageView)
+        stackView.setCustomSpacing(8.0, after: titleLabel)
     }
 }
