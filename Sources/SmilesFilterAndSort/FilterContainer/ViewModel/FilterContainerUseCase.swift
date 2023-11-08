@@ -27,6 +27,8 @@ final class FilterContainerUseCase: FilterContainerUseCaseType {
     private var previousResponse: Data?
     var selectedCusines: FilterValue?
     private let selectedFilters: [FilterValue]
+    private let filterSelection = FilterSelection()
+    
     var statePublisher: AnyPublisher<State, Never> {
         return stateSubject.eraseToAnyPublisher()
     }
@@ -84,9 +86,14 @@ final class FilterContainerUseCase: FilterContainerUseCaseType {
     }
     
     private func handleSuccessResponse() {
-        updateSelectedFilters()
-        setSelectedCuisine()
-        stateSubject.send(.listFilters(filters: .init(extTransactionID: "", filtersList: self.filtersList)))
+        var dependency: FilterSelection.Dependency = .init()
+        dependency.cusinesIndex = getCusinesIndex()
+        dependency.filterIndex = getFilterIndex()
+        dependency.filtersList = filtersList
+        dependency.selectedCusines = selectedCusines
+        dependency.selectedFilters = selectedFilters
+        filtersList = filterSelection.getSelectedItems(dependency: dependency)
+        stateSubject.send(.listFilters(filters: .init(extTransactionID: "", filtersList: filtersList)))
         handleResponse()
     }
     
@@ -95,11 +102,11 @@ final class FilterContainerUseCase: FilterContainerUseCaseType {
         var cusines: FilterUIModel = .init()
         
         if let filterIndex = getFilterIndex() {
-            filters = configFilters(filtersList[filterIndex])
+            filters = FilterMapper.configFilters(filtersList[filterIndex])
         }
         
         if let cusinesIndex = getCusinesIndex() {
-            cusines = configFilters(filtersList[cusinesIndex])
+            cusines = FilterMapper.configFilters(filtersList[cusinesIndex])
         }
         
         stateSubject.send(.values(filters: filters, cusines: cusines))
@@ -111,116 +118,6 @@ final class FilterContainerUseCase: FilterContainerUseCaseType {
     
     func getCusinesIndex() -> Int? {
         filtersList.firstIndex(where: { $0.type == FilterStrategy.cusines(title: nil).text })
-    }
-    
-    private func configFilters(_ filters: FiltersList) -> FilterUIModel {
-        var filterUIModel = FilterUIModel()
-        filterUIModel.title = filters.title
-        let sections = mapFilterTypes(filters.filterTypes ?? [])
-        filterUIModel.sections = sections
-        return filterUIModel
-    }
-    
-    private func mapFilterTypes(_ types: [FilterType]) -> [FilterSectionUIModel] {
-        var filters: [FilterSectionUIModel] = []
-        for type in types {
-            let filter = configFilterType(type)
-            filters.append(filter)
-        }
-        
-        return filters
-    }
-    
-    private func configFilterType(_ filterType: FilterType) -> FilterSectionUIModel {
-        
-        let type = filterType.type ?? ""
-        
-        switch type {
-        case SortType.explore.name:
-            var section = FilterSectionUIModel(type: .explore, isMultipleSelection: filterType.isMultipleSelection ?? false)
-            section.title = filterType.name
-            section.items = mapFilterValues(filterType.filterValues ?? [])
-            return section
-        case SortType.price.name:
-            var section = FilterSectionUIModel(type: .price, isMultipleSelection: filterType.isMultipleSelection ?? false)
-            section.title = filterType.name
-            section.items = mapFilterValues(filterType.filterValues ?? [])
-            return section
-        case SortType.rating.name:
-            var section = FilterSectionUIModel(type: .rating, isMultipleSelection: filterType.isMultipleSelection ?? false)
-            section.title = filterType.name
-            section.items = mapFilterValues(filterType.filterValues ?? [])
-            return section
-        case SortType.dietary.name:
-            var section = FilterSectionUIModel(type: .dietary, isMultipleSelection: filterType.isMultipleSelection ?? false)
-            section.title = filterType.name
-            section.items = mapFilterValues(filterType.filterValues ?? [])
-            return section
-        default:
-            var section = FilterSectionUIModel(type: .custom(name: type), isMultipleSelection: filterType.isMultipleSelection ?? false)
-            section.title = filterType.name
-            section.items = mapFilterValues(filterType.filterValues ?? [])
-            return section
-        }
-    }
-    
-    private func mapFilterValues(_ values: [FilterValue]) -> [FilterCellViewModel] {
-        return values.map({ self.mapFilterValue($0) })
-    }
-    
-    private func mapFilterValue(_ value: FilterValue) -> FilterCellViewModel {
-        var item = FilterCellViewModel(filterKey: value.filterKey ?? "", filterValue: value.filterValue ?? "")
-        item.isSelected = value.isSelected ?? false
-        item.title = value.name
-        return item
-    }
-    
-   private func updateSelectedFilters() {
-        for item in selectedFilters {
-            guard let type = item.indexPath?.section else {
-                return
-            }
-            switch type {
-            case -1:
-                processCusines(filterIndex: getCusinesIndex(), indexPath: item.indexPath)
-                
-            default:
-                processFilter(filterIndex: getFilterIndex(), indexPath: item.indexPath)
-                break
-            }
-        }
-        
-        func processFilter(filterIndex: Int?, indexPath: IndexPath?) {
-            guard let filterIndex,
-            let indexPath,
-            let _ = filtersList[safe: filterIndex]?.filterTypes?[safe: indexPath.section]?.filterValues?[safe: indexPath.row]
-            else { return }
-            filtersList[filterIndex].filterTypes?[indexPath.section].filterValues?[indexPath.row].setSelected()
-            filtersList[filterIndex].filterTypes?[indexPath.section].filterValues?[indexPath.row].indexPath = indexPath
-        }
-       
-        func processCusines(filterIndex: Int?, indexPath: IndexPath?) {
-            guard let filterIndex,
-            let indexPath,
-                  let _ = filtersList[safe: filterIndex]?.filterTypes?.first?.filterValues?[safe: indexPath.row]
-            else { return }
-            
-            filtersList[filterIndex].filterTypes?[0].filterValues?[indexPath.row].setSelected()
-            filtersList[filterIndex].filterTypes?[0].filterValues?[indexPath.row].indexPath = indexPath
-        }
-        
-    }
-    
-    private func setSelectedCuisine() {
-        guard let selectedCusines,
-              let cuisineIndex = getCusinesIndex(),
-              let values = filtersList[cuisineIndex].filterTypes?.first?.filterValues,
-              let selectedIndex = values.firstIndex(where: { $0.filterKey ==  selectedCusines.filterKey && $0.filterValue == selectedCusines.filterValue })
-        else {
-            return
-        }
-        filtersList[cuisineIndex].filterTypes?[0].filterValues?[selectedIndex].setSelected()
-        
     }
 }
 
