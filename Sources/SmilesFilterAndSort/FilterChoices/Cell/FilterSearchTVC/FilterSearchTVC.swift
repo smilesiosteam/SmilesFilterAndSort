@@ -8,6 +8,7 @@
 import UIKit
 import SmilesUtilities
 import SmilesFontsManager
+import SmilesLanguageManager
 
 final class FilterSearchTVC: UITableViewCell {
     // MARK: Outlets
@@ -37,6 +38,8 @@ final class FilterSearchTVC: UITableViewCell {
         super.awakeFromNib()
         setupUI()
         setupCollectionView()
+        let isArabicLanguage = SmilesLanguageManager.shared.currentLanguage == .ar
+        searchTextField.textAlignment = isArabicLanguage ? .right : .left
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {

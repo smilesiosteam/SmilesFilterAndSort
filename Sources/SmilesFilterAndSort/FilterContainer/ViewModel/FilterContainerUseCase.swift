@@ -18,17 +18,18 @@ protocol FilterContainerUseCaseType {
 
 final class FilterContainerUseCase: FilterContainerUseCaseType {
     
-    // MARK: - Properties
+    // MARK: - Private Properties
     private var filtersList: [FiltersList] = []
     private let repository: FilterRepositoryType
     private let menuItemType: String?
     private var cancellable = Set<AnyCancellable>()
     private var stateSubject = PassthroughSubject<State, Never>()
     private var previousResponse: Data?
-    var selectedCusines: FilterValue?
     private let selectedFilters: [FilterValue]
     private let filterSelection = FilterSelection()
     
+    // MARK: - Public Properties
+    var selectedCusines: FilterValue?
     var statePublisher: AnyPublisher<State, Never> {
         return stateSubject.eraseToAnyPublisher()
     }

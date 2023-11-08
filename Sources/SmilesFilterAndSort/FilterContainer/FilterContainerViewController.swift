@@ -23,13 +23,13 @@ public final class FilterContainerViewController: UIViewController {
     @IBOutlet private weak var clearAllButton: UIButton! {
         didSet {
             clearAllButton.fontTextStyle = .smilesTitle1
-//            clearAllButton.setTitle(FilterLocalization.clearAll.text, for: .normal)
+            clearAllButton.setTitle(FilterLocalization.clearAll.text, for: .normal)
         }
     }
     @IBOutlet private weak var filterLabel: UILabel! {
         didSet {
             filterLabel.fontTextStyle = .smilesTitle3
-//            filterLabel.text = FilterLocalization.filtersSelected.text
+            filterLabel.text = FilterLocalization.filtersSelected.text
         }
     }
     @IBOutlet private weak var filterCountLabel: UILabel! { didSet { filterCountLabel.fontTextStyle = .smilesTitle3 } }

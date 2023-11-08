@@ -16,13 +16,14 @@ public protocol SelectedFiltersDelegate: AnyObject {
 
 final class FilterContainerViewModel {
     
-    // MARK: - Properties
+    // MARK: - Private Properties
     private var filtersList: [FiltersList] = []
     private var originalFiltersList: [FiltersList] = []
     private var selectedFilter: [FilterValue] = []
     private var cancellable = Set<AnyCancellable>()
     private let useCase: FilterContainerUseCaseType
     private var stateSubject = PassthroughSubject<State, Never>()
+    // MARK: - Public Properties
     var filters: [FilterSectionUIModel] = []
     var cuisines: FilterSectionUIModel = .init()
     var segmentTitles: [FilterStrategy] = []
