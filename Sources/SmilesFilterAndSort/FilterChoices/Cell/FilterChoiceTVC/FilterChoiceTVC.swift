@@ -90,12 +90,12 @@ final class FilterChoiceTVC: UITableViewCell {
         
         if let isSelected = sort.isSelected, isSelected {
             checkBoxImageView.image = UIImage(named: "checked-radio-icon", in: .module, with: nil)
-            choiceLabel.fontTextStyle = .smilesBody2
-            choiceLabel.textColor = .black.withAlphaComponent(0.8)
-        } else {
-            checkBoxImageView.image = UIImage(named: "unchecked-radio-icon", in: .module, with: nil)
             choiceLabel.fontTextStyle = .smilesTitle1
             choiceLabel.textColor = .black
+        } else {
+            checkBoxImageView.image = UIImage(named: "unchecked-radio-icon", in: .module, with: nil)
+            choiceLabel.fontTextStyle = .smilesBody2
+            choiceLabel.textColor = .black.withAlphaComponent(0.8)
         }
         
         choiceLabel.text = sort.name
