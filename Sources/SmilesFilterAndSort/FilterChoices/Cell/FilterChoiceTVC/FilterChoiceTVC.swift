@@ -20,6 +20,7 @@ final class FilterChoiceTVC: UITableViewCell {
     // MARK: Properties
     var filterChoice: FilterCellViewModel?
     var sortChoice: FilterDO?
+    var choiceCellType: ChoiceCellType = .filter
     var filterSelected: ((_ filter: FilterCellViewModel?, _ isSelected: Bool) -> Void)?
     var sortSelected: ((_ sort: FilterDO?, _ isSelected: Bool) -> Void)?
     
@@ -56,18 +57,18 @@ final class FilterChoiceTVC: UITableViewCell {
     
     private func configureSelectionStateUI(isSelected: Bool) {
         if !isSelected {
-            if let filterChoice {
+            if choiceCellType == .filter {
                 checkBoxImageView.image = UIImage(named: "checkbox-unselected-icon", in: .module, with: nil)
-            } else if let sortChoice {
+            } else {
                 checkBoxImageView.image = UIImage(named: "unchecked-radio-icon", in: .module, with: nil)
             }
             
             choiceLabel.fontTextStyle = .smilesBody2
             choiceLabel.textColor = .black.withAlphaComponent(0.8)
         } else {
-            if let filterChoice {
+            if choiceCellType == .filter {
                 checkBoxImageView.image = UIImage(named: "checkbox-selected-icon", in: .module, with: nil)
-            } else if let sortChoice {
+            } else {
                 checkBoxImageView.image = UIImage(named: "checked-radio-icon", in: .module, with: nil)
             }
             
@@ -78,6 +79,7 @@ final class FilterChoiceTVC: UITableViewCell {
     
     func configureCell(with filter: FilterCellViewModel) {
         filterChoice = filter
+        choiceCellType = .filter
         
         selectionButton.isSelected = filter.isSelected
         configureSelectionStateUI(isSelected: filter.isSelected)
@@ -87,16 +89,9 @@ final class FilterChoiceTVC: UITableViewCell {
     
     func configureCell(with sort: FilterDO) {
         sortChoice = sort
+        choiceCellType = .sortBy
         
-        if let isSelected = sort.isSelected, isSelected {
-            checkBoxImageView.image = UIImage(named: "checked-radio-icon", in: .module, with: nil)
-            choiceLabel.fontTextStyle = .smilesTitle1
-            choiceLabel.textColor = .black
-        } else {
-            checkBoxImageView.image = UIImage(named: "unchecked-radio-icon", in: .module, with: nil)
-            choiceLabel.fontTextStyle = .smilesBody2
-            choiceLabel.textColor = .black.withAlphaComponent(0.8)
-        }
+        configureSelectionStateUI(isSelected: sort.isSelected.asBoolOrFalse())
         
         choiceLabel.text = sort.name
     }

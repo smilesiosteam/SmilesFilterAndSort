@@ -33,7 +33,7 @@
                     <rect key="frame" x="0.0" y="59" width="393" height="64"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="s7k-re-xSK">
-                            <rect key="frame" x="292" y="15.000000000000004" width="85" height="34.333333333333343"/>
+                            <rect key="frame" x="292" y="11.000000000000004" width="85" height="42.333333333333343"/>
                             <state key="normal" title="Button"/>
                             <buttonConfiguration key="configuration" style="plain" title="Clear all">
                                 <color key="baseForegroundColor" red="0.45882352939999999" green="0.25882352939999997" blue="0.5568627451" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -84,24 +84,34 @@
                     </constraints>
                 </view>
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="30" translatesAutoresizingMaskIntoConstraints="NO" id="ve7-zj-sgK">
-                    <rect key="frame" x="16" y="139.66666666666669" width="361" height="612.33333333333326"/>
+                    <rect key="frame" x="0.0" y="139.66666666666669" width="393" height="612.33333333333326"/>
                     <subviews>
-                        <segmentedControl hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="CqT-7l-Xl5" customClass="CustomizableSegmentControl" customModule="SmilesFilterAndSort">
-                            <rect key="frame" x="0.0" y="0.0" width="361" height="37"/>
-                            <color key="backgroundColor" white="0.0" alpha="0.01" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="S6h-eE-aiY">
+                            <rect key="frame" x="0.0" y="0.0" width="393" height="36"/>
+                            <subviews>
+                                <segmentedControl hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="CqT-7l-Xl5" customClass="CustomizableSegmentControl" customModule="SmilesFilterAndSort">
+                                    <rect key="frame" x="16" y="0.0" width="361" height="37"/>
+                                    <color key="backgroundColor" white="0.0" alpha="0.01" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <segments>
+                                        <segment title="Filte"/>
+                                        <segment title=""/>
+                                    </segments>
+                                    <connections>
+                                        <action selector="segmentChanged:" destination="-1" eventType="valueChanged" id="Sby-qZ-hui"/>
+                                    </connections>
+                                </segmentedControl>
+                            </subviews>
+                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="36" id="Jt4-U9-Z3u"/>
+                                <constraint firstItem="CqT-7l-Xl5" firstAttribute="leading" secondItem="S6h-eE-aiY" secondAttribute="leading" constant="16" id="1fI-Eo-aq4"/>
+                                <constraint firstAttribute="bottom" secondItem="CqT-7l-Xl5" secondAttribute="bottom" id="6TO-Qs-DiJ"/>
+                                <constraint firstAttribute="height" constant="36" id="hkb-z0-2Ee"/>
+                                <constraint firstItem="CqT-7l-Xl5" firstAttribute="top" secondItem="S6h-eE-aiY" secondAttribute="top" id="oZe-hT-vDS"/>
+                                <constraint firstAttribute="trailing" secondItem="CqT-7l-Xl5" secondAttribute="trailing" constant="16" id="xLU-m1-cz8"/>
                             </constraints>
-                            <segments>
-                                <segment title="Filte"/>
-                                <segment title=""/>
-                            </segments>
-                            <connections>
-                                <action selector="segmentChanged:" destination="-1" eventType="valueChanged" id="Sby-qZ-hui"/>
-                            </connections>
-                        </segmentedControl>
+                        </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="scd-ta-SS9">
-                            <rect key="frame" x="0.0" y="0.0" width="361" height="612.33333333333337"/>
+                            <rect key="frame" x="0.0" y="66" width="393" height="546.33333333333337"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </view>
                     </subviews>
@@ -175,12 +185,12 @@
                 <constraint firstItem="ve7-zj-sgK" firstAttribute="top" secondItem="Ac3-Nf-hXp" secondAttribute="bottom" constant="16" id="PCd-cX-tL6"/>
                 <constraint firstItem="Ac3-Nf-hXp" firstAttribute="top" secondItem="c5F-BQ-VJQ" secondAttribute="bottom" id="QfR-vm-aQj"/>
                 <constraint firstItem="Ac3-Nf-hXp" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="Qok-gD-oP1"/>
-                <constraint firstItem="ve7-zj-sgK" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="Uqn-3e-ZBU"/>
+                <constraint firstItem="ve7-zj-sgK" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="Uqn-3e-ZBU"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="c5F-BQ-VJQ" secondAttribute="trailing" id="VQM-k1-LjU"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="3FB-dI-KQ2" secondAttribute="trailing" id="aM7-NQ-Jaw"/>
                 <constraint firstItem="3FB-dI-KQ2" firstAttribute="top" secondItem="ve7-zj-sgK" secondAttribute="bottom" id="aVN-ks-1Gk"/>
                 <constraint firstItem="3FB-dI-KQ2" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="aYP-vZ-ibM"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="ve7-zj-sgK" secondAttribute="trailing" constant="16" id="bNn-fa-Npp"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="ve7-zj-sgK" secondAttribute="trailing" id="bNn-fa-Npp"/>
                 <constraint firstItem="c5F-BQ-VJQ" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="fVG-zF-8JN"/>
                 <constraint firstAttribute="bottom" secondItem="3FB-dI-KQ2" secondAttribute="bottom" id="g6m-U2-RsQ"/>
                 <constraint firstItem="c5F-BQ-VJQ" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="ie7-4u-ZN5"/>

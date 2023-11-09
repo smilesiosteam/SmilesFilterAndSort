@@ -88,10 +88,11 @@ extension FilterChoicesVC: UITableViewDelegate, UITableViewDataSource {
             }
         }
         
-        if indexPath.row == (filters.endIndex - 1) {
-            filterChoiceCell.separatorView.isHidden = true
+        let filteredFilters = !isSearching ? filters : filters.filter({ $0.isSearching })
+        if indexPath.row == (filteredFilters.endIndex - 1) {
+            filterChoiceCell.hideLineView(isHidden: true)
         } else {
-            filterChoiceCell.separatorView.isHidden = false
+            filterChoiceCell.hideLineView(isHidden: false)
         }
         
         return filterChoiceCell

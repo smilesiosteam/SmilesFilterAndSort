@@ -73,7 +73,7 @@ final class FilterSearchTVC: UITableViewCell {
             
             let layoutSize = NSCollectionLayoutSize(
                 widthDimension: .estimated(100),
-                heightDimension: .absolute(32)
+                heightDimension: .absolute(34)
             )
             
             let group = NSCollectionLayoutGroup.horizontal(layoutSize: layoutSize, subitems: [.init(layoutSize: layoutSize)])

@@ -18,20 +18,20 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="llh-Ok-Moj">
-                        <rect key="frame" x="0.0" y="81" width="393" height="1"/>
+                        <rect key="frame" x="16" y="81" width="361" height="1"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="1" id="xm2-E2-Pxa"/>
                         </constraints>
                     </view>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qYh-Nq-XIL">
-                        <rect key="frame" x="0.0" y="30.666666666666671" width="359" height="21"/>
+                        <rect key="frame" x="16" y="30.666666666666671" width="327" height="21"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="checkbox-unselected-icon" translatesAutoresizingMaskIntoConstraints="NO" id="Mfd-4G-Eck">
-                        <rect key="frame" x="363" y="26" width="30" height="30"/>
+                        <rect key="frame" x="347" y="26" width="30" height="30"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="30" id="VEZ-BY-dCd"/>
                             <constraint firstAttribute="height" constant="30" id="crd-Dy-6cH"/>
@@ -50,15 +50,15 @@
                 <constraints>
                     <constraint firstItem="qYh-Nq-XIL" firstAttribute="centerY" secondItem="Mfd-4G-Eck" secondAttribute="centerY" id="2jD-0p-qup"/>
                     <constraint firstItem="xgV-oG-1u8" firstAttribute="leading" secondItem="XYN-t0-wUL" secondAttribute="leading" id="5Ge-lC-1JR"/>
-                    <constraint firstItem="qYh-Nq-XIL" firstAttribute="leading" secondItem="XYN-t0-wUL" secondAttribute="leading" id="7z7-Ln-Z6u"/>
+                    <constraint firstItem="qYh-Nq-XIL" firstAttribute="leading" secondItem="XYN-t0-wUL" secondAttribute="leading" constant="16" id="7z7-Ln-Z6u"/>
                     <constraint firstAttribute="bottom" secondItem="xgV-oG-1u8" secondAttribute="bottom" id="9Nn-9I-t60"/>
                     <constraint firstItem="Mfd-4G-Eck" firstAttribute="leading" secondItem="qYh-Nq-XIL" secondAttribute="trailing" constant="4" id="Gxf-Pj-aRa"/>
                     <constraint firstAttribute="trailing" secondItem="xgV-oG-1u8" secondAttribute="trailing" id="JWH-83-ZoB"/>
-                    <constraint firstItem="llh-Ok-Moj" firstAttribute="leading" secondItem="XYN-t0-wUL" secondAttribute="leading" id="eBC-ht-FAi"/>
+                    <constraint firstItem="llh-Ok-Moj" firstAttribute="leading" secondItem="XYN-t0-wUL" secondAttribute="leading" constant="16" id="eBC-ht-FAi"/>
                     <constraint firstItem="Mfd-4G-Eck" firstAttribute="centerY" secondItem="XYN-t0-wUL" secondAttribute="centerY" id="fLl-nn-T9N"/>
                     <constraint firstAttribute="bottom" secondItem="llh-Ok-Moj" secondAttribute="bottom" id="gJD-Et-nMN"/>
-                    <constraint firstAttribute="trailing" secondItem="llh-Ok-Moj" secondAttribute="trailing" id="jH1-bL-bsj"/>
-                    <constraint firstAttribute="trailing" secondItem="Mfd-4G-Eck" secondAttribute="trailing" id="pso-mB-zUM"/>
+                    <constraint firstAttribute="trailing" secondItem="llh-Ok-Moj" secondAttribute="trailing" constant="16" id="jH1-bL-bsj"/>
+                    <constraint firstAttribute="trailing" secondItem="Mfd-4G-Eck" secondAttribute="trailing" constant="16" id="pso-mB-zUM"/>
                     <constraint firstItem="xgV-oG-1u8" firstAttribute="top" secondItem="XYN-t0-wUL" secondAttribute="top" id="zo6-Ot-tJp"/>
                 </constraints>
             </tableViewCellContentView>

@@ -14,7 +14,12 @@ public protocol SelectedSortDelegate: AnyObject {
 
 final public class SortByVC: UIViewController {
     // MARK: - Outlets
-    @IBOutlet private weak var sortByTitleLabel: UILabel!
+    @IBOutlet private weak var sortByTitleLabel: UILabel! {
+        didSet {
+            sortByTitleLabel.text = FilterLocalization.sortByTitle.text
+            sortByTitleLabel.fontTextStyle = .smilesHeadline2
+        }
+    }
     @IBOutlet private weak var tableView: UITableView!
     @IBOutlet private weak var buttonView: UIView!
     @IBOutlet private weak var applyButton: UIButton! {
@@ -26,7 +31,7 @@ final public class SortByVC: UIViewController {
     }
     
     @IBOutlet weak var dismissButton: UIButton! {
-        didSet {  dismissButton.setImage(UIImage(resource: .closeButton), for: .normal) }
+        didSet { dismissButton.setImage(UIImage(resource: .closeButton), for: .normal) }
     }
     
     // MARK: - Properties

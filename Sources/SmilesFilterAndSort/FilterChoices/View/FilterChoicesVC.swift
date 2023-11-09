@@ -24,7 +24,6 @@ final public class FilterChoicesVC: UIViewController {
     
     var filters = [FilterCellViewModel]()
     var selectedFilters = [FilterCellViewModel]()
-//    var searchedFilters = [FilterCellViewModel]()
     var selectedFilter = PassthroughSubject<IndexPath, Never>()
     
     // MARK: Lifecycle
@@ -50,7 +49,6 @@ final public class FilterChoicesVC: UIViewController {
         
         isSearching = false
         selectedFilters.removeAll()
-//        searchedFilters.removeAll()
         searchQuery?.removeAll()
         
         tableView.reloadSections([TableSection.filterSearch.rawValue, TableSection.filterChoice.rawValue], with: .automatic)
@@ -69,7 +67,6 @@ final public class FilterChoicesVC: UIViewController {
         if let filter, isSelected {
             selectedFilters.append(filter)
         } else {
-            
             if let filtersIndex = filters.firstIndex(where: { $0.filterValue == filter?.filterValue }) {
                 filters[filtersIndex].setUnselected()
             }
