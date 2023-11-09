@@ -8,6 +8,7 @@
 import UIKit
 import SmilesUtilities
 import SmilesFontsManager
+import SmilesOffers
 
 final class FilterChoiceTVC: UITableViewCell {
     // MARK: Outlets
@@ -18,7 +19,9 @@ final class FilterChoiceTVC: UITableViewCell {
     
     // MARK: Properties
     var filterChoice: FilterCellViewModel?
+    var sortChoice: FilterDO?
     var filterSelected: ((_ filter: FilterCellViewModel?, _ isSelected: Bool) -> Void)?
+    var sortSelected: ((_ sort: FilterDO?, _ isSelected: Bool) -> Void)?
     
     // MARK: Lifecycle
     override func awakeFromNib() {
@@ -35,7 +38,12 @@ final class FilterChoiceTVC: UITableViewCell {
         sender.isSelected = !sender.isSelected
         
         configureSelectionStateUI(isSelected: sender.isSelected)
-        filterSelected?(filterChoice, sender.isSelected)
+        
+        if let filterChoice {
+            filterSelected?(filterChoice, sender.isSelected)
+        } else if let sortChoice {
+            sortSelected?(sortChoice, sender.isSelected)
+        }
     }
     
     // MARK: Methods
@@ -48,11 +56,21 @@ final class FilterChoiceTVC: UITableViewCell {
     
     private func configureSelectionStateUI(isSelected: Bool) {
         if !isSelected {
-            checkBoxImageView.image = UIImage(named: "checkbox-unselected-icon", in: .module, with: nil)
+            if let filterChoice {
+                checkBoxImageView.image = UIImage(named: "checkbox-unselected-icon", in: .module, with: nil)
+            } else if let sortChoice {
+                checkBoxImageView.image = UIImage(named: "unchecked-radio-icon", in: .module, with: nil)
+            }
+            
             choiceLabel.fontTextStyle = .smilesBody2
             choiceLabel.textColor = .black.withAlphaComponent(0.8)
         } else {
-            checkBoxImageView.image = UIImage(named: "checkbox-selected-icon", in: .module, with: nil)
+            if let filterChoice {
+                checkBoxImageView.image = UIImage(named: "checkbox-selected-icon", in: .module, with: nil)
+            } else if let sortChoice {
+                checkBoxImageView.image = UIImage(named: "checked-radio-icon", in: .module, with: nil)
+            }
+            
             choiceLabel.fontTextStyle = .smilesTitle1
             choiceLabel.textColor = .black
         }
@@ -65,5 +83,14 @@ final class FilterChoiceTVC: UITableViewCell {
         configureSelectionStateUI(isSelected: filter.isSelected)
         
         choiceLabel.text = filter.title
+    }
+    
+    func configureCell(with sort: FilterDO) {
+        sortChoice = sort
+        
+        selectionButton.isSelected = sort.isSelected.asBoolOrFalse()
+        configureSelectionStateUI(isSelected: sort.isSelected.asBoolOrFalse())
+        
+        choiceLabel.text = sort.name
     }
 }
