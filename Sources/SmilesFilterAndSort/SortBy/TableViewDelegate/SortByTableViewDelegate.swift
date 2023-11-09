@@ -24,6 +24,7 @@ extension SortByVC: UITableViewDelegate, UITableViewDataSource {
             sorts[indexPath.row].isSelected = true
             tableView.reloadData()
         }
+        sorts.count == (indexPath.row + 1) ? sortCell.hideLineView(isHidden: true) : sortCell.hideLineView(isHidden: false)
         
         return sortCell
     }

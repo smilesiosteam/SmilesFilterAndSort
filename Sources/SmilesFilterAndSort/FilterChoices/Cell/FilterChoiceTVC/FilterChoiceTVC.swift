@@ -100,4 +100,8 @@ final class FilterChoiceTVC: UITableViewCell {
         
         choiceLabel.text = sort.name
     }
+    
+    func hideLineView(isHidden: Bool) {
+        separatorView.isHidden = isHidden
+    }
 }
