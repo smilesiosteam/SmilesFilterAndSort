@@ -38,6 +38,7 @@ class FilterSelection {
     
     private func updateSelectedFilters() {
         for item in selectedFilters {
+            print(item.indexPath)
             guard let type = item.indexPath?.section else {
                 return
             }
@@ -81,6 +82,7 @@ class FilterSelection {
             return
         }
         filtersList[cuisineIndex].filterTypes?[0].filterValues?[selectedIndex].setSelected()
+        filtersList[cuisineIndex].filterTypes?[0].filterValues?[selectedIndex].indexPath = IndexPath(row: selectedIndex, section: -1)
         
     }
 }
