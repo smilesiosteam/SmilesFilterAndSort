@@ -22,7 +22,7 @@ public enum FilterLocalization {
         case .filter:
             return "FilterMainTitle".localizedString
         case .apply:
-            return "ApplyTitle".localizedString
+            return "FilterApply".localizedString
         case .search:
             return "Search".localizedString
         case .clearAll:
