@@ -10,11 +10,6 @@ import NetworkingLayer
 import SmilesUtilities
 import SmilesOffers
 
-public protocol SelectedSortDelegate: AnyObject {
-    func didSetSort(sortBy: FilterDO)
-}
-
-
 public enum FilterConfiguration {
     
     public static func getGetListFilters(menuType: String?,
@@ -36,6 +31,9 @@ public enum FilterConfiguration {
     }
     
     public static func getListSort(sortModels: [FilterDO], delegate: SelectedSortDelegate) -> UIViewController {
-        return UIViewController()
+        let sortByVC = SortByVC.create()
+        sortByVC.updateData(sorts: sortModels)
+        sortByVC.delegate = delegate
+        return sortByVC
     }
 }

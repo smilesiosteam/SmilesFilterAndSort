@@ -8,6 +8,10 @@
 import UIKit
 import SmilesOffers
 
+public protocol SelectedSortDelegate: AnyObject {
+    func didSetSort(sortBy: FilterDO)
+}
+
 final public class SortByVC: UIViewController {
     // MARK: Outlets
     @IBOutlet weak var sortByTitleLabel: UILabel!
@@ -15,6 +19,8 @@ final public class SortByVC: UIViewController {
     @IBOutlet weak var applyButtonTitle: UILabel!
     
     var sorts = [FilterDO]()
+    weak var delegate: SelectedSortDelegate?
+    var selectedSort: FilterDO?
     
     // MARK: Lifecycle
     public override func viewDidLoad() {
@@ -27,7 +33,8 @@ final public class SortByVC: UIViewController {
     }
     
     @IBAction func applyButtonTapped(_ sender: UIButton) {
-        
+        delegate?.didSetSort(sortBy: selectedSort ?? .init())
+        dismiss()
     }
     
     // MARK: Methods

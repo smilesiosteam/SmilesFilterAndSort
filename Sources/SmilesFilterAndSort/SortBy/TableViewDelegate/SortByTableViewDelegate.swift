@@ -22,7 +22,7 @@ extension SortByVC: UITableViewDelegate, UITableViewDataSource {
         sortCell.configureCell(with: sorts[indexPath.row])
         sortCell.sortSelected = { [weak self] sort, isSelected in
             guard let self else { return }
-            
+            self.selectedSort = sort
         }
         
         return sortCell
