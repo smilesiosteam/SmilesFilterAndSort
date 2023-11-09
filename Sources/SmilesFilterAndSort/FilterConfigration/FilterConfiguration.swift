@@ -8,6 +8,12 @@
 import UIKit
 import NetworkingLayer
 import SmilesUtilities
+import SmilesOffers
+
+public protocol SelectedSortDelegate: AnyObject {
+    func didSetSort(sortBy: FilterDO)
+}
+
 
 public enum FilterConfiguration {
     
@@ -27,5 +33,9 @@ public enum FilterConfiguration {
         let viewController = FilterContainerViewController.create()
         viewController.viewModel = viewModel
         return viewController
+    }
+    
+    public static func getListSort(sortModels: [FilterDO], delegate: SelectedSortDelegate) -> UIViewController {
+        return UIViewController()
     }
 }
