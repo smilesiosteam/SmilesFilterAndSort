@@ -88,8 +88,15 @@ final class FilterChoiceTVC: UITableViewCell {
     func configureCell(with sort: FilterDO) {
         sortChoice = sort
         
-        selectionButton.isSelected = sort.isSelected.asBoolOrFalse()
-        configureSelectionStateUI(isSelected: sort.isSelected.asBoolOrFalse())
+        if let isSelected = sort.isSelected, isSelected {
+            checkBoxImageView.image = UIImage(named: "checked-radio-icon", in: .module, with: nil)
+            choiceLabel.fontTextStyle = .smilesBody2
+            choiceLabel.textColor = .black.withAlphaComponent(0.8)
+        } else {
+            checkBoxImageView.image = UIImage(named: "unchecked-radio-icon", in: .module, with: nil)
+            choiceLabel.fontTextStyle = .smilesTitle1
+            choiceLabel.textColor = .black
+        }
         
         choiceLabel.text = sort.name
     }

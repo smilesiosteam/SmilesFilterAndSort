@@ -8,9 +8,6 @@
 import UIKit
 
 extension SortByVC: UITableViewDelegate, UITableViewDataSource {
-    public func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
     
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return sorts.count
@@ -22,7 +19,10 @@ extension SortByVC: UITableViewDelegate, UITableViewDataSource {
         sortCell.configureCell(with: sorts[indexPath.row])
         sortCell.sortSelected = { [weak self] sort, isSelected in
             guard let self else { return }
+            self.setAllDataUnselected()
             self.selectedSort = sort
+            sorts[indexPath.row].isSelected = true
+            tableView.reloadData()
         }
         
         return sortCell
@@ -30,5 +30,12 @@ extension SortByVC: UITableViewDelegate, UITableViewDataSource {
     
     public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 54.0
+    }
+    
+    private func setAllDataUnselected() {
+        let count = sorts.count
+        for index in 0..<count {
+            sorts[index].isSelected = false
+        }
     }
 }

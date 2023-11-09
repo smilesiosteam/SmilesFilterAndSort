@@ -13,18 +13,33 @@ public protocol SelectedSortDelegate: AnyObject {
 }
 
 final public class SortByVC: UIViewController {
-    // MARK: Outlets
-    @IBOutlet weak var sortByTitleLabel: UILabel!
-    @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var applyButtonTitle: UILabel!
+    // MARK: - Outlets
+    @IBOutlet private weak var sortByTitleLabel: UILabel!
+    @IBOutlet private weak var tableView: UITableView!
+    @IBOutlet private weak var buttonView: UIView!
+    @IBOutlet private weak var applyButton: UIButton! {
+        didSet {
+            applyButton.setTitle(FilterLocalization.apply.text, for: .normal)
+            applyButton.fontTextStyle = .smilesTitle1
+            applyButton.layer.cornerRadius = 24
+        }
+    }
     
+    @IBOutlet weak var dismissButton: UIButton! {
+        didSet {  dismissButton.setImage(UIImage(resource: .closeButton), for: .normal) }
+    }
+    
+    // MARK: - Properties
     var sorts = [FilterDO]()
     weak var delegate: SelectedSortDelegate?
     var selectedSort: FilterDO?
     
-    // MARK: Lifecycle
+    // MARK: - Lifecycle
     public override func viewDidLoad() {
         super.viewDidLoad()
+        setupTableView()
+        tableView.reloadData()
+        buttonView.addShadowToSelf(offset: CGSize(width: 0, height: -1), color: UIColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 0.2), radius: 1.0, opacity: 5)
     }
     
     // MARK: Actions
@@ -47,8 +62,7 @@ final public class SortByVC: UIViewController {
     
     func updateData(sorts: [FilterDO]) {
         self.sorts = sorts
-        
-        tableView.reloadData()
+        selectedSort = sorts.filter({ $0.isSelected ?? false }).first
     }
 }
 
