@@ -31,7 +31,7 @@ public enum FilterConfiguration {
     }
     
     public static func getListSort(sortModels: [FilterDO], delegate: SelectedSortDelegate) -> UIViewController {
-        let sortByVC = SortByVC.create()
+        let sortByVC = SortByViewController.create()
         sortByVC.updateData(sorts: sortModels)
         sortByVC.delegate = delegate
         return sortByVC

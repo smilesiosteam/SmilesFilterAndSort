@@ -12,7 +12,7 @@ public protocol SelectedSortDelegate: AnyObject {
     func didSetSort(sortBy: FilterDO)
 }
 
-final public class SortByVC: UIViewController {
+final public class SortByViewController: UIViewController {
     // MARK: - Outlets
     @IBOutlet private weak var sortByTitleLabel: UILabel! {
         didSet {
@@ -62,7 +62,7 @@ final public class SortByVC: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         
-        tableView.registerCellFromNib(FilterChoiceTVC.self, withIdentifier: String(describing: FilterChoiceTVC.self), bundle: .module)
+        tableView.registerCellFromNib(FilterChoiceTableViewCell.self, withIdentifier: String(describing: FilterChoiceTableViewCell.self), bundle: .module)
     }
     
     func updateData(sorts: [FilterDO]) {
@@ -71,9 +71,9 @@ final public class SortByVC: UIViewController {
     }
 }
 
-extension SortByVC {
-    static public func create() -> SortByVC {
-        let viewController = SortByVC(nibName: String(describing: SortByVC.self), bundle: .module)
+extension SortByViewController {
+    static public func create() -> SortByViewController {
+        let viewController = SortByViewController(nibName: String(describing: SortByViewController.self), bundle: .module)
         return viewController
     }
 }

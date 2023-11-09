@@ -7,14 +7,14 @@
 
 import UIKit
 
-extension SortByVC: UITableViewDelegate, UITableViewDataSource {
+extension SortByViewController: UITableViewDelegate, UITableViewDataSource {
     
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return sorts.count
     }
     
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let sortCell = tableView.dequeueReusableCell(withIdentifier: "FilterChoiceTVC", for: indexPath) as? FilterChoiceTVC else { return UITableViewCell() }
+        guard let sortCell = tableView.dequeueReusableCell(withIdentifier: "FilterChoiceTableViewCell", for: indexPath) as? FilterChoiceTableViewCell else { return UITableViewCell() }
         
         sortCell.configureCell(with: sorts[indexPath.row])
         sortCell.sortSelected = { [weak self] sort, isSelected in

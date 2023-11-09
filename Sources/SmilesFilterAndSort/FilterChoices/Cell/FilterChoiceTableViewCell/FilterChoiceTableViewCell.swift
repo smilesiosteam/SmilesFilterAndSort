@@ -10,7 +10,7 @@ import SmilesUtilities
 import SmilesFontsManager
 import SmilesOffers
 
-final class FilterChoiceTVC: UITableViewCell {
+final class FilterChoiceTableViewCell: UITableViewCell {
     // MARK: Outlets
     @IBOutlet weak var selectionButton: UIButton!
     @IBOutlet weak var choiceLabel: UILabel!

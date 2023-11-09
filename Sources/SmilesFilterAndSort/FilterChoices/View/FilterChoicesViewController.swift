@@ -9,7 +9,7 @@ import UIKit
 import SmilesUtilities
 import Combine
 
-final public class FilterChoicesVC: UIViewController {
+final public class FilterChoicesViewController: UIViewController {
     enum TableSection: Int, CaseIterable {
         case filterSearch
         case filterChoice
@@ -59,8 +59,8 @@ final public class FilterChoicesVC: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         
-        tableView.registerCellFromNib(FilterSearchTVC.self, withIdentifier: String(describing: FilterSearchTVC.self), bundle: .module)
-        tableView.registerCellFromNib(FilterChoiceTVC.self, withIdentifier: String(describing: FilterChoiceTVC.self), bundle: .module)
+        tableView.registerCellFromNib(FilterSearchTableViewCell.self, withIdentifier: String(describing: FilterSearchTableViewCell.self), bundle: .module)
+        tableView.registerCellFromNib(FilterChoiceTableViewCell.self, withIdentifier: String(describing: FilterChoiceTableViewCell.self), bundle: .module)
     }
     
     func configureFilterCollectionState(filter: FilterCellViewModel?, isSelected: Bool, sectionsToReload: IndexSet) {
@@ -78,9 +78,9 @@ final public class FilterChoicesVC: UIViewController {
     }
 }
 
-extension FilterChoicesVC {
-    static public func create() -> FilterChoicesVC {
-        let viewController = FilterChoicesVC(nibName: String(describing: FilterChoicesVC.self), bundle: .module)
+extension FilterChoicesViewController {
+    static public func create() -> FilterChoicesViewController {
+        let viewController = FilterChoicesViewController(nibName: String(describing: FilterChoicesViewController.self), bundle: .module)
         return viewController
     }
 }

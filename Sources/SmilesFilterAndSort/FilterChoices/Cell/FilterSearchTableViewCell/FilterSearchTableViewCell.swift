@@ -10,7 +10,7 @@ import SmilesUtilities
 import SmilesFontsManager
 import SmilesLanguageManager
 
-final class FilterSearchTVC: UITableViewCell {
+final class FilterSearchTableViewCell: UITableViewCell {
     // MARK: Outlets
     @IBOutlet weak var searchView: UIView!
     @IBOutlet weak var collectionParentView: UIView!
@@ -62,7 +62,7 @@ final class FilterSearchTVC: UITableViewCell {
     }
     
     private func setupCollectionView() {
-        collectionView.register(UINib(nibName: String(describing: FilterChipCVC.self), bundle: .module), forCellWithReuseIdentifier: String(describing: FilterChipCVC.self))
+        collectionView.register(UINib(nibName: String(describing: FilterChipCollectionViewCell.self), bundle: .module), forCellWithReuseIdentifier: String(describing: FilterChipCollectionViewCell.self))
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.collectionViewLayout = setupCollectionViewLayout()
@@ -95,14 +95,14 @@ final class FilterSearchTVC: UITableViewCell {
     }
 }
 
-extension FilterSearchTVC: UICollectionViewDelegate, UICollectionViewDataSource {
+extension FilterSearchTableViewCell: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return collectionData?.count ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if let data = collectionData?[indexPath.row] {
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FilterChipCVC", for: indexPath) as? FilterChipCVC else { return UICollectionViewCell() }
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FilterChipCollectionViewCell", for: indexPath) as? FilterChipCollectionViewCell else { return UICollectionViewCell() }
             
             cell.configureCell(with: data)
             cell.removeFilter = { [weak self] filter in

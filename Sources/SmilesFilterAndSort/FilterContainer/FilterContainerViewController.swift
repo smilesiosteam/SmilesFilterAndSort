@@ -48,7 +48,7 @@ public final class FilterContainerViewController: UIViewController {
     
     // MARK: - Properties
     let filterViewController = SortViewController.create()
-    let choicesViewController  = FilterChoicesVC.create()
+    let choicesViewController  = FilterChoicesViewController.create()
     var viewModel: FilterContainerViewModel!
     private var cancellable = Set<AnyCancellable>()
     

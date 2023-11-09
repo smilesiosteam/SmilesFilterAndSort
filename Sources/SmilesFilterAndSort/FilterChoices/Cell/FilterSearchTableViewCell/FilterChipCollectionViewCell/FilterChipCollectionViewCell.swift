@@ -9,7 +9,7 @@ import UIKit
 import SmilesUtilities
 import SmilesFontsManager
 
-final class FilterChipCVC: UICollectionViewCell {
+final class FilterChipCollectionViewCell: UICollectionViewCell {
     // MARK: Outlets
     @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var titleLabel: UILabel!

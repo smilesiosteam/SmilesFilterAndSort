@@ -8,7 +8,7 @@
 import UIKit
 import SmilesUtilities
 
-extension FilterChoicesVC: UITableViewDelegate, UITableViewDataSource {
+extension FilterChoicesViewController: UITableViewDelegate, UITableViewDataSource {
     public func numberOfSections(in tableView: UITableView) -> Int {
         return TableSection.allCases.count
     }
@@ -23,7 +23,7 @@ extension FilterChoicesVC: UITableViewDelegate, UITableViewDataSource {
     
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == TableSection.filterSearch.rawValue {
-            guard let filterSearchCell = tableView.dequeueReusableCell(withIdentifier: "FilterSearchTVC", for: indexPath) as? FilterSearchTVC else { return UITableViewCell() }
+            guard let filterSearchCell = tableView.dequeueReusableCell(withIdentifier: "FilterSearchTableViewCell", for: indexPath) as? FilterSearchTableViewCell else { return UITableViewCell() }
             
             filterSearchCell.collectionData = selectedFilters
             filterSearchCell.configureSearchBar(with: searchQuery)
@@ -69,7 +69,7 @@ extension FilterChoicesVC: UITableViewDelegate, UITableViewDataSource {
             return filterSearchCell
         }
         
-        guard let filterChoiceCell = tableView.dequeueReusableCell(withIdentifier: "FilterChoiceTVC", for: indexPath) as? FilterChoiceTVC else { return UITableViewCell() }
+        guard let filterChoiceCell = tableView.dequeueReusableCell(withIdentifier: "FilterChoiceTableViewCell", for: indexPath) as? FilterChoiceTableViewCell else { return UITableViewCell() }
         
         let filterChoice = !isSearching ? filters.filter({ !$0.isSearching })[indexPath.row] : filters.filter({ $0.isSearching })[indexPath.row]
         
