@@ -40,6 +40,7 @@ public final class FilterContainerViewController: UIViewController {
         }
     }
     @IBOutlet private weak var viewFilter: UIView!
+    @IBOutlet private weak var segmentControlContainerView: UIView!
     @IBOutlet private weak var segmentController: UISegmentedControl!
     @IBOutlet private weak var buttomView: UIView!
     @IBOutlet private weak var dismissButton: UIButton! {
@@ -58,7 +59,11 @@ public final class FilterContainerViewController: UIViewController {
         bindData()
         bindFilterData()
         bindFilterCuision()
-        viewModel.fetchFilters()
+        if viewModel.filterContentType == .food {
+            viewModel.fetchFilters()
+        } else {
+            viewModel.fetchOffersFilters()
+        }
         configSegmentUI()
         bindCountFilters()
     }
@@ -111,7 +116,14 @@ public final class FilterContainerViewController: UIViewController {
     }
     
     private func configSegment(_ titles: [FilterStrategy]) {
-        segmentController.isHidden = titles.count == 2 ? false : true
+        if titles.count == 2 {
+            segmentControlContainerView.isHidden = false
+            segmentController.isHidden = false
+        } else {
+            segmentControlContainerView.isHidden = true
+            segmentController.isHidden = true
+        }
+        
         for item in titles {
             switch item {
             case .cusines(title: let title):

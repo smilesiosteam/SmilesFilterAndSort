@@ -17,6 +17,7 @@ public enum FilterLocalization {
     case noFilteredResultFoundTitle
     case noFilteredResultFoundDescription
     case sortByTitle
+    case explore
     
     public var text: String {
         switch self {
@@ -36,6 +37,8 @@ public enum FilterLocalization {
             return "NoFilteredResultFoundDescription".localizedString
         case .sortByTitle:
             return "SortByTitle".localizedString
+        case .explore:
+            return "ExploreTitle".localizedString
         }
     }
 }

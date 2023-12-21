@@ -10,6 +10,7 @@ import NetworkingLayer
 
 enum FilterRequestBuilder {
     case listFilters(request: ListFilterRequest)
+    case offersFilters(request: OffersFilterRequest)
     
     var requestTimeOut: Int {
         return 100
@@ -18,6 +19,8 @@ enum FilterRequestBuilder {
     var httpMethod: SmilesHTTPMethod {
         switch self {
         case .listFilters:
+            return .POST
+        case .offersFilters:
             return .POST
         }
     }
@@ -35,6 +38,8 @@ enum FilterRequestBuilder {
         switch self {
         case .listFilters(let request):
             return request
+        case .offersFilters(let request):
+            return request
         }
     }
     
@@ -43,6 +48,8 @@ enum FilterRequestBuilder {
         
         switch self {
         case .listFilters:
+            return "\(baseURL)\(endPoint)"
+        case .offersFilters:
             return "\(baseURL)\(endPoint)"
         }
     }

@@ -11,6 +11,7 @@ import NetworkingLayer
 
 protocol FilterRepositoryType {
     func fetchFilters(menuItemType: String?) -> AnyPublisher<FilterDataModel, NetworkError>
+    func fetchOffersFilters(categoryId: String?, sortingType: String?) -> AnyPublisher<OffersFilterResponse, NetworkError>
 }
 
 final class FilterRepository: FilterRepositoryType {
@@ -33,6 +34,18 @@ final class FilterRepository: FilterRepositoryType {
         let request = endPoint.createRequest(
             baseURL: self.baseURL,
             endPoint: FilterEndPoints.listFilters
+        )
+        
+        return networkRequest.request(request)
+    }
+    
+    public func fetchOffersFilters(categoryId: String?, sortingType: String?) -> AnyPublisher<OffersFilterResponse, NetworkError> {
+        let offersFilterRequest = OffersFilterRequest(categoryId: categoryId, sortingType: sortingType)
+        let endPoint = FilterRequestBuilder.offersFilters(request: offersFilterRequest)
+        
+        let request = endPoint.createRequest(
+            baseURL: self.baseURL,
+            endPoint: .offersFilters
         )
         
         return networkRequest.request(request)

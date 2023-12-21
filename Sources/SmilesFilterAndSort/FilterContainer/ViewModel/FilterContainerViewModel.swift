@@ -21,7 +21,8 @@ final class FilterContainerViewModel {
     private var originalFiltersList: [FiltersList] = []
     private var selectedFilter: [FilterValue] = []
     private var cancellable = Set<AnyCancellable>()
-    private let useCase: FilterContainerUseCaseType
+    private var useCase: FilterContainerUseCaseType?
+    private var offersUseCase: OffersFilterUseCaseType?
     private var stateSubject = PassthroughSubject<State, Never>()
     // MARK: - Public Properties
     var filters: [FilterSectionUIModel] = []
@@ -32,16 +33,18 @@ final class FilterContainerViewModel {
     var statePublisher: AnyPublisher<State, Never> {
         stateSubject.eraseToAnyPublisher()
     }
+    var filterContentType: FilterContentType = .food
     
     // MARK: - Init
-    init(useCase: FilterContainerUseCaseType) {
+    init(useCase: FilterContainerUseCaseType? = nil, offersUseCase: OffersFilterUseCaseType? = nil) {
         self.useCase = useCase
+        self.offersUseCase = offersUseCase
     }
     
     // MARK: - Functions
     func fetchFilters() {
         stateSubject.send(.showLoader)
-        useCase.statePublisher.sink { [weak self] response in
+        useCase?.statePublisher.sink { [weak self] response in
             guard let self else {
                 return
             }
@@ -62,7 +65,32 @@ final class FilterContainerViewModel {
             }
         }
         .store(in: &cancellable)
-        useCase.fetchFilters()
+        useCase?.fetchFilters()
+    }
+    
+    func fetchOffersFilters() {
+        stateSubject.send(.showLoader)
+        offersUseCase?.statePublisher.sink { [weak self] response in
+            guard let self else {
+                return
+            }
+            self.stateSubject.send(.hideLoader)
+            switch response {
+            case .error(let message):
+                self.stateSubject.send(.showError(message: message))
+            case .listFilters(let filters):
+                self.filtersList = filters.filtersList ?? []
+                var list = filters
+                let unselectedList = list.setUnselectedValues()
+                self.originalFiltersList = unselectedList ?? []
+                self.updateSelectedFilters()
+            case .values(let filters):
+                self.configSegmentTitles(filters: filters, cuisines: .init())
+                self.stateSubject.send(.filters(filters.sections))
+            }
+        }
+        .store(in: &cancellable)
+        offersUseCase?.fetchFilters()
     }
     
     func clearData() {
@@ -84,7 +112,15 @@ final class FilterContainerViewModel {
     }
     
     func updateFilter(with index: IndexPath) {
-        guard let filterIndex = useCase.getFilterIndex(),
+        var useCaseIndex: Int?
+        
+        if let useCase {
+            useCaseIndex = useCase.getFilterIndex()
+        } else if let offersUseCase {
+            useCaseIndex = offersUseCase.getFilterIndex()
+        }
+        
+        guard let filterIndex = useCaseIndex,
               let countOfItems = filtersList[safe: filterIndex]?.filterTypes?[safe: index.section]?.filterValues?.count,
               let isMultiSelection = filtersList[safe: filterIndex]?.filterTypes?[safe: index.section]?.isMultipleSelection,
               let _ = filtersList[safe: filterIndex]?.filterTypes?[safe: index.section]?.filterValues?[safe: index.row]
@@ -104,7 +140,7 @@ final class FilterContainerViewModel {
     }
     
     func updateCusines(with index: IndexPath) {
-        guard let filterIndex = useCase.getCusinesIndex(),
+        guard let filterIndex = useCase?.getCusinesIndex(),
               let isEmpty = filtersList[filterIndex].filterTypes?.first?.filterValues?.isEmpty,
               !isEmpty,
               let _ = filtersList[safe: filterIndex]?.filterTypes?[safe: 0]?.filterValues?[safe: index.row]
@@ -130,8 +166,12 @@ final class FilterContainerViewModel {
             }
         }
         
-        processFilterTypes(filterIndex: useCase.getFilterIndex())
-        processFilterTypes(filterIndex: useCase.getCusinesIndex())
+        if let useCase {
+            processFilterTypes(filterIndex: useCase.getFilterIndex())
+            processFilterTypes(filterIndex: useCase.getCusinesIndex())
+        } else if let offersUseCase {
+            processFilterTypes(filterIndex: offersUseCase.getFilterIndex())
+        }
     }
     
     func getFiltersDictionary() {

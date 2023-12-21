@@ -18,6 +18,7 @@
                 <outlet property="dismissButton" destination="TKq-7u-5CU" id="rQM-LH-pU3"/>
                 <outlet property="filterCountLabel" destination="Fjn-Bz-78a" id="4GB-ZX-NNJ"/>
                 <outlet property="filterLabel" destination="V7C-03-FqS" id="gCS-wt-9Ku"/>
+                <outlet property="segmentControlContainerView" destination="S6h-eE-aiY" id="fpp-Qj-ogv"/>
                 <outlet property="segmentController" destination="CqT-7l-Xl5" id="xo1-iK-q57"/>
                 <outlet property="titleLabel" destination="N1U-Ki-lzL" id="a8a-KJ-XYP"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
