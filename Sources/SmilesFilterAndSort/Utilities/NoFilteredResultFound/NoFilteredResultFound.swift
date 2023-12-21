@@ -54,11 +54,11 @@ public class NoFilteredResultFound: UIView {
     }
     
     private func configFont() {
-        titleLabel.fontTextStyle = .smilesHeadline3
-        titleLabel.textColor = .black.withAlphaComponent(0.8)
+        titleLabel.fontTextStyle = .smilesHeadline2
+        titleLabel.textColor = .black
         
         descriptionLabel.fontTextStyle = .smilesBody3
-        descriptionLabel.textColor = .black.withAlphaComponent(0.4)
+        descriptionLabel.textColor = .black.withAlphaComponent(0.6)
         
         stackView.setCustomSpacing(32.0, after: emptyResultImageView)
         stackView.setCustomSpacing(8.0, after: titleLabel)

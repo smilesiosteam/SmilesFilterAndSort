@@ -24,32 +24,34 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="32" translatesAutoresizingMaskIntoConstraints="NO" id="8fl-f8-Zxp">
-                    <rect key="frame" x="16" y="48" width="361" height="334"/>
+                    <rect key="frame" x="16" y="108.66666666666669" width="361" height="215"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tUm-Hs-VDY">
-                            <rect key="frame" x="0.0" y="0.0" width="361" height="209"/>
+                            <rect key="frame" x="0.0" y="0.0" width="361" height="90"/>
                             <subviews>
                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="empty-result-icon" translatesAutoresizingMaskIntoConstraints="NO" id="lJM-Nz-JDP">
-                                    <rect key="frame" x="15" y="0.0" width="331" height="209"/>
+                                    <rect key="frame" x="135.66666666666666" y="0.0" width="90" height="90"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="90" id="MyN-YW-oAt"/>
+                                    </constraints>
                                 </imageView>
                             </subviews>
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             <constraints>
                                 <constraint firstItem="lJM-Nz-JDP" firstAttribute="top" secondItem="tUm-Hs-VDY" secondAttribute="top" id="4xB-kU-Ugb"/>
-                                <constraint firstAttribute="height" constant="209" id="Uhb-xs-joY"/>
+                                <constraint firstAttribute="height" constant="90" id="Uhb-xs-joY"/>
                                 <constraint firstAttribute="bottom" secondItem="lJM-Nz-JDP" secondAttribute="bottom" id="ZPd-Wk-IHm"/>
-                                <constraint firstItem="lJM-Nz-JDP" firstAttribute="leading" secondItem="tUm-Hs-VDY" secondAttribute="leading" constant="15" id="iMb-tO-2Ne"/>
-                                <constraint firstAttribute="trailing" secondItem="lJM-Nz-JDP" secondAttribute="trailing" constant="15" id="jxK-JA-3DH"/>
+                                <constraint firstItem="lJM-Nz-JDP" firstAttribute="centerX" secondItem="tUm-Hs-VDY" secondAttribute="centerX" id="ZS4-cC-ect"/>
                             </constraints>
                         </view>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Opps, no result found" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yWO-yZ-Uoz">
-                            <rect key="frame" x="0.0" y="241" width="361" height="20.333333333333314"/>
+                            <rect key="frame" x="0.0" y="121.99999999999999" width="361" height="20.333333333333329"/>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="sorry, there are no results for the selected filters, please try fewer or different filters" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="N5G-RL-qlG">
-                            <rect key="frame" x="0.0" y="293.33333333333331" width="361" height="40.666666666666686"/>
+                            <rect key="frame" x="0.0" y="174.33333333333331" width="361" height="40.666666666666657"/>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
@@ -60,8 +62,8 @@
             <viewLayoutGuide key="safeArea" id="5wA-IW-qGC"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
-                <constraint firstItem="8fl-f8-Zxp" firstAttribute="top" secondItem="WvZ-cg-1rd" secondAttribute="top" constant="48" id="HrV-1y-dpO"/>
                 <constraint firstItem="8fl-f8-Zxp" firstAttribute="leading" secondItem="5wA-IW-qGC" secondAttribute="leading" constant="16" id="MYq-CT-Fjq"/>
+                <constraint firstItem="8fl-f8-Zxp" firstAttribute="centerY" secondItem="WvZ-cg-1rd" secondAttribute="centerY" id="gaS-zx-xRS"/>
                 <constraint firstItem="5wA-IW-qGC" firstAttribute="trailing" secondItem="8fl-f8-Zxp" secondAttribute="trailing" constant="16" id="nBT-0J-Wl6"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
