@@ -60,7 +60,7 @@ public class NoFilteredResultFound: UIView {
         descriptionLabel.fontTextStyle = .smilesBody3
         descriptionLabel.textColor = .black.withAlphaComponent(0.6)
         
-        stackView.setCustomSpacing(32.0, after: emptyResultImageView)
-        stackView.setCustomSpacing(8.0, after: titleLabel)
+        stackView.setCustomSpacing(16.0, after: emptyResultImageView)
+        stackView.setCustomSpacing(16.0, after: titleLabel)
     }
 }
