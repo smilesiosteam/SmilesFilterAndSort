@@ -46,6 +46,11 @@ public final class FilterContainerViewController: UIViewController {
     @IBOutlet private weak var dismissButton: UIButton! {
         didSet { dismissButton.setImage(UIImage(resource: .closeButton), for: .normal) }
     }
+    @IBOutlet private weak var numberOfFiltersStackView: UIStackView! {
+        didSet {
+            numberOfFiltersStackView.isHidden = true
+        }
+    }
     
     // MARK: - Properties
     let filterViewController = SortViewController.create()
@@ -170,6 +175,7 @@ public final class FilterContainerViewController: UIViewController {
     private func bindCountFilters() {
         viewModel.$countOfSelectedFilters.sink { [weak self] count in
             self?.filterCountLabel.text = "\(count)"
+            self?.numberOfFiltersStackView.isHidden = (count == 0) ? true : false
         }
         .store(in: &cancellable)
     }
