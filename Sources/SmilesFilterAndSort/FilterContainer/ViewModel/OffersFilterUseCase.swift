@@ -114,7 +114,7 @@ final class OffersFilterUseCase: OffersFilterUseCaseType {
         var filterTypes = [FilterType]()
         var filters = [FiltersList]()
         
-        if categoryId == "9" {
+        if categoryId == "9" || categoryId == "973" {
             if let categories = response.categories, !categories.isEmpty {
                 categories.forEach { category in
                     var filter = FiltersList(title: category.categoryName, type: "filterby")
