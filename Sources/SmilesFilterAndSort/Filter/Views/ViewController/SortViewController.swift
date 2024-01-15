@@ -60,7 +60,10 @@ public final class SortViewController: UIViewController {
     }
     
     private func reloadData() {
-        !manipulatedSections.isEmpty ? manipulatedSections[0].isFirstSection = true : ()
+        guard !manipulatedSections.isEmpty, let _ = manipulatedSections.first?.isFirstSection else {
+            return
+        }
+        manipulatedSections[0].isFirstSection = true
         collectionView.collectionViewLayout = layout.createLayout(sections: manipulatedSections)
         collectionView.reloadData()
     }
@@ -111,7 +114,9 @@ extension SortViewController: UICollectionViewDelegate {
         } else {
             
             for i in 0..<selectedSection.items.count {
-                i != indexPath.row ? manipulatedSections[section].items[i].setUnselected() : ()
+                if i != indexPath.row {
+                    manipulatedSections[section].items[i].setUnselected()
+                }
             }
             manipulatedSections[section].items[indexPath.row].toggle()
         }
