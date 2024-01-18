@@ -19,7 +19,7 @@ public final class SortViewController: UIViewController {
     private var manipulatedSections: [FilterSectionUIModel] = []
     private var sections: [FilterSectionUIModel] = []
     var selectedFilter = PassthroughSubject<IndexPath, Never>()
-    
+    private var isDummy = false
     
     // MARK: - Life Cycle
     public override func viewDidLoad() {
@@ -47,7 +47,8 @@ public final class SortViewController: UIViewController {
         collectionView.collectionViewLayout = layout.createLayout(sections: [])
     }
     
-    func setupSections(filterModel: FilterUIModel) {
+    func setupSections(filterModel: FilterUIModel, isDummy: Bool = false) {
+        self.isDummy = isDummy
         manipulatedSections = filterModel.sections
         var list = filterModel
         sections = list.setUnselectedValues()
@@ -67,6 +68,15 @@ public final class SortViewController: UIViewController {
         collectionView.collectionViewLayout = layout.createLayout(sections: manipulatedSections)
         collectionView.reloadData()
     }
+    
+    private func configureShimmer(for cell: UIView) {
+        if isDummy {
+            cell.enableSkeleton()
+            cell.showAnimatedSkeleton()
+        } else {
+            cell.hideSkeleton()
+        }
+    }
 }
 
 // MARK: - UICollectionViewDataSource
@@ -84,21 +94,24 @@ extension SortViewController: UICollectionViewDataSource {
         
         switch section.type {
         case .rating:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RatingCollectionViewCell.identifier, for: indexPath) as! RatingCollectionViewCell
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RatingCollectionViewCell.identifier, for: indexPath) as? RatingCollectionViewCell else { return UICollectionViewCell() }
+            configureShimmer(for: cell)
             cell.updateCell(with: section.items[indexPath.row])
             return cell
         default:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TextCollectionViewCell.identifier, for: indexPath) as! TextCollectionViewCell
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TextCollectionViewCell.identifier, for: indexPath) as? TextCollectionViewCell else { return UICollectionViewCell() }
+            configureShimmer(for: cell)
             cell.updateCell(with: section.items[indexPath.row])
             return cell
         }
     }
     
     public func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        let header = collectionView.dequeueReusableSupplementaryView(ofKind: "header", withReuseIdentifier: FilterHeaderCollectionViewCell.identifier, for: indexPath) as! FilterHeaderCollectionViewCell
+        guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: "header", withReuseIdentifier: FilterHeaderCollectionViewCell.identifier, for: indexPath) as? FilterHeaderCollectionViewCell else { return UICollectionReusableView() }
         let section = indexPath.section
         let currentSection = manipulatedSections[section]
         currentSection.isFirstSection ? header.hideLineView() : header.showLineView()
+        configureShimmer(for: header)
         header.setupHeader(with: currentSection.title)
         return header
     }
@@ -106,22 +119,24 @@ extension SortViewController: UICollectionViewDataSource {
 
 extension SortViewController: UICollectionViewDelegate {
     public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let section = indexPath.section
-        let selectedSection = manipulatedSections[section]
-        
-        if selectedSection.isMultipleSelection {
-            manipulatedSections[section].items[indexPath.row].toggle()
-        } else {
+        if !isDummy {
+            let section = indexPath.section
+            let selectedSection = manipulatedSections[section]
             
-            for i in 0..<selectedSection.items.count {
-                if i != indexPath.row {
-                    manipulatedSections[section].items[i].setUnselected()
+            if selectedSection.isMultipleSelection {
+                manipulatedSections[section].items[indexPath.row].toggle()
+            } else {
+                
+                for i in 0..<selectedSection.items.count {
+                    if i != indexPath.row {
+                        manipulatedSections[section].items[i].setUnselected()
+                    }
                 }
+                manipulatedSections[section].items[indexPath.row].toggle()
             }
-            manipulatedSections[section].items[indexPath.row].toggle()
+            selectedFilter.send(indexPath)
+            collectionView.reloadSections(IndexSet(integer: section))
         }
-        selectedFilter.send(indexPath)
-        collectionView.reloadSections(IndexSet(integer: section))
     }
 }
 

@@ -43,12 +43,10 @@ final class FilterContainerViewModel {
     
     // MARK: - Functions
     func fetchFilters() {
-        stateSubject.send(.showLoader)
         useCase?.statePublisher.sink { [weak self] response in
             guard let self else {
                 return
             }
-            self.stateSubject.send(.hideLoader)
             switch response {
             case .error(let message):
                 self.stateSubject.send(.showError(message: message))
@@ -58,9 +56,9 @@ final class FilterContainerViewModel {
                 let unselectedList = list.setUnselectedValues()
                 self.originalFiltersList = unselectedList ?? []
                 self.updateSelectedFilters()
-            case .values(let filters, let cusines):
+            case .values(let filters, let cusines, let isDummy):
                 self.configSegmentTitles(filters: filters, cuisines: cusines)
-                self.stateSubject.send(.filters(filters.sections))
+                self.stateSubject.send(.filters(filters.sections, isDummy: isDummy))
                 self.stateSubject.send(.cuisines(cuisines: cusines.sections.first ?? .init()))
             }
         }
@@ -69,12 +67,10 @@ final class FilterContainerViewModel {
     }
     
     func fetchOffersFilters() {
-        stateSubject.send(.showLoader)
         offersUseCase?.statePublisher.sink { [weak self] response in
             guard let self else {
                 return
             }
-            self.stateSubject.send(.hideLoader)
             switch response {
             case .error(let message):
                 self.stateSubject.send(.showError(message: message))
@@ -84,9 +80,9 @@ final class FilterContainerViewModel {
                 let unselectedList = list.setUnselectedValues()
                 self.originalFiltersList = unselectedList ?? []
                 self.updateSelectedFilters()
-            case .values(let filters):
+            case .values(let filters, let isDummy):
                 self.configSegmentTitles(filters: filters, cuisines: .init())
-                self.stateSubject.send(.filters(filters.sections))
+                self.stateSubject.send(.filters(filters.sections, isDummy: isDummy))
             }
         }
         .store(in: &cancellable)
@@ -184,10 +180,8 @@ final class FilterContainerViewModel {
 
 extension FilterContainerViewModel {
     enum State {
-        case showLoader
-        case hideLoader
         case showError(message: String)
-        case filters([FilterSectionUIModel])
+        case filters([FilterSectionUIModel], isDummy: Bool)
         case cuisines(cuisines: FilterSectionUIModel)
         case segmentTitles(titles: [FilterStrategy])
     }

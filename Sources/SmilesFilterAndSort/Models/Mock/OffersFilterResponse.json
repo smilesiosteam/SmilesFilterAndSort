@@ -1,0 +1,79 @@
+{
+  "categories": [
+    {
+      "categoryId": 1,
+      "categoryName": "Filters",
+      "categoryTypes": [
+        {
+          "categoryTypeName": "Dine in",
+          "categoryTypeId": 4
+        },
+        {
+          "categoryTypeName": "Bills & Recharge",
+          "categoryTypeId": 8
+        },
+        {
+          "categoryTypeName": "Travel",
+          "categoryTypeId": 7
+        },
+        {
+          "categoryTypeName": "Fine Dining",
+          "categoryTypeId": 11
+        },
+        {
+          "categoryTypeName": "Wellness",
+          "categoryTypeId": 6
+        },
+        {
+          "categoryTypeName": "Services",
+          "categoryTypeId": 12
+        },
+        {
+          "categoryTypeName": "Home Care",
+          "categoryTypeId": 703
+        },
+        {
+          "categoryTypeName": "Charity",
+          "categoryTypeId": 711
+        },
+        {
+          "categoryTypeName": "Pet Care",
+          "categoryTypeId": 716
+        }
+      ]
+    }
+  ],
+  "subCategories": [
+    {
+      "subCategoryName": "Filters",
+      "subCategoryTypes": [
+        {
+          "subCategoryTypeName": "Cafes",
+          "subCategoryTypeId": 41
+        },
+        {
+          "subCategoryTypeName": "Family & Casual",
+          "subCategoryTypeId": 42
+        },
+        {
+          "subCategoryTypeName": "Fast food",
+          "subCategoryTypeId": 44
+        },
+        {
+          "subCategoryTypeName": "Casual Dining",
+          "subCategoryTypeId": 45
+        },
+        {
+          "subCategoryTypeName": "Fine Dining",
+          "subCategoryTypeId": 46
+        },
+        {
+          "subCategoryTypeName": "70 % Off ",
+          "subCategoryTypeId": 48
+        }
+      ],
+      "subCategoryId": 1
+    }
+  ],
+  "extTransactionId": "3840831877427"
+}

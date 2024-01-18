@@ -150,11 +150,6 @@ public final class FilterContainerViewController: UIViewController {
                 return
             }
             switch states {
-                
-            case .showLoader:
-                SmilesLoader.show()
-            case .hideLoader:
-                SmilesLoader.dismiss()
             case .showError(message: let message):
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                     self.showAlertWithOkayOnly(message: message) { _ in 
@@ -162,9 +157,9 @@ public final class FilterContainerViewController: UIViewController {
                     }
                 }
                 
-            case .filters(let filters):
-                self.filterViewController.setupSections(filterModel: FilterUIModel(sections: filters))
-            case .cuisines(cuisines: let cuisines):
+            case .filters(let filters, let isDummy):
+                self.filterViewController.setupSections(filterModel: FilterUIModel(sections: filters), isDummy: isDummy)
+            case .cuisines(let cuisines):
                 self.choicesViewController.updateData(section: cuisines)
             case .segmentTitles(titles: let titles):
                 self.configSegment(titles)

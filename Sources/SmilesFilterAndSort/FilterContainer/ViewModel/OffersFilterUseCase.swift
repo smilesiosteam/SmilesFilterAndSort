@@ -25,6 +25,7 @@ final class OffersFilterUseCase: OffersFilterUseCaseType {
     private var previousResponse: Data?
     private let selectedFilters: [FilterValue]
     private let filterSelection = FilterSelection()
+    private var isDummy = false
     
     // MARK: - Public Properties
     var statePublisher: AnyPublisher<State, Never> {
@@ -65,6 +66,7 @@ final class OffersFilterUseCase: OffersFilterUseCaseType {
     }
     
     private func fetchRemoteFilters() {
+        configureDataForShimmer()
         repository.fetchOffersFilters(categoryId: categoryId, sortingType: sortingType)
             .sink { [weak self] completion in
                 guard let self else {
@@ -80,6 +82,7 @@ final class OffersFilterUseCase: OffersFilterUseCaseType {
                 }
                 let list = mapFilterObjects(response: values)
                 self.filtersList = list
+                self.isDummy = false
                 self.handleSuccessResponse()
             }
         .store(in: &cancellables)
@@ -102,7 +105,7 @@ final class OffersFilterUseCase: OffersFilterUseCaseType {
             filters = FilterMapper.configFilters(filtersList[filterIndex])
         }
         
-        stateSubject.send(.values(filters: filters))
+        stateSubject.send(.values(filters: filters, isDummy: isDummy))
     }
     
     func getFilterIndex() -> Int? {
@@ -146,12 +149,21 @@ final class OffersFilterUseCase: OffersFilterUseCaseType {
         
         return filters
     }
+    
+    private func configureDataForShimmer() {
+        if let mockFilterData = OffersFilterResponse.fromModuleFile() {
+            let list = mapFilterObjects(response: mockFilterData)
+            self.filtersList = list
+            self.isDummy = true
+            self.handleSuccessResponse()
+        }
+    }
 }
 
 extension OffersFilterUseCase {
     enum State {
         case error(message: String)
         case listFilters(filters: FilterDataModel)
-        case values(filters: FilterUIModel)
+        case values(filters: FilterUIModel, isDummy: Bool)
     }
 }

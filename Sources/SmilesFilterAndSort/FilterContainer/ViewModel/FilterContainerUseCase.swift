@@ -27,6 +27,7 @@ final class FilterContainerUseCase: FilterContainerUseCaseType {
     private var previousResponse: Data?
     private let selectedFilters: [FilterValue]
     private let filterSelection = FilterSelection()
+    private var isDummy = false
     
     // MARK: - Public Properties
     var selectedCusines: FilterValue?
@@ -66,6 +67,7 @@ final class FilterContainerUseCase: FilterContainerUseCaseType {
     }
     
     private func fetchRemoteFilters() {
+        configureDataForShimmer()
         repository.fetchFilters(menuItemType: menuItemType)
             .sink { [weak self] completion in
                 guard let self else {
@@ -81,6 +83,7 @@ final class FilterContainerUseCase: FilterContainerUseCaseType {
                 }
                 let list = values.filtersList ?? []
                 self.filtersList = list
+                self.isDummy = false
                 self.handleSuccessResponse()
             }
             .store(in: &cancellable)
@@ -110,7 +113,7 @@ final class FilterContainerUseCase: FilterContainerUseCaseType {
             cusines = FilterMapper.configFilters(filtersList[cusinesIndex])
         }
         
-        stateSubject.send(.values(filters: filters, cusines: cusines))
+        stateSubject.send(.values(filters: filters, cusines: cusines, isDummy: isDummy))
     }
     
     func getFilterIndex() -> Int? {
@@ -120,12 +123,21 @@ final class FilterContainerUseCase: FilterContainerUseCaseType {
     func getCusinesIndex() -> Int? {
         filtersList.firstIndex(where: { $0.type == FilterStrategy.cusines(title: nil).text })
     }
+    
+    private func configureDataForShimmer() {
+        if let mockFilterData = FilterDataModel.fromModuleFile() {
+            let list = mockFilterData.filtersList ?? []
+            filtersList = list
+            isDummy = true
+            handleSuccessResponse()
+        }
+    }
 }
 
 extension FilterContainerUseCase {
     enum State {
         case error(message: String)
         case listFilters(filters: FilterDataModel)
-        case values(filters: FilterUIModel, cusines: FilterUIModel)
+        case values(filters: FilterUIModel, cusines: FilterUIModel, isDummy: Bool)
     }
 }

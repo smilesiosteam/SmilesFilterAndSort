@@ -32,6 +32,10 @@ let package = Package(
                 .product(name: "SmilesFontsManager", package: "SmilesFontsManager"),
                 .product(name: "NetworkingLayer", package: "NetworkingLayer"),
                 .product(name: "SmilesOffers", package: "SmilesOffers")
+            ],
+            resources: [
+                .copy("Models/Mock/FilterDataModel.json"),
+                .copy("Models/Mock/OffersFilterResponse.json")
             ]
         ),
     ]
