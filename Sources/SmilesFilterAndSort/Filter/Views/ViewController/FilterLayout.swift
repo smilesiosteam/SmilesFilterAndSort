@@ -23,7 +23,7 @@ final class FilterLayout {
     
     private func configLayoutSection(isFirstSection: Bool) -> NSCollectionLayoutSection {
         let layoutSize = NSCollectionLayoutSize(
-            widthDimension: .estimated(300),
+            widthDimension: .estimated(120),
             heightDimension: .absolute(40)
         )
         
