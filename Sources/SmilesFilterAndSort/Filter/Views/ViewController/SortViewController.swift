@@ -109,10 +109,11 @@ extension SortViewController: UICollectionViewDataSource {
     public func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: "header", withReuseIdentifier: FilterHeaderCollectionViewCell.identifier, for: indexPath) as? FilterHeaderCollectionViewCell else { return UICollectionReusableView() }
         let section = indexPath.section
-        let currentSection = manipulatedSections[section]
-        currentSection.isFirstSection ? header.hideLineView() : header.showLineView()
-        configureShimmer(for: header)
-        header.setupHeader(with: currentSection.title)
+        if let currentSection = manipulatedSections[safe: section] {
+            currentSection.isFirstSection ? header.hideLineView() : header.showLineView()
+            configureShimmer(for: header)
+            header.setupHeader(with: currentSection.title)
+        }
         return header
     }
 }
