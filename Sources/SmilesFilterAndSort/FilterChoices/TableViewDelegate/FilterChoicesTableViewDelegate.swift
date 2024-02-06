@@ -71,9 +71,11 @@ extension FilterChoicesViewController: UITableViewDelegate, UITableViewDataSourc
         
         guard let filterChoiceCell = tableView.dequeueReusableCell(withIdentifier: "FilterChoiceTableViewCell", for: indexPath) as? FilterChoiceTableViewCell else { return UITableViewCell() }
         
-        let filterChoice = !isSearching ? filters.filter({ !$0.isSearching })[indexPath.row] : filters.filter({ $0.isSearching })[indexPath.row]
+        if let filterChoice = !isSearching ? filters.filter({ !$0.isSearching })[safe: indexPath.row] : filters.filter({ $0.isSearching })[safe: indexPath.row] {
+            filterChoiceCell.configureCell(with: filterChoice)
+        }
         
-        filterChoiceCell.configureCell(with: filterChoice)
+        
         filterChoiceCell.filterSelected = { [weak self] filter, isSelected in
             guard let self else { return }
             
