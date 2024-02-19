@@ -122,21 +122,32 @@ extension SortViewController: UICollectionViewDelegate {
     public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if !isDummy {
             let section = indexPath.section
-            let selectedSection = manipulatedSections[section]
+            guard let selectedSection = manipulatedSections[safe: section] else {
+                return
+            }
             
             if selectedSection.isMultipleSelection {
-                manipulatedSections[section].items[indexPath.row].toggle()
+                setToToggleSelection(with: section, index: indexPath.row)
             } else {
-                
                 for i in 0..<selectedSection.items.count {
                     if i != indexPath.row {
                         manipulatedSections[section].items[i].setUnselected()
                     }
                 }
-                manipulatedSections[section].items[indexPath.row].toggle()
+                setToToggleSelection(with: section, index: indexPath.row)
             }
             selectedFilter.send(indexPath)
-            collectionView.reloadSections(IndexSet(integer: section))
+            DispatchQueue.main.async {
+                collectionView.reloadSections(IndexSet(integer: section))
+            }
+        }
+    }
+    
+    private func setToToggleSelection(with sectionIndex: Int, index: Int){
+        if var section = manipulatedSections[safe: sectionIndex], var item = section.items[safe: index] {
+            item.toggle()
+            section.items[index] = item
+            manipulatedSections[sectionIndex] = section
         }
     }
 }
