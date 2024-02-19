@@ -74,7 +74,7 @@ final public class FilterChoicesViewController: UIViewController {
             selectedFilters.removeAll(where: { $0.filterValue == filter?.filterValue })
         }
         
-        tableView.reloadSections(sectionsToReload, with: .automatic)
+      tableView.reloadData()
     }
 }
 
