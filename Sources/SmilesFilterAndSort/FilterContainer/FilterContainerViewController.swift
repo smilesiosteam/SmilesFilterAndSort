@@ -8,7 +8,6 @@
 import UIKit
 import Combine
 import SmilesUtilities
-import SmilesLoader
 
 public final class FilterContainerViewController: UIViewController {
     

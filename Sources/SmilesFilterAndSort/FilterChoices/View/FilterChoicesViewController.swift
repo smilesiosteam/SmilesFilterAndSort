@@ -51,7 +51,7 @@ final public class FilterChoicesViewController: UIViewController {
         selectedFilters.removeAll()
         searchQuery?.removeAll()
         
-        tableView.reloadSections([TableSection.filterSearch.rawValue, TableSection.filterChoice.rawValue], with: .automatic)
+        tableView.reloadData()
     }
     
     // MARK: Methods

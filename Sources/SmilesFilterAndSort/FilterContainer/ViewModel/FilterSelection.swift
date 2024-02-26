@@ -38,7 +38,6 @@ class FilterSelection {
     
     private func updateSelectedFilters() {
         for item in selectedFilters {
-            print(item.indexPath)
             guard let type = item.indexPath?.section else {
                 return
             }
