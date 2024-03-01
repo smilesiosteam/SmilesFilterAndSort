@@ -17,7 +17,9 @@ final class FilterLayout {
     }
     
     private func createSections(index: Int, sections: [FilterSectionUIModel]) -> NSCollectionLayoutSection? {
-        let isFistSection = sections[index].isFirstSection
+        guard let isFistSection = sections[safe: index]?.isFirstSection else {
+            return nil
+        }
         return configLayoutSection(isFirstSection: isFistSection)
     }
     

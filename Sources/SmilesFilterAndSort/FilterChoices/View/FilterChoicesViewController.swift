@@ -35,7 +35,9 @@ final public class FilterChoicesViewController: UIViewController {
     func updateData(section: FilterSectionUIModel) {
         filters = section.items
         selectedFilters = filters.filter({ $0.isSelected })
-        tableView.reloadData()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
+            self?.tableView.reloadData()
+        }
     }
     
     func clearSelectedFilters() {
