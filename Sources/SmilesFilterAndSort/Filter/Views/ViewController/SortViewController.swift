@@ -36,7 +36,7 @@ public final class SortViewController: UIViewController {
             forCellWithReuseIdentifier: TextCollectionViewCell.identifier)
         
         collectionView.register(
-            UINib(nibName: RatingCollectionViewCell.identifier, bundle: .module), 
+            UINib(nibName: RatingCollectionViewCell.identifier, bundle: .module),
             forCellWithReuseIdentifier: RatingCollectionViewCell.identifier)
         
         collectionView.register(
@@ -86,22 +86,26 @@ extension SortViewController: UICollectionViewDataSource {
         manipulatedSections.count
     }
     public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        manipulatedSections[section].items.count
+        manipulatedSections[safe: section]?.items.count ?? 0
     }
     
     public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let section = manipulatedSections[indexPath.section]
+        guard let section = manipulatedSections[safe: indexPath.section] else {
+            return UICollectionViewCell()
+        }
         
         switch section.type {
         case .rating:
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RatingCollectionViewCell.identifier, for: indexPath) as? RatingCollectionViewCell else { return UICollectionViewCell() }
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RatingCollectionViewCell.identifier, for: indexPath) as? RatingCollectionViewCell,
+                    let item = section.items[safe: indexPath.row] else { return UICollectionViewCell() }
             configureShimmer(for: cell)
-            cell.updateCell(with: section.items[indexPath.row])
+            cell.updateCell(with: item)
             return cell
         default:
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TextCollectionViewCell.identifier, for: indexPath) as? TextCollectionViewCell else { return UICollectionViewCell() }
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TextCollectionViewCell.identifier, for: indexPath) as? TextCollectionViewCell,
+                    let item = section.items[safe: indexPath.row] else { return UICollectionViewCell() }
             configureShimmer(for: cell)
-            cell.updateCell(with: section.items[indexPath.row])
+            cell.updateCell(with: item)
             return cell
         }
     }
